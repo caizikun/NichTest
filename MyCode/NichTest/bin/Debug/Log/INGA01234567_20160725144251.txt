@@ -1,0 +1,310 @@
+[14:42:51] Begin to test...
+[14:42:51] Power on all equipments.
+[14:42:51] AttSlot is2state ISON
+[14:42:54] Enable full function for module.
+[14:42:55] Try to get test condition from server.
+[14:42:55] Begin to config environment.
+[14:42:55] Temp = 25 VCC = 3.29999995231628 Channel = 1
+[14:42:55] AttSlot is2:Channel1Wavelength is1310nm
+[14:42:55] AttSlot is2offset is0
+[14:42:56] AttSlot is2ATT VALUE IS8.35
+[14:42:56] AttSlot is2ATT VALUE IS8.35
+[14:42:56] ATT CurrentChannel is1ATT Wavelength isATT offset is-1.65
+[14:42:56] Light Source Power Too Smal
+[14:43:00] AttSlot is2ATT VALUE IS0
+[14:43:00] AttSlot is2ATT VALUE IS0
+[14:43:00] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:00] AttSlot is2offset is0
+[14:43:01] AttSlot is2ATT VALUE IS9.04
+[14:43:01] AttSlot is2ATT VALUE IS9.04
+[14:43:01] ATT CurrentChannel is2ATT Wavelength isATT offset is-0.96
+[14:43:01] Light Source Power Too Smal
+[14:43:02] AttSlot is2ATT VALUE IS0
+[14:43:02] AttSlot is2ATT VALUE IS0
+[14:43:02] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:02] AttSlot is2offset is0
+[14:43:03] AttSlot is2ATT VALUE IS8.73
+[14:43:03] AttSlot is2ATT VALUE IS8.73
+[14:43:03] ATT CurrentChannel is3ATT Wavelength isATT offset is-1.27
+[14:43:03] Light Source Power Too Smal
+[14:43:04] AttSlot is2ATT VALUE IS0
+[14:43:04] AttSlot is2ATT VALUE IS0
+[14:43:04] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:04] AttSlot is2offset is0
+[14:43:05] AttSlot is2ATT VALUE IS8.98
+[14:43:05] AttSlot is2ATT VALUE IS8.98
+[14:43:05] ATT CurrentChannel is4ATT Wavelength isATT offset is-1.02
+[14:43:05] Light Source Power Too Smal
+[14:43:05] AttSlot is2ATT VALUE IS0
+[14:43:05] AttSlot is2ATT VALUE IS0
+[14:43:05] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:05] AttSlot is2offset is0
+[14:43:06] AttSlot is2ATT VALUE IS8.35
+[14:43:06] AttSlot is2ATT VALUE IS8.35
+[14:43:06] ATT CurrentChannel is1ATT Wavelength isATT offset is-1.65
+[14:43:06] Light Source Power Too Smal
+[14:43:07] AttSlot is2ATT VALUE IS0
+[14:43:07] AttSlot is2ATT VALUE IS0
+[14:43:07] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:07] AttSlot is2offset is0
+[14:43:08] AttSlot is2ATT VALUE IS8.35
+[14:43:08] AttSlot is2ATT VALUE IS8.35
+[14:43:08] ATT CurrentChannel is1ATT Wavelength isATT offset is-1.65
+[14:43:08] OpticalSwitch change channel to1
+[14:43:08] E3631 channel isAPPL P6Vvoltage is3.49999995231628current is1.5
+[14:43:08] Try to get test model list under this condition.
+[14:43:12] Try to get test parameter for QuickCheck.
+[14:43:12] ModDACs 62,62,62,62
+[14:43:12] BiasDACs 48,48,48,48
+[14:43:12] Ratio 32
+[14:43:12] Resolution 12
+[14:43:12] Rrssi 39
+[14:43:12] URef 2.5
+[14:43:12] Test QuickCheck...
+[14:43:12] Close apc for module.
+[14:43:12] Shut down attennuator and disable Tx to read Tx/RxDark ADC for channel 1
+[14:43:12] AttSlot is2state ISOFF
+[14:43:14] Current TXPOWERADC is 0
+[14:43:14] Current TXPOWERADC is 4
+[14:43:14] TxDarkADC is 0
+[14:43:14] RxDarkADC is 4
+[14:43:14] Power on attennuator and set value to 0
+[14:43:14] AttSlot is2state ISON
+[14:43:16] AttSlot is2ATT VALUE IS0
+[14:43:16] Light on all Tx channel.
+[14:43:16] Current TXPOWERADC is 860
+[14:43:16] Calculate RES of Rx is 0.630
+[14:43:16] Set BiasDAC is 48
+[14:43:16] Set ModDAC is 62
+[14:43:17] OpticalSwitch change channel to1
+[14:43:17] Get Tx power is 0.358
+[14:43:17] Again. Read module' serial number is INGA01234567
+[14:43:17] Begin to config environment.
+[14:43:17] Temp = 25 VCC = 3.29999995231628 Channel = 2
+[14:43:17] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:17] AttSlot is2offset is0
+[14:43:18] AttSlot is2ATT VALUE IS8.35
+[14:43:18] AttSlot is2ATT VALUE IS8.35
+[14:43:18] ATT CurrentChannel is1ATT Wavelength isATT offset is-1.65
+[14:43:18] Light Source Power Too Smal
+[14:43:19] AttSlot is2ATT VALUE IS0
+[14:43:19] AttSlot is2ATT VALUE IS0
+[14:43:19] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:19] AttSlot is2offset is0
+[14:43:19] AttSlot is2ATT VALUE IS9.04
+[14:43:20] AttSlot is2ATT VALUE IS9.04
+[14:43:20] ATT CurrentChannel is2ATT Wavelength isATT offset is-0.96
+[14:43:20] Light Source Power Too Smal
+[14:43:20] AttSlot is2ATT VALUE IS0
+[14:43:20] AttSlot is2ATT VALUE IS0
+[14:43:20] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:20] AttSlot is2offset is0
+[14:43:21] AttSlot is2ATT VALUE IS8.73
+[14:43:21] AttSlot is2ATT VALUE IS8.73
+[14:43:21] ATT CurrentChannel is3ATT Wavelength isATT offset is-1.27
+[14:43:21] Light Source Power Too Smal
+[14:43:22] AttSlot is2ATT VALUE IS0
+[14:43:22] AttSlot is2ATT VALUE IS0
+[14:43:22] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:22] AttSlot is2offset is0
+[14:43:23] AttSlot is2ATT VALUE IS8.98
+[14:43:23] AttSlot is2ATT VALUE IS8.98
+[14:43:23] ATT CurrentChannel is4ATT Wavelength isATT offset is-1.02
+[14:43:23] Light Source Power Too Smal
+[14:43:24] AttSlot is2ATT VALUE IS0
+[14:43:24] AttSlot is2ATT VALUE IS0
+[14:43:24] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:24] AttSlot is2offset is0
+[14:43:25] AttSlot is2ATT VALUE IS9.04
+[14:43:25] AttSlot is2ATT VALUE IS9.04
+[14:43:25] ATT CurrentChannel is2ATT Wavelength isATT offset is-0.96
+[14:43:25] Light Source Power Too Smal
+[14:43:25] AttSlot is2ATT VALUE IS0
+[14:43:26] AttSlot is2ATT VALUE IS0
+[14:43:26] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:26] AttSlot is2offset is0
+[14:43:26] AttSlot is2ATT VALUE IS9.04
+[14:43:27] AttSlot is2ATT VALUE IS9.04
+[14:43:27] ATT CurrentChannel is2ATT Wavelength isATT offset is-0.96
+[14:43:27] OpticalSwitch change channel to2
+[14:43:27] E3631 channel isAPPL P6Vvoltage is3.49999995231628current is1.5
+[14:43:27] Try to get test model list under this condition.
+[14:43:30] Try to get test parameter for QuickCheck.
+[14:43:30] ModDACs 62,62,62,62
+[14:43:30] BiasDACs 48,48,48,48
+[14:43:30] Ratio 32
+[14:43:30] Resolution 12
+[14:43:30] Rrssi 39
+[14:43:30] URef 2.5
+[14:43:30] Test QuickCheck...
+[14:43:30] Close apc for module.
+[14:43:30] Shut down attennuator and disable Tx to read Tx/RxDark ADC for channel 2
+[14:43:30] AttSlot is2state ISOFF
+[14:43:32] Current TXPOWERADC is 0
+[14:43:32] Current TXPOWERADC is 0
+[14:43:32] TxDarkADC is 0
+[14:43:32] RxDarkADC is 0
+[14:43:32] Power on attennuator and set value to 0
+[14:43:32] AttSlot is2state ISON
+[14:43:34] AttSlot is2ATT VALUE IS0
+[14:43:34] Light on all Tx channel.
+[14:43:34] Current TXPOWERADC is 1101
+[14:43:34] Calculate RES of Rx is 0.688
+[14:43:34] Set BiasDAC is 48
+[14:43:34] Set ModDAC is 62
+[14:43:36] OpticalSwitch change channel to2
+[14:43:36] Get Tx power is 1.816
+[14:43:36] Again. Read module' serial number is INGA01234567
+[14:43:36] Begin to config environment.
+[14:43:36] Temp = 25 VCC = 3.29999995231628 Channel = 3
+[14:43:36] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:36] AttSlot is2offset is0
+[14:43:36] AttSlot is2ATT VALUE IS8.35
+[14:43:36] AttSlot is2ATT VALUE IS8.35
+[14:43:36] ATT CurrentChannel is1ATT Wavelength isATT offset is-1.65
+[14:43:36] Light Source Power Too Smal
+[14:43:37] AttSlot is2ATT VALUE IS0
+[14:43:37] AttSlot is2ATT VALUE IS0
+[14:43:37] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:37] AttSlot is2offset is0
+[14:43:38] AttSlot is2ATT VALUE IS9.04
+[14:43:38] AttSlot is2ATT VALUE IS9.04
+[14:43:38] ATT CurrentChannel is2ATT Wavelength isATT offset is-0.96
+[14:43:38] Light Source Power Too Smal
+[14:43:39] AttSlot is2ATT VALUE IS0
+[14:43:39] AttSlot is2ATT VALUE IS0
+[14:43:39] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:39] AttSlot is2offset is0
+[14:43:40] AttSlot is2ATT VALUE IS8.73
+[14:43:40] AttSlot is2ATT VALUE IS8.73
+[14:43:40] ATT CurrentChannel is3ATT Wavelength isATT offset is-1.27
+[14:43:40] Light Source Power Too Smal
+[14:43:40] AttSlot is2ATT VALUE IS0
+[14:43:40] AttSlot is2ATT VALUE IS0
+[14:43:41] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:41] AttSlot is2offset is0
+[14:43:41] AttSlot is2ATT VALUE IS8.98
+[14:43:41] AttSlot is2ATT VALUE IS8.98
+[14:43:41] ATT CurrentChannel is4ATT Wavelength isATT offset is-1.02
+[14:43:41] Light Source Power Too Smal
+[14:43:42] AttSlot is2ATT VALUE IS0
+[14:43:42] AttSlot is2ATT VALUE IS0
+[14:43:42] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:42] AttSlot is2offset is0
+[14:43:43] AttSlot is2ATT VALUE IS8.73
+[14:43:43] AttSlot is2ATT VALUE IS8.73
+[14:43:43] ATT CurrentChannel is3ATT Wavelength isATT offset is-1.27
+[14:43:43] Light Source Power Too Smal
+[14:43:44] AttSlot is2ATT VALUE IS0
+[14:43:44] AttSlot is2ATT VALUE IS0
+[14:43:44] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:44] AttSlot is2offset is0
+[14:43:45] AttSlot is2ATT VALUE IS8.73
+[14:43:45] AttSlot is2ATT VALUE IS8.73
+[14:43:45] ATT CurrentChannel is3ATT Wavelength isATT offset is-1.27
+[14:43:45] OpticalSwitch change channel to3
+[14:43:45] E3631 channel isAPPL P6Vvoltage is3.49999995231628current is1.5
+[14:43:45] Try to get test model list under this condition.
+[14:43:48] Try to get test parameter for QuickCheck.
+[14:43:48] ModDACs 62,62,62,62
+[14:43:48] BiasDACs 48,48,48,48
+[14:43:48] Ratio 32
+[14:43:48] Resolution 12
+[14:43:48] Rrssi 39
+[14:43:48] URef 2.5
+[14:43:48] Test QuickCheck...
+[14:43:48] Close apc for module.
+[14:43:48] Shut down attennuator and disable Tx to read Tx/RxDark ADC for channel 3
+[14:43:48] AttSlot is2state ISOFF
+[14:43:50] Current TXPOWERADC is 0
+[14:43:50] Current TXPOWERADC is 3
+[14:43:50] TxDarkADC is 0
+[14:43:50] RxDarkADC is 3
+[14:43:50] Power on attennuator and set value to 0
+[14:43:50] AttSlot is2state ISON
+[14:43:52] AttSlot is2ATT VALUE IS0
+[14:43:52] Light on all Tx channel.
+[14:43:52] Current TXPOWERADC is 1057
+[14:43:52] Calculate RES of Rx is 0.709
+[14:43:52] Set BiasDAC is 48
+[14:43:52] Set ModDAC is 62
+[14:43:54] OpticalSwitch change channel to3
+[14:43:54] Get Tx power is 1.637
+[14:43:54] Again. Read module' serial number is INGA01234567
+[14:43:54] Begin to config environment.
+[14:43:54] Temp = 25 VCC = 3.29999995231628 Channel = 4
+[14:43:54] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:54] AttSlot is2offset is0
+[14:43:54] AttSlot is2ATT VALUE IS8.35
+[14:43:54] AttSlot is2ATT VALUE IS8.35
+[14:43:54] ATT CurrentChannel is1ATT Wavelength isATT offset is-1.65
+[14:43:54] Light Source Power Too Smal
+[14:43:55] AttSlot is2ATT VALUE IS0
+[14:43:55] AttSlot is2ATT VALUE IS0
+[14:43:55] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:55] AttSlot is2offset is0
+[14:43:56] AttSlot is2ATT VALUE IS9.04
+[14:43:56] AttSlot is2ATT VALUE IS9.04
+[14:43:56] ATT CurrentChannel is2ATT Wavelength isATT offset is-0.96
+[14:43:56] Light Source Power Too Smal
+[14:43:57] AttSlot is2ATT VALUE IS0
+[14:43:57] AttSlot is2ATT VALUE IS0
+[14:43:57] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:57] AttSlot is2offset is0
+[14:43:58] AttSlot is2ATT VALUE IS8.73
+[14:43:58] AttSlot is2ATT VALUE IS8.73
+[14:43:58] ATT CurrentChannel is3ATT Wavelength isATT offset is-1.27
+[14:43:58] Light Source Power Too Smal
+[14:43:58] AttSlot is2ATT VALUE IS0
+[14:43:58] AttSlot is2ATT VALUE IS0
+[14:43:58] AttSlot is2:Channel1Wavelength is1310nm
+[14:43:59] AttSlot is2offset is0
+[14:43:59] AttSlot is2ATT VALUE IS8.98
+[14:43:59] AttSlot is2ATT VALUE IS8.98
+[14:43:59] ATT CurrentChannel is4ATT Wavelength isATT offset is-1.02
+[14:43:59] Light Source Power Too Smal
+[14:44:00] AttSlot is2ATT VALUE IS0
+[14:44:00] AttSlot is2ATT VALUE IS0
+[14:44:00] AttSlot is2:Channel1Wavelength is1310nm
+[14:44:00] AttSlot is2offset is0
+[14:44:01] AttSlot is2ATT VALUE IS8.98
+[14:44:01] AttSlot is2ATT VALUE IS8.98
+[14:44:01] ATT CurrentChannel is4ATT Wavelength isATT offset is-1.02
+[14:44:01] Light Source Power Too Smal
+[14:44:02] AttSlot is2ATT VALUE IS0
+[14:44:02] AttSlot is2ATT VALUE IS0
+[14:44:02] AttSlot is2:Channel1Wavelength is1310nm
+[14:44:02] AttSlot is2offset is0
+[14:44:03] AttSlot is2ATT VALUE IS8.98
+[14:44:03] AttSlot is2ATT VALUE IS8.98
+[14:44:03] ATT CurrentChannel is4ATT Wavelength isATT offset is-1.02
+[14:44:03] OpticalSwitch change channel to4
+[14:44:03] E3631 channel isAPPL P6Vvoltage is3.49999995231628current is1.5
+[14:44:03] Try to get test model list under this condition.
+[14:44:06] Try to get test parameter for QuickCheck.
+[14:44:06] ModDACs 62,62,62,62
+[14:44:06] BiasDACs 48,48,48,48
+[14:44:06] Ratio 32
+[14:44:06] Resolution 12
+[14:44:06] Rrssi 39
+[14:44:06] URef 2.5
+[14:44:06] Test QuickCheck...
+[14:44:06] Close apc for module.
+[14:44:06] Shut down attennuator and disable Tx to read Tx/RxDark ADC for channel 4
+[14:44:06] AttSlot is2state ISOFF
+[14:44:08] Current TXPOWERADC is 0
+[14:44:08] Current TXPOWERADC is 4
+[14:44:08] TxDarkADC is 0
+[14:44:08] RxDarkADC is 4
+[14:44:08] Power on attennuator and set value to 0
+[14:44:08] AttSlot is2state ISON
+[14:44:10] AttSlot is2ATT VALUE IS0
+[14:44:10] Light on all Tx channel.
+[14:44:10] Current TXPOWERADC is 911
+[14:44:10] Calculate RES of Rx is 0.577
+[14:44:10] Set BiasDAC is 48
+[14:44:10] Set ModDAC is 62
+[14:44:12] OpticalSwitch change channel to4
+[14:44:12] Get Tx power is 0.389
+[14:44:12] Again. Read module' serial number is INGA01234567
+[14:44:13] Upload test data to server sucessfully.

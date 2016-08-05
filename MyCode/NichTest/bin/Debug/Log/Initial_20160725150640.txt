@@ -1,0 +1,56 @@
+[15:06:40] Load config...
+[15:06:40] Done.
+[15:06:40] Load test data recording...
+[15:06:40] Done.
+[15:06:40] Get production family information from server.
+[15:06:40] Done.
+[15:06:42] Get production name list from server, according selected family QSFP28.
+[15:06:42] Done.
+[15:06:44] Get test plan list from server, according its PN TR_CGR4_G3.
+[15:06:44] Done.
+[15:06:46] Get parameters and spec of test plan DEV_TR_QuickCheck.
+[15:06:46] Done.
+[15:06:48] Selected test station PreModule.
+[15:06:50] Begin to initial...
+[15:06:50] Saved calibration data to config file.
+[15:06:50] Try to get equipment infomation from server.
+[15:06:50] Config offset for equipment AQ2211ATTEN_NA_ATTENNUATOR
+[15:06:50] Get parameter for equipment AQ2211ATTEN_NA_ATTENNUATOR
+[15:06:50] Initial equipment AQ2211ATTEN_NA_ATTENNUATOR
+[15:06:50] AttSlot is2:Channel1Wavelength is1310nm
+[15:06:50] Light Source Power Too Smal
+[15:06:50] AttSlot is2ATT VALUE IS0
+[15:06:50] AttSlot is2ATT VALUE IS0
+[15:06:50] AttSlot is2state ISON
+[15:06:52] AttSlot is2:Channel1Wavelength is1310nm
+[15:06:52] AttSlot is2ATT VALUE IS0.00
+[15:06:52] AttSlot is2ATT VALUE IS0.00
+[15:06:52] AttSlot is2state ISON
+[15:06:53] AttSlot is2:Channel1Wavelength is1310nm
+[15:06:53] AttSlot is2ATT VALUE IS0.00
+[15:06:53] AttSlot is2ATT VALUE IS0.00
+[15:06:54] AttSlot is2state ISON
+[15:06:55] AttSlot is2:Channel1Wavelength is1310nm
+[15:06:55] AttSlot is2ATT VALUE IS0.00
+[15:06:55] AttSlot is2ATT VALUE IS0.00
+[15:06:55] AttSlot is2state ISON
+[15:06:56] AttSlot is2state ISOFF
+[15:06:57] Config offset for equipment E3631_NA_POWERSUPPLY
+[15:06:57] Get parameter for equipment E3631_NA_POWERSUPPLY
+[15:06:57] Initial equipment E3631_NA_POWERSUPPLY
+[15:06:57] E3631 channel isAPPL P6Vvoltage is3.5current is1.5
+[15:06:57] E3631 channel isAPPL P25Vvoltage is3.5current is1
+[15:07:00] Get parameter for equipment AQ2211OPTICALSWITCH_TX_OPTICALSWITCH
+[15:07:00] Initial equipment AQ2211OPTICALSWITCH_TX_OPTICALSWITCH
+[15:07:00] OpticalSwitch change channel to1
+[15:07:00] Get parameter for equipment AQ2211POWERMETER_NA_POWERMETER
+[15:07:00] Initial equipment AQ2211POWERMETER_NA_POWERMETER
+[15:07:01] PowerMeterSlot is3:Channel1:WAV 1310nm
+[15:07:01] PowerMeterSlot is3Channel is1UnitType is0
+[15:07:01] PowerMeterSlot is3:Channel1:WAV 1310nm
+[15:07:01] PowerMeterSlot is3Channel is1UnitType is0
+[15:07:01] PowerMeterSlot is3:Channel1:WAV 1310nm
+[15:07:01] PowerMeterSlot is3Channel is1UnitType is0
+[15:07:01] PowerMeterSlot is3:Channel1:WAV 1310nm
+[15:07:01] PowerMeterSlot is3Channel is1UnitType is0
+[15:07:01] Initial equipment successfully.

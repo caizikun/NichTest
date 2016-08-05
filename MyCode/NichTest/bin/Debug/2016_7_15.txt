@@ -1,0 +1,45 @@
+[2016/7/15 11:23:53][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/15 11:23:53][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/15 11:23:53][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/15 11:23:53][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/15 11:23:54][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/15 11:24:00][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/15 11:24:00][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/15 11:24:00][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/15 11:24:00][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/15 11:24:01][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/15 11:24:01][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/15 11:24:01][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/15 11:24:01][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/15 11:24:02][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/15 11:24:02][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/15 11:24:02][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/15 11:24:03][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/15 11:24:04][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISOFF
+[2016/7/15 11:24:13][Error][IOPort.ReadString]:VI_ERROR_TMO: A timeout occurred
+[2016/7/15 11:24:13][Error][AQ2211PowerMeter.ConfigWavelength]:System.FormatException: 输入字符串的格式不正确。
+   在 System.Number.ParseDouble(String value, NumberStyles options, NumberFormatInfo numfmt)
+   在 System.Convert.ToDouble(String value)
+   在 QuickCheck.AQ2211PowerMeter.ConfigWavelength(String dutcurrentchannel, Int32 syn) 位置 F:\documents\visual studio 2010\Projects\QuickCheck\QuickCheck\Equipment\PowerMeter\AQ2211PowerMeter.cs:行号 161
+[2016/7/15 11:24:13][Infor][AQ2211PowerMeter.SelectUnit]:PowerMeterSlot is3Channel is1UnitType is0
+[2016/7/15 11:24:40][Error][E3631.Initial]:System.Collections.Generic.KeyNotFoundException: 给定关键字不在字典中。
+   在 System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   在 QuickCheck.E3631.Initial(Dictionary`2 inPara, logManager log, Int32 syn) 位置 F:\documents\visual studio 2010\Projects\QuickCheck\QuickCheck\Equipment\PowerSupply\E3631.cs:行号 25
+[2016/7/15 11:24:40][Error][ForUser.Initial]:E3631_NA_POWERSUPPLYConfigure Error
+[2016/7/15 11:24:40][Error][MainForm.RunInitial]:ConfigEquipment Error ,PLS Check Equipment
+[2016/7/15 11:24:40][Error][MainForm.RunInitial]:System.Exception: E3631_NA_POWERSUPPLYConfigure Error
+   在 QuickCheck.ForUser.Initial() 位置 F:\documents\visual studio 2010\Projects\QuickCheck\QuickCheck\ForUser.cs:行号 166
+   在 QuickCheck.MainForm.RunInitial() 位置 F:\documents\visual studio 2010\Projects\QuickCheck\QuickCheck\MainForm.cs:行号 283
+[2016/7/15 11:24:48][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/15 11:24:48][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/15 11:24:48][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/15 11:24:48][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/15 11:24:48][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/15 11:24:49][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/15 11:24:50][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/15 11:24:50][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/15 11:24:50][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/15 11:24:51][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/15 11:24:51][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/15 11:24:51][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/15 11:24:51][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
