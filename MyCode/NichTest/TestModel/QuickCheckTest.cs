@@ -152,6 +152,7 @@ namespace NichTest
                         dr["DeltaTxPower"] = (Convert.ToDouble(dr["TxPower"]) - Convert.ToDouble(dt.Rows[dt.Rows.Count - 1]["TxPower"])).ToString("f3");
                         dr["DeltaRxDarkADC"] = Convert.ToInt32(dr["RxDarkADC"]) - Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["RxDarkADC"]);
                         double orgRxRes = Convert.ToDouble(dt.Rows[dt.Rows.Count - 1]["RxRes"]);
+                        //orgRxRes can't be zero
                         dr["DeltaRxRes"] = (orgRxRes == 0) ? "-99999" : (100.0 * (Convert.ToDouble(dr["RxRes"]) - orgRxRes) / orgRxRes).ToString("f2") + "%";
                         dr["Result"] = 0;
                         Log.SaveLogToTxt("Sucessfully get test data of pre module station.");
