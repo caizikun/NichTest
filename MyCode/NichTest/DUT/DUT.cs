@@ -69,6 +69,16 @@ namespace NichTest
             Read = 2
         }
 
+        public enum Coeff : int
+        {
+            DMIVCCCOEFC,
+            DMIVCC2COEFC,
+            DMIVCC3COEFC,
+            DMIVCCCOEFB,
+            DMIVCC2COEFB,
+            DMIVCC3COEFB
+        }
+
         protected struct DebugInterface
         {
             public static byte EngPage;
@@ -85,12 +95,12 @@ namespace NichTest
 
         public virtual string ReadSN()
         {
-            return "";
+            return Algorithm.MyNaN.ToString();
         }
 
         public virtual string ReadFW()
         {
-            return "";
+            return Algorithm.MyNaN.ToString();
         }
 
         public virtual bool InitialChip()
@@ -130,12 +140,12 @@ namespace NichTest
 
         public virtual double ReadDmiTxP(int channel)
         {
-            return 0.0;
+            return Algorithm.MyNaN;
         }
 
         public virtual ushort ReadADC(NameOfADC enumName, int channel)
         {
-            return 9999;
+            return Algorithm.MyNaN;
         }
 
         public ushort[] ReadADC(NameOfADC enumName)
@@ -187,12 +197,22 @@ namespace NichTest
 
         public virtual double CalRxRes(double inputPower_dBm, int channel, double ratio, double U_Ref, double resolution, double R_rssi)
         {
-            return 0;
+            return Algorithm.MyNaN;
         }
 
         public virtual bool CloseAndOpenAPC(byte mode)
         {
             return true;
+        }
+
+        public virtual bool SetCoeff(Coeff coeff, int channel, string value)
+        {
+            return false;
+        }
+
+        public virtual string GetCoeff(Coeff coeff, int channel)
+        {
+            return Algorithm.MyNaN.ToString();
         }
     }
 }

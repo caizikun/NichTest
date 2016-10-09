@@ -296,10 +296,10 @@ namespace NichTest
         }
 
         public override double ReadDmiTxP(int channel)
-        {
-            double dmitxp =0.0;
+        {            
             try
             {
+                double dmitxp = 0.0;
                 switch (channel)
                 {
                     case 1:
@@ -322,7 +322,7 @@ namespace NichTest
             catch (Exception ex)
             {
                 Log.SaveLogToTxt(ex.ToString());
-                throw new Exception("ReadDmiTxP failed");
+                return Algorithm.MyNaN;
             }
         }        
 
@@ -330,30 +330,19 @@ namespace NichTest
         {
             try
             {
-                string filter = "ItemName = " + "'" + enumName.ToString() + "'";
-                DataRow[] foundRows = this.dataTable_DUTCoeffControlByPN.Select(filter);
-
-                for (int row = 0; row < foundRows.Length; row++)
-                {
-                    if (Convert.ToInt32(foundRows[row]["Channel"]) == channel)
-                    {
-                        byte page = Convert.ToByte(foundRows[row]["Page"]);
-                        int startAddress = Convert.ToInt32(foundRows[row]["StartAddress"]);
-                        int length = Convert.ToInt32(foundRows[row]["Length"]);
-                        string format = foundRows[row]["Format"].ToString();
-
-                        this.EnterEngMode(page);
-                        UInt16 valueADC = QSFP.readadc(TestPlanParaByPN.DUT_USB_Port, 0xA0, startAddress);
-                        Log.SaveLogToTxt("Current TXPOWERADC is " + valueADC);
-                        return valueADC;
-                    }
-                }
-                throw new Exception("ReadADC failed, please check module table config");
+                string name = enumName.ToString();
+                DUTCoeffControlByPN.CoeffInfo coeffInfo = dataTable_DUTCoeffControlByPN.GetOneInfoFromTable(name, channel);
+                
+                this.EnterEngMode(coeffInfo.Page);
+                UInt16 valueADC = QSFP.readadc(TestPlanParaByPN.DUT_USB_Port, 0xA0, coeffInfo.StartAddress);
+                Log.SaveLogToTxt("Current TXPOWERADC is " + valueADC);
+                return valueADC;
+               
             }
             catch (Exception ex)
             {
                 Log.SaveLogToTxt(ex.ToString());
-                throw new Exception("ReadADC failed");
+                return Algorithm.MyNaN;
             }
         }        
 
@@ -619,5 +608,47 @@ namespace NichTest
             USBIO.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, startAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
             return true;
         }
+
+        public override bool SetCoeff(Coeff coeff, int channel, string value)
+        {
+            try
+            {
+                string coeffName = coeff.ToString();
+                DUTCoeffControlByPN.CoeffInfo coeffInfo = dataTable_DUTCoeffControlByPN.GetOneInfoFromTable(coeffName, channel);                                
+
+                this.EnterEngMode(coeffInfo.Page);
+                bool result = QSFP.SetCoef(TestPlanParaByPN.DUT_USB_Port, 0xA0, coeffInfo.StartAddress, value, coeffInfo.Format);
+
+                Log.SaveLogToTxt("Set " + coeffName + " to " + value);
+                return result;
+                  
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLogToTxt(ex.ToString());
+                return false;
+            }
+        }
+
+        public override string GetCoeff(Coeff coeff, int channel)
+        {
+            string coeffName = coeff.ToString();
+            try
+            {                
+                DUTCoeffControlByPN.CoeffInfo coeffInfo = dataTable_DUTCoeffControlByPN.GetOneInfoFromTable(coeffName, channel);
+
+                this.EnterEngMode(coeffInfo.Page);
+                string value = QSFP.ReadCoef(TestPlanParaByPN.DUT_USB_Port, 0xA0, coeffInfo.StartAddress, coeffInfo.Format);
+
+                Log.SaveLogToTxt("Get " + coeffName + " is " + value);
+                return value;
+
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLogToTxt("Failed to get value of " + coeffName);
+                return Algorithm.MyNaN.ToString();
+            }
+        }        
     }
 }

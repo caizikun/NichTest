@@ -177,6 +177,12 @@ namespace NichTest
                 Log.SaveLogToTxt("Failed to quickcheck test.");
                 return false;
             }
+            finally
+            {
+                // open apc
+                Log.SaveLogToTxt("Close apc for module.");
+                dut.CloseAndOpenAPC(Convert.ToByte(DUT.APCMODE.IBAISandIMODON));
+            }
         }
 
         public bool SaveTestData()
