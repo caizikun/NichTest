@@ -7,7 +7,12 @@ It uses for QSFP, CFP and SFP products function test in lab. Here are two part: 
 
 The app is the software client. When it is to test product, it will get parameters from database firstly. And then do test model.
 
-Totally, there are three engineer to develop this software platform. One codes web and database. One is responsible for equipmemnt driver. My major is the left: UI, design model, test model and algorithm etc.
+Totally, there are three engineer to develop this software platform. One codes web and database. One is responsible for equipmemnt driver. My major is the left: UI, design mode, test model and algorithm etc.
+
+design mode: **abstract factory**
+
+![](http://i.imgur.com/BB3BhcA.png)
+
 
 ## Calculator ##
 
