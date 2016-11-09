@@ -1,13 +1,16 @@
 # NichTest
-it is a software platform, combining ATS, calculator and mine clearance.
+
+It is a software platform based on C/S framework, combining ATS, calculator and mine clearance.
 
 ## ATS ##
 
-It uses for QSFP, CFP and SFP products function test in lab. Here are two part: one is web and one is app in PC. User can input parameters and create/maintain test plan for product on the web. these parameters/infomation will be stored in database. We use SQL as our database tool.
+After i joined in Innolight RD department, we began to develop this ATS at the end of 2015. There are three software engineers: One codes web and database. One is responsible for equipmemnt driver. My major is the left: UI, design mode, test model and algorithm etc.
 
-The app is the software client. When it is to test product, it will get parameters from database firstly. And then do test model.
+In the early of 2016, it was on line in RD lab. Its capacity is more than 1K each month. It always uses for QSFP, CFP and SFP products function test. 
 
-Totally, there are three engineer to develop this software platform. One codes web and database. One is responsible for equipmemnt driver. My major is the left: UI, design mode, test model and algorithm etc.
+Here are two part: one is **web** and one is **app** in PC. User can input parameters and create/maintain test plan for product on the web. These parameters/infomation will be stored in database. (We use SQL as our database tool)
+
+The app is the software client. When it is to test product, it will get parameters from database firstly. And then run test model step by step.
 
 design mode: **abstract factory**
 
