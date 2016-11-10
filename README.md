@@ -20,6 +20,7 @@ UI: winform
 
 ![](http://i.imgur.com/38jlGTQ.png)
 
+algorithm: Least squares. Please see the [link](https://github.com/tclxspy/Articles/blob/master/algorithm/MD/%E7%AE%97%E6%B3%95%2303--%E8%AF%A6%E8%A7%A3%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81.md) for detailed introduction.
 
 ## Calculator ##
 
