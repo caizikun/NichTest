@@ -12,9 +12,15 @@ Here are two part: one is **web** and one is **app** in PC. User can input param
 
 The app is the software client. When it is to test product, it will get parameters from database firstly. And then run test model step by step.
 
-design mode: **abstract factory**
+design mode:  see document
 
-![](http://i.imgur.com/BB3BhcA.png)
+**simple factory**
+
+![](http://i.imgur.com/JzGmkq2.png)
+
+**abstract factory**
+
+![](http://i.imgur.com/LGhVkoF.png)
 
 UI: winform
 
