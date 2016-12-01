@@ -160,6 +160,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Config\XmlIo.cs" />
+    <Compile Include="TestModel\TestIBiasDmi.cs" />
+    <Compile Include="TestModel\TestIcc.cs" />
+    <Compile Include="TestModel\TestVccDmi.cs" />
     <EmbeddedResource Include="Form\CalculatorForm.resx">
       <DependentUpon>CalculatorForm.cs</DependentUpon>
     </EmbeddedResource>
