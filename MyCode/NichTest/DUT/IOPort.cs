@@ -10,7 +10,7 @@ namespace NichTest
 {
     public class IOPort
     {
-        private bool Connect_flag = false;// have used
+        //private bool Connect_flag = false;// have used
 
         private Ivi.Visa.Interop.ResourceManager rm; // VIsa  GPIB
 
@@ -481,14 +481,15 @@ namespace NichTest
         /// </summary>
 
         private static volatile IOPort instance = null;
-        private static object syncRoot = new Object();
+        private static object syncRoot_GPIB = new Object();
+        private static object syncRoot_RS232 = new Object();
         private IOPort() { }
 
         public static IOPort GetIOPort()
         {
             if (instance == null)
             {
-                lock (syncRoot)
+                lock (syncRoot_GPIB)
                 {
                     if (instance == null)
                     {
@@ -505,153 +506,256 @@ namespace NichTest
         /// <param name="type"></param>
         /// <param name="ioaddr"></param>
         /// <returns></returns>
-        private bool IOConnect(string type, string ioaddr)
+        //private bool IOConnect(string type, string ioaddr)
+        //{
+        //    try
+        //    {
+        //        lock (syncRoot_GPIB)
+        //        {
+        //            bool connect_flag = false;
+        //            switch (type.ToUpper())
+        //            {
+        //                case "GPIB":
+        //                    if (rm == null || myDmm == null)
+        //                    {
+        //                        rm = new Ivi.Visa.Interop.ResourceManager(); //Open up a new resource manager
+        //                        myDmm = new Ivi.Visa.Interop.FormattedIO488(); //Open a new Formatted IO 488 session 
+        //                    }
+        //                    myDmm.IO = (IMessage)rm.Open(ioaddr, AccessMode.NO_LOCK, 5000, ""); //Open up a handle to the DMM with a 2 second timeout
+        //                    myDmm.IO.Timeout = 5000; //You can also set your timeout by doing this command, sets to 3 seconds
+        //                    //myDmm.IO.Clear(); //Send a device clear first to stop any measurements in process    
+        //                    //myDmm.WriteString("*RST", true);
+        //                    connect_flag = true;
+        //                    break;
+
+        //                case "NIUSB":
+        //                    if (rm == null || myDmm == null)
+        //                    {
+        //                        rm = new Ivi.Visa.Interop.ResourceManager(); //Open up a new resource manager
+        //                        myDmm = new Ivi.Visa.Interop.FormattedIO488(); //Open a new Formatted IO 488 session 
+        //                    }
+        //                    myDmm.IO = (IMessage)rm.Open(ioaddr, AccessMode.NO_LOCK, 5000, ""); //Open up a handle to the DMM with a 2 second timeout
+        //                    myDmm.IO.Timeout = 5000; //You can also set your timeout by doing this command, sets to 3 seconds
+        //                                             //myDmm.IO.Clear(); //Send a device clear first to stop any measurements in process    
+        //                                             //myDmm.WriteString("*RST", true);
+        //                    connect_flag = true;
+        //                    break;
+
+        //                case "USB":
+        //                    connect_flag = OpenDevice(Convert.ToByte(ioaddr));
+        //                    break;
+
+        //                case "RJ45":// 网口
+        //                    break;
+
+        //                case "RS232":// 网口
+        //                    break;
+
+        //                default:
+        //                    break;
+        //            }
+        //            //Connect_flag = true;
+        //            Thread.Sleep(50);
+        //            return connect_flag;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.SaveLogToTxt(ex.Message);
+        //        return false;
+        //    }
+        //}
+
+        //public bool WriteString(string type, string ioaddr, string Str_Write)
+        //{
+        //    try
+        //    {
+        //        lock (syncRoot_GPIB)
+        //        {
+        //            IOConnect(type, ioaddr);
+        //            switch (type.ToUpper().Trim())
+        //            {
+        //                case "GPIB":
+        //                    myDmm.WriteString(Str_Write, true);
+        //                    break;
+        //                case "USB":
+
+        //                    break;
+        //                case "NIUSB":
+        //                    myDmm.WriteString(Str_Write, true);
+        //                    break;
+        //                case "RJ45":// 网口
+        //                    break;
+        //                case "RS232":// 网口
+        //                    break;
+
+        //            }
+        //            Thread.Sleep(50);
+        //            return true;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.SaveLogToTxt(ex.Message);
+        //        return false;
+        //    }
+        //}
+
+        //public string ReadString(string type, string ioaddr, int count)
+        //{
+        //    try
+        //    {
+        //        lock (syncRoot_GPIB)
+        //        {
+        //            byte[] arr = new byte[count];
+        //            string Str_Read = null;
+        //            IOConnect(type, ioaddr);
+        //            arr = myDmm.IO.Read(count);
+
+        //            Str_Read = System.Text.Encoding.Default.GetString(arr);
+        //            Thread.Sleep(50);
+        //            return Str_Read;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.SaveLogToTxt(ex.Message);
+        //        return null;
+        //    }
+        //}
+
+        //public string ReadString(string type, string ioaddr)
+        //{            
+        //    try
+        //    {
+        //        lock (syncRoot_GPIB)
+        //        {
+        //            string Str = "";
+        //            IOConnect(type, ioaddr);
+        //            switch (type.ToUpper().Trim())
+        //            {
+        //                case "GPIB":
+        //                    Str = myDmm.ReadString();
+        //                    break;
+        //                case "USB":
+        //                    break;
+        //                case "RJ45":// 网口
+        //                    break;
+        //                case "RS232":// 网口
+        //                    break;
+
+        //            }
+        //            Thread.Sleep(50);
+        //            return Str;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.SaveLogToTxt(ex.Message);
+        //        return null;
+        //    }
+        //}
+
+        public enum Type: int
         {
-            try
-            {
-                lock (syncRoot)
-                {
-                    switch (type.ToUpper())
-                    {
-                        case "GPIB":
-                            if (rm == null || myDmm == null)
-                            {
-                                rm = new Ivi.Visa.Interop.ResourceManager(); //Open up a new resource manager
-                                myDmm = new Ivi.Visa.Interop.FormattedIO488(); //Open a new Formatted IO 488 session 
-                            }
-                            myDmm.IO = (IMessage)rm.Open(ioaddr, AccessMode.NO_LOCK, 5000, ""); //Open up a handle to the DMM with a 2 second timeout
-                            myDmm.IO.Timeout = 5000; //You can also set your timeout by doing this command, sets to 3 seconds
-                            //myDmm.IO.Clear(); //Send a device clear first to stop any measurements in process    
-                                              //myDmm.WriteString("*RST", true);
-                            Connect_flag = true;
-                            break;
-
-                        case "NIUSB":
-                            if (rm == null || myDmm == null)
-                            {
-                                rm = new Ivi.Visa.Interop.ResourceManager(); //Open up a new resource manager
-                                myDmm = new Ivi.Visa.Interop.FormattedIO488(); //Open a new Formatted IO 488 session 
-                            }
-                            myDmm.IO = (IMessage)rm.Open(ioaddr, AccessMode.NO_LOCK, 5000, ""); //Open up a handle to the DMM with a 2 second timeout
-                            myDmm.IO.Timeout = 5000; //You can also set your timeout by doing this command, sets to 3 seconds
-                            //myDmm.IO.Clear(); //Send a device clear first to stop any measurements in process    
-                                              //myDmm.WriteString("*RST", true);
-                            Connect_flag = true;
-                            break;
-
-                        case "USB":
-                            Connect_flag = OpenDevice(Convert.ToByte(ioaddr));
-                            break;
-
-                        case "RJ45":// 网口
-                            break;
-
-                        case "RS232":// 网口
-                            break;
-
-                        default:
-                            break;
-                    }
-                    //Connect_flag = true;
-                    Thread.Sleep(50);
-                    return Connect_flag;
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.SaveLogToTxt(ex.Message);
-                return Connect_flag;
-            }
+            GPIB = 0,
+            USB = 1,
+            NIUSB = 2,
+            RJ45 = 3,
+            RS232 = 4
         }
 
-        public bool WriteString(string type, string ioaddr, string Str_Write)
+        public bool WriteString(Type type, string ioaddr, string str_Write)
         {
+            return this.WriteReadString(type, ioaddr, str_Write, ReadWrite.Write) != "false";
+        }
+
+        public string ReadString(Type type, string ioaddr, int count = 0)
+        {
+            return this.WriteReadString(type, ioaddr, null, ReadWrite.Read, count);
+        }
+
+        private string WriteReadString(Type type, string ioaddr, string Str_Write, ReadWrite operation, int count = 0)
+        {
+            string buf = "false";             
+            switch (type)
+            {                    
+                case Type.GPIB:
+                    buf = this.WriteReadString_GPIB(ioaddr, Str_Write, operation, count);
+                    break;
+
+                case Type.USB:
+                    break;
+
+                case Type.NIUSB:
+                    buf = this.WriteReadString_NIUSB(ioaddr, Str_Write, operation, count);
+                    break;
+
+                case Type.RJ45:// 网口
+                    break;
+
+                case Type.RS232:// 网口
+                    buf = this.WriteReadString_RS232(Str_Write, operation, count);
+                    break;
+            }
+            return buf;                
+        }
+
+        private string WriteReadString_GPIB(string ioaddr, string Str_Write, ReadWrite operation, int count = 0)
+        {
+            string buf = "false";
             try
             {
-                lock (syncRoot)
+                lock (syncRoot_GPIB)
                 {
-                    IOConnect(type, ioaddr);
-                    switch (type.ToUpper().Trim())
+                    if (rm == null || myDmm == null)
                     {
-                        case "GPIB":
-                            myDmm.WriteString(Str_Write, true);
-                            break;
-                        case "USB":
-
-                            break;
-                        case "NIUSB":
-                            myDmm.WriteString(Str_Write, true);
-                            break;
-                        case "RJ45":// 网口
-                            break;
-                        case "RS232":// 网口
-                            break;
-
+                        rm = new Ivi.Visa.Interop.ResourceManager(); //Open up a new resource manager
+                        myDmm = new Ivi.Visa.Interop.FormattedIO488(); //Open a new Formatted IO 488 session 
+                    }
+                    myDmm.IO = (IMessage)rm.Open(ioaddr, AccessMode.NO_LOCK, 5000, ""); //Open up a handle to the DMM with a 2 second timeout
+                    myDmm.IO.Timeout = 5000; //You can also set your timeout by doing this command, sets to 3 seconds
+                                             //myDmm.IO.Clear(); //Send a device clear first to stop any measurements in process    
+                                             //myDmm.WriteString("*RST", true);
+                    if (operation == ReadWrite.Write)
+                    {
+                        myDmm.WriteString(Str_Write, true);
+                    }
+                    else if (count == 0)
+                    {
+                        buf = myDmm.ReadString();
+                    }
+                    else
+                    {
+                        byte[] arr = new byte[count];
+                        arr = myDmm.IO.Read(count);
+                        buf = System.Text.Encoding.Default.GetString(arr);
                     }
                     Thread.Sleep(50);
-                    return true;
+                    return buf;
                 }
             }
             catch (Exception ex)
             {
-                Log.SaveLogToTxt(ex.Message);
-                return false;
+                Log.SaveLogToTxt(ex.Message + "\n" + "failed to operate GPIB");
+                return buf;
             }
         }
 
-        public string ReadString(string type, string ioaddr, int count)
-        {            
-            try
-            {
-                lock (syncRoot)
-                {
-                    byte[] arr = new byte[count];
-                    string Str_Read = null;
-                    IOConnect(type, ioaddr);
-                    arr = myDmm.IO.Read(count);
-
-                    Str_Read = System.Text.Encoding.Default.GetString(arr);
-                    Thread.Sleep(50);
-                    return Str_Read;
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.SaveLogToTxt(ex.Message);
-                return null;
-            }
+        private string WriteReadString_NIUSB(string ioaddr, string Str_Write, ReadWrite operation, int count = 0)
+        {
+            return this.WriteReadString_GPIB(ioaddr, Str_Write, operation, count);
         }
 
-        public string ReadString(string type, string ioaddr)
-        {            
-            try
+        private string WriteReadString_RS232(string Str_Write, ReadWrite operation, int count = 0)
+        {
+            //need code
+            lock (syncRoot_RS232)
             {
-                lock (syncRoot)
-                {
-                    string Str = "";
-                    IOConnect(type, ioaddr);
-                    switch (type.ToUpper().Trim())
-                    {
-                        case "GPIB":
-                            Str = myDmm.ReadString();
-                            break;
-                        case "USB":
-                            break;
-                        case "RJ45":// 网口
-                            break;
-                        case "RS232":// 网口
-                            break;
-
-                    }
-                    Thread.Sleep(50);
-                    return Str;
-                }
+                //connect
+                //writestring  or readstring
             }
-            catch (Exception ex)
-            {
-                Log.SaveLogToTxt(ex.Message);
-                return null;
-            }
+            return null;
         }
     }
 }
