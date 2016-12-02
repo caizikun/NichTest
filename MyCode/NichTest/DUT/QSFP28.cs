@@ -9,21 +9,21 @@ namespace NichTest
 {
     public class QSFP28 : DUT
     {
-        EEPROM QSFP;
+        //EEPROM QSFP;
 
         public byte[] WriteDriver40g(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte chipset, byte[] dataToWrite, bool Switch)
         {
-            return QSFP.ReadWriteDriverQSFP(deviceIndex, deviceAddress, StartAddress, regAddress, channel, 0x02, chipset, dataToWrite, Switch);
+            return EEPROM.ReadWriteDriverQSFP(deviceIndex, deviceAddress, StartAddress, regAddress, channel, 0x02, chipset, dataToWrite, Switch);
         }
 
         public byte[] ReadDriver40g(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte chipset, int readLength, bool Switch)
         {
-            return QSFP.ReadWriteDriverQSFP(deviceIndex, deviceAddress, StartAddress, regAddress, channel, 0x01, chipset, new byte[readLength], Switch);
+            return EEPROM.ReadWriteDriverQSFP(deviceIndex, deviceAddress, StartAddress, regAddress, channel, 0x01, chipset, new byte[readLength], Switch);
         }
         
         public byte[] StoreDriver40g(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte chipset, byte[] dataToWrite, bool Switch)
         {
-            return QSFP.ReadWriteDriverQSFP(deviceIndex, deviceAddress, StartAddress, regAddress, channel, 0x06, chipset, dataToWrite, Switch);
+            return EEPROM.ReadWriteDriverQSFP(deviceIndex, deviceAddress, StartAddress, regAddress, channel, 0x06, chipset, dataToWrite, Switch);
         }
         
         public override bool Initial(ChipControlByPN tableA, ChipDefaultValueByPN tableB, EEPROMDefaultValueByTestPlan tableC, DUTCoeffControlByPN tableD)
@@ -35,9 +35,10 @@ namespace NichTest
                 this.dataTable_EEPROMDefaultValueByTestPlan = tableC;
                 this.dataTable_DUTCoeffControlByPN = tableD;
 
-                QSFP = new EEPROM(TestPlanParaByPN.DUT_USB_Port);
-                USBIO = new IOPort("USB", TestPlanParaByPN.DUT_USB_Port.ToString());
-                USBIO.IOConnect();
+                //QSFP = new EEPROM(TestPlanParaByPN.DUT_USB_Port);
+                //USBIO = new IOPort("USB", TestPlanParaByPN.DUT_USB_Port.ToString());
+                //IOPort.IOConnect();
+                //USBIO = IOPort.GetIOPort();
 
                 string filter = "ItemName = " + "'" + "DEBUGINTERFACE" + "'";
                 DataRow[] foundRows = this.dataTable_DUTCoeffControlByPN .Select(filter);
@@ -70,9 +71,9 @@ namespace NichTest
             byte[] dataReadArray;
             for (int i = 0; i < 3; i++)
             {
-                USBIO.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 98, IOPort.SoftHard.HARDWARE_SEQUENT, dataToWrite);
+                IOPort.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 98, IOPort.SoftHard.HARDWARE_SEQUENT, dataToWrite);
                 Thread.Sleep(100);
-                dataReadArray = USBIO.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 98, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                dataReadArray = IOPort.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 98, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
 
                 if (dataReadArray[0] == 0xff)
                 {
@@ -88,9 +89,9 @@ namespace NichTest
             byte[] dataReadArray;
             for (int i = 0; i < 3; i++)
             {
-                USBIO.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 93, IOPort.SoftHard.HARDWARE_SEQUENT, dataToWrite);
+                IOPort.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 93, IOPort.SoftHard.HARDWARE_SEQUENT, dataToWrite);
                 Thread.Sleep(100);
-                dataReadArray = USBIO.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 93, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                dataReadArray = IOPort.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 93, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if (dataReadArray[0] == 0x04)
                 {
                     return true;
@@ -120,7 +121,7 @@ namespace NichTest
         {
             string SN = "";
             this.EnterEngMode(0);
-            SN = QSFP.ReadSn(TestPlanParaByPN.DUT_USB_Port, 0xA0, 196);
+            SN = EEPROM.ReadSn(TestPlanParaByPN.DUT_USB_Port, 0xA0, 196);
             return SN.Trim();
         }
 
@@ -132,14 +133,14 @@ namespace NichTest
             buff[2] = 0x81;
             buff[3] = 0x5f;
             buff[4] = page;
-            USBIO.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 123, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+            IOPort.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 123, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
         }
 
         public override string ReadFW()
         {
             string fwrev = "";
             this.EnterEngMode(4);
-            fwrev = QSFP.ReadFWRev(TestPlanParaByPN.DUT_USB_Port, 0xA0, 128);
+            fwrev = EEPROM.ReadFWRev(TestPlanParaByPN.DUT_USB_Port, 0xA0, 128);
             return fwrev.ToUpper();
         }
 
@@ -236,24 +237,24 @@ namespace NichTest
                 switch (channel)
                 {
                     case 1:
-                        buff = USBIO.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                        buff = IOPort.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                         buff[0] = (byte)(buff[0] | 0x01);
-                        USBIO.WrtieReg(0, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                        IOPort.WrtieReg(0, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                         break;
                     case 2:
-                        buff = USBIO.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                        buff = IOPort.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                         buff[0] = (byte)(buff[0] | 0x02);
-                        USBIO.WrtieReg(0, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                        IOPort.WrtieReg(0, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                         break;
                     case 3:
-                        buff = USBIO.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                        buff = IOPort.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                         buff[0] = (byte)(buff[0] | 0x04);
-                        USBIO.WrtieReg(0, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                        IOPort.WrtieReg(0, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                         break;
                     case 4:
-                        buff = USBIO.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                        buff = IOPort.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                         buff[0] = (byte)(buff[0] | 0x08);
-                        USBIO.WrtieReg(0, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                        IOPort.WrtieReg(0, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                         break;
                     default:
                         break;
@@ -285,14 +286,55 @@ namespace NichTest
             byte[] dataReadArray;
             for (int i = 0; i < 3; i++)
             {
-                USBIO.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, dataToWrite);
-                dataReadArray = USBIO.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                IOPort.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, dataToWrite);
+                dataReadArray = IOPort.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 86, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if (dataReadArray[0] == 0x00)
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        public override double ReadDmiTemp()
+        {
+            return EEPROM.readdmitemp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 22);
+        }
+
+        public override double ReadDmiVcc()
+        {
+            return EEPROM.readdmivcc(TestPlanParaByPN.DUT_USB_Port, 0xA0, 26);
+        }
+
+        public override double ReadDmiBias(int channel)
+        {            
+            try
+            {
+                double dmibias = 0.0;
+                switch (channel)
+                {
+                    case 1:
+                        dmibias = EEPROM.readdmibias(TestPlanParaByPN.DUT_USB_Port, 0xA0, 42);
+                        break;
+                    case 2:
+                        dmibias = EEPROM.readdmibias(TestPlanParaByPN.DUT_USB_Port, 0xA0, 44);
+                        break;
+                    case 3:
+                        dmibias = EEPROM.readdmibias(TestPlanParaByPN.DUT_USB_Port, 0xA0, 46);
+                        break;
+                    case 4:
+                        dmibias = EEPROM.readdmibias(TestPlanParaByPN.DUT_USB_Port, 0xA0, 48);
+                        break;
+                    default:
+                        break;
+                }
+                return dmibias;
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLogToTxt(ex.ToString());
+                return Algorithm.MyNaN;
+            }
         }
 
         public override double ReadDmiTxP(int channel)
@@ -303,16 +345,16 @@ namespace NichTest
                 switch (channel)
                 {
                     case 1:
-                        dmitxp = QSFP.readdmitxp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 50);
+                        dmitxp = EEPROM.readdmitxp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 50);
                         break;
                     case 2:
-                        dmitxp = QSFP.readdmitxp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 52);
+                        dmitxp = EEPROM.readdmitxp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 52);
                         break;
                     case 3:
-                        dmitxp = QSFP.readdmitxp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 54);
+                        dmitxp = EEPROM.readdmitxp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 54);
                         break;
                     case 4:
-                        dmitxp = QSFP.readdmitxp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 56);
+                        dmitxp = EEPROM.readdmitxp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 56);
                         break;
                     default:
                         break;
@@ -334,7 +376,7 @@ namespace NichTest
                 DUTCoeffControlByPN.CoeffInfo coeffInfo = dataTable_DUTCoeffControlByPN.GetOneInfoFromTable(name, channel);
                 
                 this.EnterEngMode(coeffInfo.Page);
-                UInt16 valueADC = QSFP.readadc(TestPlanParaByPN.DUT_USB_Port, 0xA0, coeffInfo.StartAddress);
+                UInt16 valueADC = EEPROM.readadc(TestPlanParaByPN.DUT_USB_Port, 0xA0, coeffInfo.StartAddress);
                 Log.SaveLogToTxt("Current TXPOWERADC is " + valueADC);
                 return valueADC;
                
@@ -580,7 +622,7 @@ namespace NichTest
             byte page = Convert.ToByte(foundRows[0]["Page"]);
             int startAddress = Convert.ToInt32(foundRows[0]["StartAddress"]);
             this.EnterEngMode(page);
-            USBIO.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, startAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+            IOPort.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, startAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
             return true;
         }
 
@@ -605,7 +647,7 @@ namespace NichTest
             byte page = Convert.ToByte(foundRows[0]["Page"]);
             int startAddress = Convert.ToInt32(foundRows[0]["StartAddress"]);
             this.EnterEngMode(page);
-            USBIO.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, startAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+            IOPort.WrtieReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, startAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
             return true;
         }
 
@@ -617,7 +659,7 @@ namespace NichTest
                 DUTCoeffControlByPN.CoeffInfo coeffInfo = dataTable_DUTCoeffControlByPN.GetOneInfoFromTable(coeffName, channel);                                
 
                 this.EnterEngMode(coeffInfo.Page);
-                bool result = QSFP.SetCoef(TestPlanParaByPN.DUT_USB_Port, 0xA0, coeffInfo.StartAddress, value, coeffInfo.Format);
+                bool result = EEPROM.SetCoef(TestPlanParaByPN.DUT_USB_Port, 0xA0, coeffInfo.StartAddress, value, coeffInfo.Format);
 
                 Log.SaveLogToTxt("Set " + coeffName + " to " + value);
                 return result;
@@ -638,13 +680,13 @@ namespace NichTest
                 DUTCoeffControlByPN.CoeffInfo coeffInfo = dataTable_DUTCoeffControlByPN.GetOneInfoFromTable(coeffName, channel);
 
                 this.EnterEngMode(coeffInfo.Page);
-                string value = QSFP.ReadCoef(TestPlanParaByPN.DUT_USB_Port, 0xA0, coeffInfo.StartAddress, coeffInfo.Format);
+                string value = EEPROM.ReadCoef(TestPlanParaByPN.DUT_USB_Port, 0xA0, coeffInfo.StartAddress, coeffInfo.Format);
 
                 Log.SaveLogToTxt("Get " + coeffName + " is " + value);
                 return value;
 
             }
-            catch (Exception ex)
+            catch
             {
                 Log.SaveLogToTxt("Failed to get value of " + coeffName);
                 return Algorithm.MyNaN.ToString();

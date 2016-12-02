@@ -7,15 +7,19 @@ namespace NichTest
 {
     public class EEPROM
     {
-        private IOPort USBIO;
+        //private IOPort USBIO;
 
-        public EEPROM(int INDEX)
-        {
-            USBIO = new IOPort("USB", INDEX.ToString());
-            USBIO.IOConnect();
-        }
-        //read DMI
-        public double readdmitemp(int deviceIndex,int deviceAddress, int regAddress,int phycialAdress=0, int mdiomode=0)
+        //public EEPROM(int INDEX)
+        //{
+        //    //USBIO = new IOPort("USB", INDEX.ToString());
+        //    //IOPort.IOConnect();
+
+            
+        //    USBIO = IOPort.GetIOPort();
+            
+        //}
+        ////read DMI
+        public static double readdmitemp(int deviceIndex,int deviceAddress, int regAddress,int phycialAdress=0, int mdiomode=0)
         {
             byte[] buff = new byte[2];
             UInt16[] buffmdio=new UInt16[1];
@@ -24,14 +28,14 @@ namespace NichTest
             {
                 if (mdiomode == 1)
                 {
-                    buffmdio = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
+                    buffmdio = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
 
                     buff[0] = (byte)(buffmdio[0] / 256);
                     buff[1] = (byte)(buffmdio[0] & 0xFF);
                 }
                 else
                 {
-                    buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                    buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                 }
                 if (buff[0] > Convert.ToByte(127))
                 {
@@ -51,7 +55,7 @@ namespace NichTest
                 return temperature;
             }
         }
-        public double readdmivcc(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
+        public static double readdmivcc(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
         {
             byte[] buff = new byte[2];
             UInt16[] buffmdio = new UInt16[1];
@@ -60,12 +64,12 @@ namespace NichTest
             {
                 if (mdiomode == 1)
                 {
-                    buffmdio = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
+                    buffmdio = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
                     vcc = buffmdio[0] / 10000.0;
                 }
                 else
                 {
-                    buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                    buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                     vcc = (buff[0] * 256 + buff[1]) / 10000.0;
                 }
                 
@@ -79,7 +83,7 @@ namespace NichTest
                 return vcc;
             }
         }
-        public double readdmibias(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
+        public static double readdmibias(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
         {
             byte[] buff = new byte[2];
             UInt16[] buffmdio = new UInt16[1];
@@ -88,12 +92,12 @@ namespace NichTest
             {
                 if (mdiomode == 1)
                 {
-                    buffmdio = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
+                    buffmdio = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
                     bias = buffmdio[0] / 500.0;
                 }
                 else
                 {
-                    buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                    buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                     bias = (buff[0] * 256 + buff[1]) / 500.0;
                 }
                 bias = Math.Round(bias, 4);
@@ -106,7 +110,7 @@ namespace NichTest
                 return bias;
             }
         }
-        public double readdmitxp(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
+        public static double readdmitxp(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
         {
             byte[] buff = new byte[2];
             UInt16[] buffmdio = new UInt16[1];
@@ -115,12 +119,12 @@ namespace NichTest
             {
                 if (mdiomode == 1)
                 {
-                    buffmdio = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
+                    buffmdio = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
                     txp = 10 * (Math.Log10(buffmdio[0] * (1E-4)));
                 }
                 else
                 {
-                    buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                    buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                     txp = 10 * (Math.Log10((buff[0] * 256 + buff[1]) * (1E-4)));
                 }
                 txp = Math.Round(txp, 4);
@@ -133,7 +137,7 @@ namespace NichTest
                 return txp;
             }
         }
-        public double readdmirxp(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
+        public static double readdmirxp(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
         {
             byte[] buff = new byte[2];
             UInt16[] buffmdio = new UInt16[1];
@@ -142,12 +146,12 @@ namespace NichTest
             {
                 if (mdiomode == 1)
                 {
-                    buffmdio = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
+                    buffmdio = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
                     rxp = 10 * (Math.Log10(buffmdio[0] * (1E-4)));
                 }
                 else
                 {
-                    buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                    buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                     rxp = 10 * (Math.Log10((buff[0] * 256 + buff[1]) * (1E-4)));
                 }
                 rxp = Math.Round(rxp, 4);
@@ -163,13 +167,13 @@ namespace NichTest
 
         //read a/w
         //temp  alarm/waring
-        public double readtempaw(int deviceIndex, int deviceAddress, int regAddress)
+        public static double readtempaw(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[2];
             double tempaw = 0.0;
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                 if (buff[0] > Convert.ToByte(127))
                 {
                     tempaw = ((buff[0] * 256 + buff[1]) - 65536) / 256.0;
@@ -192,13 +196,13 @@ namespace NichTest
         }
 
         //vcc alarm/waring
-        public double readvccaw(int deviceIndex, int deviceAddress, int regAddress)
+        public static double readvccaw(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[2];
             double vccaw = 0.0;
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                 vccaw = (buff[0] * 256 + buff[1]) * 0.0001;
                 vccaw = Math.Round(vccaw, 4);
                 return vccaw;
@@ -211,14 +215,14 @@ namespace NichTest
         }
 
         //bias alarm/waring
-        public double readbiasaw(int deviceIndex, int deviceAddress, int regAddress)
+        public static double readbiasaw(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[2];
             double biasaw = 0.0;
             try
             {
 
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                 biasaw = (buff[0] * 256 + buff[1]) * 0.002;
                 biasaw = Math.Round(biasaw, 4);
                 return biasaw;
@@ -232,13 +236,13 @@ namespace NichTest
         }
 
         //txp alarm/waring
-        public double readtxpaw(int deviceIndex, int deviceAddress, int regAddress)
+        public static double readtxpaw(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[2];
             double txpaw= 0.0;
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                 txpaw = (buff[0] * 256 + buff[1]) * 0.1;
                 //txpaw = 10 * (Math.Log10((buff[0] * 256 + buff[1]) * (1E-4)));
                 txpaw = Math.Round(txpaw, 4);
@@ -252,13 +256,13 @@ namespace NichTest
             }
         }
         //rxp alarm/waring
-        public double readrxpaw(int deviceIndex, int deviceAddress, int regAddress)
+        public static double readrxpaw(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[2];
             double rxpaw = 0.0;
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                 rxpaw = (buff[0] * 256 + buff[1]) * 0.1;
                 //rxpaw = 10 * (Math.Log10((buff[0] * 256 + buff[1]) * (1E-4)));
                 rxpaw = Math.Round(rxpaw, 4);
@@ -273,12 +277,12 @@ namespace NichTest
         }
         
         //check temp high alarm
-        public bool ChkTempHA(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkTempHA(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x80) != 0)
                 {
                     return true;
@@ -296,12 +300,12 @@ namespace NichTest
             }
         }
         //check temp low alarm
-        public bool ChkTempLA(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkTempLA(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x40) != 0)
                 {
                     return true;
@@ -319,12 +323,12 @@ namespace NichTest
             }
         }
         //check vcc high alarm
-        public bool ChkVccHA(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkVccHA(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x20) != 0)
                 {
                     return true;
@@ -342,12 +346,12 @@ namespace NichTest
             }
         }
         //check vcc low alarm
-        public bool ChkVccLA(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkVccLA(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x10) != 0)
                 {
                     return true;
@@ -365,12 +369,12 @@ namespace NichTest
             }
         }
         //check bias high alarm
-        public bool ChkBiasHA(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkBiasHA(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x08) != 0)
                 {
                     return true;
@@ -388,12 +392,12 @@ namespace NichTest
             }
         }
         //check bias low alarm
-        public bool ChkBiasLA(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkBiasLA(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x04) != 0)
                 {
                     return true;
@@ -411,12 +415,12 @@ namespace NichTest
             }
         }
         //check txp high alarm
-        public bool ChkTxpHA(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkTxpHA(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x02) != 0)
                 {
                     return true;
@@ -434,12 +438,12 @@ namespace NichTest
             }
         }
         //check txp low alarm
-        public bool ChkTxpLA(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkTxpLA(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x01) != 0)
                 {
                     return true;
@@ -457,12 +461,12 @@ namespace NichTest
             }
         }
         //check rxp high alarm
-        public bool ChkRxpHA(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkRxpHA(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x80) != 0)
                 {
                     return true;
@@ -480,12 +484,12 @@ namespace NichTest
             }
         }
         //check rxp low alarm
-        public bool ChkRxpLA(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkRxpLA(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x40) != 0)
                 {
                     return true;
@@ -503,12 +507,12 @@ namespace NichTest
             }
         }
         //check temp high warning
-        public bool ChkTempHW(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkTempHW(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x80) != 0)
                 {
                     return true;
@@ -526,12 +530,12 @@ namespace NichTest
             }
         }
         //check temp low warning
-        public bool ChkTempLW(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkTempLW(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x40) != 0)
                 {
                     return true;
@@ -549,12 +553,12 @@ namespace NichTest
             }
         }
         //check vcc high warning
-        public bool ChkVccHW(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkVccHW(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x20) != 0)
                 {
                     return true;
@@ -572,12 +576,12 @@ namespace NichTest
             }
         }
         //check vcc low warning
-        public bool ChkVccLW(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkVccLW(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x10) != 0)
                 {
                     return true;
@@ -595,12 +599,12 @@ namespace NichTest
             }
         }
         //check bias high warning
-        public bool ChkBiasHW(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkBiasHW(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x08) != 0)
                 {
                     return true;
@@ -618,12 +622,12 @@ namespace NichTest
             }
         }
         //check bias low warning
-        public bool ChkBiasLW(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkBiasLW(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x04) != 0)
                 {
                     return true;
@@ -641,12 +645,12 @@ namespace NichTest
             }
         }
         //check txp high warning
-        public bool ChkTxpHW(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkTxpHW(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x02) != 0)
                 {
                     return true;
@@ -664,12 +668,12 @@ namespace NichTest
             }
         }
         //check txp low warning
-        public bool ChkTxpLW(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkTxpLW(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x01) != 0)
                 {
                     return true;
@@ -687,12 +691,12 @@ namespace NichTest
             }
         }
         //check rxp high warning
-        public bool ChkRxpHW(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkRxpHW(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x80) != 0)
                 {
                     return true;
@@ -710,12 +714,12 @@ namespace NichTest
             }
         }
         //check rxp low warning
-        public bool ChkRxpLW(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkRxpLW(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x40) != 0)
                 {
                     return true;
@@ -734,12 +738,12 @@ namespace NichTest
         }
         //read optional status /control bit 110
         //tx disable
-        public bool ChkTxDis(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkTxDis(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if (((buff[0] & 0x80) != 0) || ((buff[0] & 0x40) != 0))
                 {
                     return true;
@@ -757,12 +761,12 @@ namespace NichTest
             }
         }
         //tx fault
-        public bool ChkTxFault(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkTxFault(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x04) != 0)
                 {
                     return true;
@@ -780,12 +784,12 @@ namespace NichTest
             }
         }
         //rx los
-        public bool ChkRxLos(int deviceIndex, int deviceAddress, int regAddress)
+        public static bool ChkRxLos(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if ((buff[0] & 0x02) != 0)
                 {
                     return true;
@@ -804,7 +808,7 @@ namespace NichTest
         }
         
         //set temp  alarm warning
-        public void settempaw(int deviceIndex, int deviceAddress, int regAddress, decimal tempaw)
+        public static void settempaw(int deviceIndex, int deviceAddress, int regAddress, decimal tempaw)
         {
             byte[] buff = new byte[2];
             Int64 itest1;
@@ -823,7 +827,7 @@ namespace NichTest
                     buff[1] = Convert.ToByte(itest1 % 256);
 
                 }
-                USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                 System.Threading.Thread.Sleep(1000);
 
 
@@ -835,7 +839,7 @@ namespace NichTest
         }
 
         //set vcc alarm warning 
-        public void setvccaw(int deviceIndex, int deviceAddress, int regAddress, decimal vccaw)
+        public static void setvccaw(int deviceIndex, int deviceAddress, int regAddress, decimal vccaw)
         {
             byte[] buff = new byte[2];
             Int64 itest1;
@@ -844,7 +848,7 @@ namespace NichTest
                 itest1 = Convert.ToInt64(vccaw) * 10000;
                 buff[0] = Convert.ToByte(itest1 / 256);
                 buff[1] = Convert.ToByte(itest1 % 256);
-                USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                 System.Threading.Thread.Sleep(1000);
             }
             catch (Exception ex)
@@ -854,7 +858,7 @@ namespace NichTest
         }
 
         //set bias alarm warning 
-        public void setbiasaw(int deviceIndex, int deviceAddress, int regAddress, decimal biasaw)
+        public static void setbiasaw(int deviceIndex, int deviceAddress, int regAddress, decimal biasaw)
         {
             byte[] buff = new byte[2];
             Int64 itest1;
@@ -863,7 +867,7 @@ namespace NichTest
                 itest1 = Convert.ToInt64(biasaw) * 500;
                 buff[0] = Convert.ToByte(itest1 / 256);
                 buff[1] = Convert.ToByte(itest1 % 256);
-                USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                 System.Threading.Thread.Sleep(1000);
             }
             catch (Exception ex)
@@ -873,7 +877,7 @@ namespace NichTest
         }
 
         //set txp alarm warning 
-        public void settxpaw(int deviceIndex, int deviceAddress, int regAddress, decimal txpaw)
+        public static void settxpaw(int deviceIndex, int deviceAddress, int regAddress, decimal txpaw)
         {
             byte[] buff = new byte[2];
             Int64 itest1;
@@ -882,7 +886,7 @@ namespace NichTest
                 itest1 = Convert.ToInt64(txpaw) * 10;
                 buff[0] = Convert.ToByte(itest1 / 256);
                 buff[1] = Convert.ToByte(itest1 % 256);
-                USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                 System.Threading.Thread.Sleep(1000);
             }
             catch (Exception ex)
@@ -892,7 +896,7 @@ namespace NichTest
         }
 
         //set rxp alarm warning 
-        public void setrxpaw(int deviceIndex, int deviceAddress, int regAddress, decimal rxpaw)
+        public static void setrxpaw(int deviceIndex, int deviceAddress, int regAddress, decimal rxpaw)
         {
             byte[] buff = new byte[2];
             Int64 itest1;
@@ -901,7 +905,7 @@ namespace NichTest
                 itest1 = Convert.ToInt64(rxpaw) * 10;
                 buff[0] = Convert.ToByte(itest1 / 256);
                 buff[1] = Convert.ToByte(itest1 % 256);
-                USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                 System.Threading.Thread.Sleep(1000);
 
             }
@@ -912,14 +916,14 @@ namespace NichTest
         }
         
         //set txdis soft
-        public void SetSoftTxDis(int deviceIndex, int deviceAddress, int regAddress)
+        public static void SetSoftTxDis(int deviceIndex, int deviceAddress, int regAddress)
         {
             byte[] buff = new byte[1];
             try
             {
-                buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 buff[0] = (byte)(buff[0] | 0x40);
-                USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                 System.Threading.Thread.Sleep(1000);
 
             }
@@ -930,7 +934,7 @@ namespace NichTest
         }
 
         //w/r  sn/pn
-        public string ReadSn(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
+        public static string ReadSn(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
         {
             byte[] buff1 = new byte[16];
             UInt16[] buff = new UInt16[16];
@@ -939,7 +943,7 @@ namespace NichTest
             {
                 if (mdiomode == 1)
                 {
-                    buff = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 16);
+                    buff = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 16);
                     for (int i = 0; i < 16; i++)
                     {
                         buff1[i] = (byte)(buff[i]);
@@ -947,7 +951,7 @@ namespace NichTest
                 }
                 else
                 {
-                    buff1 = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 16);
+                    buff1 = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 16);
                 }
                     sn = Convert.ToChar(Convert.ToInt64(buff1[0])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[1])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[2])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[3])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[4])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[5])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[6])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[7])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[8])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[9])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[10])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[11])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[12])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[13])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[14])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[15])).ToString();
                return sn.Trim();
@@ -960,7 +964,7 @@ namespace NichTest
             }
         }
         //read pn==sn
-        public string ReadPn(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
+        public static string ReadPn(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
         {
             byte[] buff1 = new byte[16];
             UInt16[] buff = new UInt16[16];
@@ -969,7 +973,7 @@ namespace NichTest
             {
                 if (mdiomode == 1)
                 {
-                    buff = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 16);
+                    buff = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 16);
                     for (int i = 0; i < 16; i++)
                     {
                         buff1[i] = (byte)(buff[i]);
@@ -978,7 +982,7 @@ namespace NichTest
                 else
                 {
 
-                    buff1 = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 16);
+                    buff1 = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 16);
                 }
                 pn = Convert.ToChar(Convert.ToInt64(buff1[0])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[1])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[2])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[3])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[4])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[5])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[6])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[7])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[8])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[9])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[10])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[11])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[12])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[13])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[14])).ToString() + Convert.ToChar(Convert.ToInt64(buff1[15])).ToString();
                 return pn.Trim();
@@ -991,7 +995,7 @@ namespace NichTest
             }
         }
         //write sn
-        public void SetSn(int deviceIndex, int deviceAddress, int regAddress, string sn)
+        public static void SetSn(int deviceIndex, int deviceAddress, int regAddress, string sn)
         {
             byte[] buff = new byte[16];
             try
@@ -999,7 +1003,7 @@ namespace NichTest
 
 
                 buff = Encoding.Default.GetBytes(sn);
-                USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                 System.Threading.Thread.Sleep(1000);
                
 
@@ -1011,7 +1015,7 @@ namespace NichTest
             }
         }
         //write pn
-        public void SetPn(int deviceIndex, int deviceAddress, int regAddress, string pn)
+        public static void SetPn(int deviceIndex, int deviceAddress, int regAddress, string pn)
         {
             byte[] buff = new byte[16];
             try
@@ -1019,7 +1023,7 @@ namespace NichTest
 
 
                 buff = Encoding.Default.GetBytes(pn.Trim());
-                USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                 System.Threading.Thread.Sleep(1000);
             }
             catch (Exception ex)
@@ -1030,7 +1034,7 @@ namespace NichTest
         }
         //read manufacture data
         //read fwrev
-        public string ReadFWRev(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
+        public static string ReadFWRev(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
         {
             byte[] buff = new byte[2];
             string fwrev = "ff";
@@ -1039,14 +1043,14 @@ namespace NichTest
             {
                 if (mdiomode == 1)
                 {
-                    buff1 = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 2);
+                    buff1 = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 2);
                     buff[0] = (byte)(buff1[0]);
                     buff[1] = (byte)(buff1[1]);
                 }
                 else
                 {
 
-                    buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                    buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                     
                 }
                 fwrev = Convert.ToString((buff[0] * 256 + buff[1]), 16);
@@ -1061,7 +1065,7 @@ namespace NichTest
             }
         }
         //read adc
-        public UInt16 readadc(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
+        public static UInt16 readadc(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
         {
             byte[] buff = new byte[2];
             UInt16 adc = 0;
@@ -1072,13 +1076,13 @@ namespace NichTest
                 {
                     if (mdiomode == 1)
                     {
-                        buff1 = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 2);
+                        buff1 = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 2);
                         buff[0] = (byte)(buff1[0]);
                         buff[1] = (byte)(buff1[1]);
                     }
                     else
                     {
-                        buff = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                        buff = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                     }
                     if (buff[0] != 0)
                         break;
@@ -1098,7 +1102,7 @@ namespace NichTest
         }
        
         //coef ieee754
-        public bool floattoieee(int deviceIndex, int deviceAddress, int regAddress, float fcoef, int phycialAdress = 0, int mdiomode = 0)
+        public static bool floattoieee(int deviceIndex, int deviceAddress, int regAddress, float fcoef, int phycialAdress = 0, int mdiomode = 0)
         {
             bool flag = false;
             byte[] bcoef = new byte[4];
@@ -1115,21 +1119,21 @@ namespace NichTest
                     bcoefmdio[i]=(UInt16)(bcoef[i]);
                 }
                
-                USBIO.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
+                IOPort.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
                  System.Threading.Thread.Sleep(200);
 
                 for (int i = 0; i < 4; i++)
                 {
                     UInt16[] rcoef = new UInt16[4];
                    
-                    rcoef = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 4);
+                    rcoef = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 4);
                     if ((bcoefmdio[0] != rcoef[0]) || (bcoefmdio[1] != rcoef[1]) || (bcoefmdio[2] != rcoef[2]) || (bcoefmdio[3] != rcoef[3]))
                     {
                         if (i>2)
                         {
                             return false;
                         }
-                        USBIO.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
+                        IOPort.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
                         System.Threading.Thread.Sleep(100);
                     }
                     else
@@ -1142,16 +1146,16 @@ namespace NichTest
             }
             else
             {
-                USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, bcoef);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, bcoef);
                 System.Threading.Thread.Sleep(200);
 
                 for (int i = 0; i < 4; i++)
                 {
                     byte[] rcoef = new byte[4];
-                    rcoef = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 4);
+                    rcoef = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 4);
                     if ((bcoef[0] != rcoef[0]) || (bcoef[1] != rcoef[1]) || (bcoef[2] != rcoef[2]) || (bcoef[3] != rcoef[3]))
                     {
-                        USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, bcoef);
+                        IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, bcoef);
                         System.Threading.Thread.Sleep(200);
                     }
                     else
@@ -1164,7 +1168,7 @@ namespace NichTest
             }
             return flag;
         }
-        public float ieeetofloat(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
+        public static float ieeetofloat(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
         {
             float fcoef;
             byte[] bcoef = new byte[4];
@@ -1172,7 +1176,7 @@ namespace NichTest
             UInt16[] bcoefmdio = new UInt16[4];
             if (mdiomode == 1)
             {
-                bcoefmdio = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 4);
+                bcoefmdio = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 4);
                 for (int i = 0; i < 4; i++)
                 {
                     bcoef[i] = (byte)(bcoefmdio[i]);
@@ -1180,7 +1184,7 @@ namespace NichTest
             }
             else
             {
-                bcoef = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 4);
+                bcoef = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 4);
                 
             }
             System.Threading.Thread.Sleep(200);
@@ -1188,7 +1192,7 @@ namespace NichTest
             fcoef = BitConverter.ToSingle(bcoef, 0);
             return fcoef;
         }
-        public bool u16tobyte(int deviceIndex, int deviceAddress, int regAddress, UInt16 coef, int phycialAdress = 0, int mdiomode = 0)
+        public static bool u16tobyte(int deviceIndex, int deviceAddress, int regAddress, UInt16 coef, int phycialAdress = 0, int mdiomode = 0)
         {
             bool flag = false;
             byte[] buff = new byte[2];
@@ -1199,16 +1203,16 @@ namespace NichTest
             bcoefmdio[1] = (UInt16)(buff[1]);
             if (mdiomode == 1)
             {
-                USBIO.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
+                IOPort.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
                 System.Threading.Thread.Sleep(200);
 
                 for (int i = 0; i < 4; i++)
                 {
                     UInt16[] rcoef = new UInt16[2];
-                    rcoef = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 2);
+                    rcoef = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 2);
                     if ((bcoefmdio[0] != rcoef[0]) || (bcoefmdio[1] != rcoef[1]))
                     {
-                        USBIO.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
+                        IOPort.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
                         System.Threading.Thread.Sleep(200);
                     }
                     else
@@ -1222,16 +1226,16 @@ namespace NichTest
             }
             else
             {
-                USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                 System.Threading.Thread.Sleep(200);
 
                 for (int i = 0; i < 4; i++)
                 {
                     byte[] rcoef = new byte[2];
-                    rcoef = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                    rcoef = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                     if ((buff[0] != rcoef[0]) || (buff[1] != rcoef[1]))
                     {
-                        USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                        IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                         System.Threading.Thread.Sleep(200);
                     }
                     else
@@ -1244,7 +1248,7 @@ namespace NichTest
             }
             return flag;
         }
-        public bool u8tobyte(int deviceIndex, int deviceAddress, int regAddress, UInt16 coef, int phycialAdress = 0, int mdiomode = 0)
+        public static bool u8tobyte(int deviceIndex, int deviceAddress, int regAddress, UInt16 coef, int phycialAdress = 0, int mdiomode = 0)
         {
             bool flag = false;
             byte[] buff = new byte[1];
@@ -1255,16 +1259,16 @@ namespace NichTest
           
             if (mdiomode == 1)
             {
-                USBIO.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
+                IOPort.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
                 System.Threading.Thread.Sleep(200);
 
                 for (int i = 0; i < 4; i++)
                 {
                     UInt16[] rcoef = new UInt16[1];
-                    rcoef = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
+                    rcoef = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
                     if (bcoefmdio[0] != rcoef[0])
                     {
-                        USBIO.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
+                        IOPort.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
                         System.Threading.Thread.Sleep(200);
                     }
                     else
@@ -1278,16 +1282,16 @@ namespace NichTest
             }
             else
             {
-                USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                 System.Threading.Thread.Sleep(200);
 
                 for (int i = 0; i < 4; i++)
                 {
                     byte[] rcoef = new byte[2];
-                    rcoef = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                    rcoef = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                     if ((buff[0] != rcoef[0]) || (buff[1] != rcoef[1]))
                     {
-                        USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                        IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                         System.Threading.Thread.Sleep(200);
                     }
                     else
@@ -1301,13 +1305,13 @@ namespace NichTest
             return flag;
         }
        
-        public UInt16 bytetou16(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
+        public static UInt16 bytetou16(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
         {
             byte[] bcoef = new byte[2];
             UInt16[] bcoefmdio = new UInt16[2];
             if (mdiomode == 1)
             {
-                bcoefmdio = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 2);
+                bcoefmdio = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 2);
                 for (int i = 0; i < 2; i++)
                 {
                     bcoef[i] = (byte)(bcoefmdio[i]);
@@ -1315,7 +1319,7 @@ namespace NichTest
             }
             else
             {
-                bcoef = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                bcoef = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                 
             }
 
@@ -1325,7 +1329,7 @@ namespace NichTest
             return U16coef;
 
         }
-        public bool u32tobyte(int deviceIndex, int deviceAddress, int regAddress, UInt32 coef, int phycialAdress = 0, int mdiomode = 0)
+        public static bool u32tobyte(int deviceIndex, int deviceAddress, int regAddress, UInt32 coef, int phycialAdress = 0, int mdiomode = 0)
         {
             bool flag = false;
             byte[] buff = new byte[4];
@@ -1341,16 +1345,16 @@ namespace NichTest
 
             if (mdiomode == 1)
             {
-                USBIO.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
+                IOPort.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
                 System.Threading.Thread.Sleep(200);
 
                 for (int i = 0; i < 4; i++)
                 {
                     UInt16[] rcoef = new UInt16[4];
-                    rcoef = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 4);
+                    rcoef = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 4);
                     if ((bcoefmdio[0] != rcoef[0]) || (bcoefmdio[1] != rcoef[1]) || (bcoefmdio[2] != rcoef[2]) || (bcoefmdio[3] != rcoef[3]))
                     {
-                        USBIO.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
+                        IOPort.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, bcoefmdio);
                         System.Threading.Thread.Sleep(200);
                     }
                     else
@@ -1363,16 +1367,16 @@ namespace NichTest
             }
             else
             {
-                USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                 System.Threading.Thread.Sleep(200);
 
                 for (int i = 0; i < 4; i++)
                 {
                     byte[] rcoef = new byte[4];
-                    rcoef = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 4);
+                    rcoef = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 4);
                     if ((buff[0] != rcoef[0]) || (buff[1] != rcoef[1]) || (buff[2] != rcoef[2]) || (buff[3] != rcoef[3]))
                     {
-                        USBIO.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
+                        IOPort.WrtieReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buff);
                         System.Threading.Thread.Sleep(200);
                     }
                     else
@@ -1386,13 +1390,13 @@ namespace NichTest
             
             return flag;
         }
-        public UInt32 bytetou32(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
+        public static UInt32 bytetou32(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
         {
             byte[] bcoef = new byte[4];
             UInt16[] bcoefmdio = new UInt16[4];
             if (mdiomode == 1)
             {
-                bcoefmdio = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 4);
+                bcoefmdio = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 4);
                 for (int i = 0; i < 4; i++)
                 {
                     bcoef[i] = (byte)(bcoefmdio[i]);
@@ -1400,14 +1404,14 @@ namespace NichTest
             }
             else
             {
-                bcoef = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 4);
+                bcoef = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 4);
             }
             UInt32 U32coef = (UInt32)((bcoef[0] << 24) + (bcoef[1] << 16) + (bcoef[2] << 8) + bcoef[3]);
             System.Threading.Thread.Sleep(200);
             return U32coef;
         }
 
-        public bool SetCoef(int deviceIndex, int deviceAddress, int regAddress, string coef, byte format, int phycialAdress = 0, int mdiomode = 0)
+        public static bool SetCoef(int deviceIndex, int deviceAddress, int regAddress, string coef, byte format, int phycialAdress = 0, int mdiomode = 0)
         {//1 ieee754;2 UInt16;3 UInt32
             bool flag = false;
             try
@@ -1448,7 +1452,7 @@ namespace NichTest
            
         }
      
-        public string ReadCoef(int deviceIndex, int deviceAddress, int regAddress, byte format, int phycialAdress = 0, int mdiomode = 0)
+        public static string ReadCoef(int deviceIndex, int deviceAddress, int regAddress, byte format, int phycialAdress = 0, int mdiomode = 0)
         {//1 ieee754;2 UInt16;3 UInt32
             string strcoef="";
             try
@@ -1482,7 +1486,7 @@ namespace NichTest
                 return strcoef;
             }
         }
-        public string ReadALLCoef(int deviceIndex, int deviceAddress, int regAddress, byte format, int phycialAdress = 0, int mdiomode = 0)
+        public static string ReadALLCoef(int deviceIndex, int deviceAddress, int regAddress, byte format, int phycialAdress = 0, int mdiomode = 0)
         {//1 ieee754;2 UInt16;3 UInt32
             string strcoef = "";
             try
@@ -1495,7 +1499,7 @@ namespace NichTest
                          UInt16[] bcoefmdio = new UInt16[4];
                          if (mdiomode == 1)
                          {
-                             bcoefmdio = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 4);
+                             bcoefmdio = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 4);
                              for (int i = 0; i < 4; i++)
                              {
                                  if (bcoefmdio[i] < 16)
@@ -1510,7 +1514,7 @@ namespace NichTest
                          }
                          else
                          {
-                             bcoef = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 4);
+                             bcoef = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 4);
                              for (int i = 0; i < 4; i++)
                              {
                                  if (bcoef[i] < 16)
@@ -1530,7 +1534,7 @@ namespace NichTest
                     case 2:
                         byte[] rcoef = new byte[2];
                         string[] rcoefstr = new string[2];
-                        rcoef = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                        rcoef = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                         for (int i = 0; i < 2; i++)
                          {
                              if (rcoef[i] < 16)
@@ -1549,7 +1553,7 @@ namespace NichTest
                     case 3:
                          byte[] bcoef1 = new byte[4];
                          string[] bcoefstr1=new string[4];
-                         bcoef1 = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 4);
+                         bcoef1 = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 4);
                          for (int i = 0; i < 4; i++)
                          {
                              if (bcoef1[i]<16)
@@ -1579,7 +1583,7 @@ namespace NichTest
             }
         
         }
-        public string ReadALLEEprom(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
+        public static string ReadALLEEprom(int deviceIndex, int deviceAddress, int regAddress, int phycialAdress = 0, int mdiomode = 0)
         {//1 ieee754;2 UInt16;3 UInt32
             string strcoef = "";
             try
@@ -1590,7 +1594,7 @@ namespace NichTest
                         UInt16[] bcoefmdio = new UInt16[1];
                         if (mdiomode == 1)
                         {
-                            bcoefmdio = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
+                            bcoefmdio = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, regAddress, IOPort.MDIOSoftHard.SOFTWARE, 1);
                             if (bcoefmdio[0] < 16)
                             {
                                 bcoefstr[0] = "000" + Convert.ToString(bcoefmdio[0], 16);
@@ -1602,7 +1606,7 @@ namespace NichTest
                         }
                         else
                         {
-                            bcoef = USBIO.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                            bcoef = IOPort.ReadReg(deviceIndex, deviceAddress, regAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
 
                             if (bcoef[0] < 16)
                             {
@@ -1627,7 +1631,7 @@ namespace NichTest
 
         }
 
-        public byte[] ReadWriteDriverQSFP(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte operation, byte chipset, byte[] buffer,bool Switch)
+        public static byte[] ReadWriteDriverQSFP(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte operation, byte chipset, byte[] buffer,bool Switch)
         {
             //database 0: LDD 1: AMP 2: DAC 3: CDR
 
@@ -1662,19 +1666,19 @@ namespace NichTest
                 tempData[2] = (byte)(buffer.Length);
             }
             buffer.CopyTo(tempData, datastartadd-1);
-            USBIO.WrtieReg(deviceIndex, deviceAddress, StartAddress+1, IOPort.SoftHard.HARDWARE_SEQUENT, tempData);
+            IOPort.WrtieReg(deviceIndex, deviceAddress, StartAddress+1, IOPort.SoftHard.HARDWARE_SEQUENT, tempData);
             
             System.Threading. Thread.Sleep(50);
 
-            USBIO.WrtieReg(deviceIndex, deviceAddress, StartAddress, IOPort.SoftHard.HARDWARE_SEQUENT, tempData1);
+            IOPort.WrtieReg(deviceIndex, deviceAddress, StartAddress, IOPort.SoftHard.HARDWARE_SEQUENT, tempData1);
             for (int i = 0; i < 10; i++)
             {
                 System.Threading.Thread.Sleep(50);
-                byte[] temp = USBIO.ReadReg(deviceIndex, deviceAddress, StartAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                byte[] temp = IOPort.ReadReg(deviceIndex, deviceAddress, StartAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                 if (temp[0] == 0)
                 {
                     if (operation == 1)
-                    { arrRead = USBIO.ReadReg(deviceIndex, deviceAddress, StartAddress + datastartadd, IOPort.SoftHard.HARDWARE_SEQUENT, buffer.Length); }
+                    { arrRead = IOPort.ReadReg(deviceIndex, deviceAddress, StartAddress + datastartadd, IOPort.SoftHard.HARDWARE_SEQUENT, buffer.Length); }
                     break;
                 }
             }
@@ -1689,7 +1693,7 @@ namespace NichTest
             }
 
         }
-        public byte[] ReadWriteDriverSFP(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte operation, byte chipset, byte[] buffer)
+        public static byte[] ReadWriteDriverSFP(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte operation, byte chipset, byte[] buffer)
         {
             //database 0: LDD 1: AMP 2: DAC 3: CDR
 
@@ -1718,17 +1722,17 @@ namespace NichTest
                     tempData[2] = (byte)((regAddress + i >> 8) & 0xff);
                     tempData[3] = (byte)(regAddress + i & 0xff);
                     tempData1[0] = chipoperation;
-                    USBIO.WrtieReg(deviceIndex, deviceAddress, StartAddress, IOPort.SoftHard.HARDWARE_SEQUENT, tempData);
-                    USBIO.WrtieReg(deviceIndex, deviceAddress, StartAddress + 8, IOPort.SoftHard.HARDWARE_SEQUENT, tempData1);
+                    IOPort.WrtieReg(deviceIndex, deviceAddress, StartAddress, IOPort.SoftHard.HARDWARE_SEQUENT, tempData);
+                    IOPort.WrtieReg(deviceIndex, deviceAddress, StartAddress + 8, IOPort.SoftHard.HARDWARE_SEQUENT, tempData1);
                     for (int j = 0; j < 10; j++)
                     {
                         System.Threading.Thread.Sleep(50);
-                        byte[] temp = USBIO.ReadReg(deviceIndex, deviceAddress, StartAddress + 8, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                        byte[] temp = IOPort.ReadReg(deviceIndex, deviceAddress, StartAddress + 8, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
                         if (temp[0] == 0)
                         {
                             if (operation == 1)
                             {
-                                tempread = USBIO.ReadReg(deviceIndex, deviceAddress, StartAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
+                                tempread = IOPort.ReadReg(deviceIndex, deviceAddress, StartAddress, IOPort.SoftHard.HARDWARE_SEQUENT, 2);
                                 if (RegistWide == 1)
                                 {
 
@@ -1757,7 +1761,7 @@ namespace NichTest
             }
         }
        
-        public UInt16 ReadWriteDriverCFP(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte operation, byte chipset, UInt16 buffer,int phycialAdress=0)
+        public static UInt16 ReadWriteDriverCFP(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte operation, byte chipset, UInt16 buffer,int phycialAdress=0)
         {
             //database 0: LDD 1: AMP 2: DAC 3: CDR
             ////chipset 1ldd,2amp,3cdr,0dac
@@ -1777,16 +1781,16 @@ namespace NichTest
                 tempData[1] = (UInt16)(regAddress & 0xff);
                 tempData[4] = (UInt16)(channel);
                 tempData[5] = (UInt16)(chipoperation);
-                USBIO.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, StartAddress, IOPort.MDIOSoftHard.SOFTWARE, tempData);
+                IOPort.WriteMDIO(deviceIndex, deviceAddress, phycialAdress, StartAddress, IOPort.MDIOSoftHard.SOFTWARE, tempData);
                 for (int i = 0; i < 10; i++)
                 {
                     System.Threading.Thread.Sleep(50);
-                    UInt16[] temp = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, StartAddress + 5, IOPort.MDIOSoftHard.SOFTWARE, 1);
+                    UInt16[] temp = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, StartAddress + 5, IOPort.MDIOSoftHard.SOFTWARE, 1);
                     if (temp[0] == 0)
                     {
                         if (operation == 1)
                         {
-                            UInt16[] arrRead = USBIO.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, StartAddress, IOPort.MDIOSoftHard.SOFTWARE, 6);
+                            UInt16[] arrRead = IOPort.ReadMDIO(deviceIndex, deviceAddress, phycialAdress, StartAddress, IOPort.MDIOSoftHard.SOFTWARE, 6);
                             System.Threading.Thread.Sleep(200);
                             buff[0] = (byte)(arrRead[2]);
                             buff[1] = (byte)(arrRead[3]);
@@ -1804,7 +1808,7 @@ namespace NichTest
                 return returndata;
             }
         }
-        public byte[] ReadWriteDriverXFP(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte operation, byte[] buffer)
+        public static byte[] ReadWriteDriverXFP(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte operation, byte[] buffer)
         {
             //operation 80 write ldd,40 read ldd,20 store ldd
             //08 store dac,04 read dac,02 write dac
@@ -1817,8 +1821,8 @@ namespace NichTest
                 tempData[2] = (byte)regAddress;
                 tempData[3] = (operation);
                 buffer.CopyTo(tempData, 4);
-                USBIO.WrtieReg(deviceIndex, deviceAddress, StartAddress, IOPort.SoftHard.HARDWARE_SEQUENT, tempData);
-                arrRead = USBIO.ReadReg(deviceIndex, deviceAddress, StartAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buffer.Length);
+                IOPort.WrtieReg(deviceIndex, deviceAddress, StartAddress, IOPort.SoftHard.HARDWARE_SEQUENT, tempData);
+                arrRead = IOPort.ReadReg(deviceIndex, deviceAddress, StartAddress, IOPort.SoftHard.HARDWARE_SEQUENT, buffer.Length);
                 System.Threading.Thread.Sleep(200);
                 return arrRead;
             }

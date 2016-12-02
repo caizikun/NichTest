@@ -7,7 +7,7 @@ namespace NichTest
 {
     public class DUT
     {
-        protected IOPort USBIO;
+        //protected IOPort USBIO = IOPort.GetIOPort();
 
         protected Log log;
 
@@ -126,6 +126,21 @@ namespace NichTest
         public virtual bool SetSoftTxDis(int channel)
         {
             return true;
+        }
+
+        public virtual double ReadDmiTemp()
+        {
+            return Algorithm.MyNaN;
+        }
+
+        public virtual double ReadDmiVcc()
+        {
+            return Algorithm.MyNaN;
+        }
+
+        public virtual double ReadDmiBias(int channel)
+        {
+            return Algorithm.MyNaN;
         }
 
         public double[] ReadDmiTxP()
