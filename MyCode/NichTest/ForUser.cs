@@ -11,24 +11,15 @@ namespace NichTest
     class ForUser
     {
         private Dictionary<string, IEquipment> usedEquipments;
-
+        private Dictionary<string, ITest> testItemsObject;
         private DataTable dataTable_Spec;
-
         private ConfigXmlIO myXml;
-
         private DataIO myDataIO;
-
         private IFactory myFactory;
-
         private PowerSupply supply;
-
         private Thermocontroller tempControl;
-
         private Attennuator attennuator;
-
-        private DUT dut;
-
-        private Dictionary<string, ITest> testItemsObject;  
+        private DUT dut;          
 
         public string GetIP()
         {
@@ -262,8 +253,9 @@ namespace NichTest
 
                         if (equipmentFullName.Contains("POWERSUPPLY"))
                         {
-                            double offset = Convert.ToDouble(myXml.VccOffset);
-                            equipment.ConfigOffset(1, offset);
+                            double offset_VCC = Convert.ToDouble(myXml.VccOffset);
+                            double offset_ICC = Convert.ToDouble(myXml.IccOffset);
+                            equipment.ConfigOffset(1, offset_VCC, offset_ICC);
                         }
 
                         if (equipment.Initial(currentEquipmentPara) && equipment.Configure(1))
@@ -550,6 +542,119 @@ namespace NichTest
             }
         }
 
+        public bool ParallelBeginTest()
+        {
+            try
+            {
+                Log.SaveLogToTxt("Begin to test...");
+                Log.SaveLogToTxt("Power on all equipments.");
+                foreach (string key in this.usedEquipments.Keys)
+                {
+                    this.usedEquipments[key].OutPutSwitch(true);
+                }
+                Log.SaveLogToTxt("Enable full function for module.");
+                dut.FullFunctionEnable();
+
+                Log.SaveLogToTxt("Try to get test condition from server.");
+                testItemsObject = new Dictionary<string, ITest>();
+                DataTable dataTable_Condition = this.BuildConditionTable();
+                for (int row = 0; row < dataTable_Condition.Rows.Count; row++)//遍历测试环境条件
+                {
+                    DataRow dr = dataTable_Condition.Rows[row];
+                    ConditionParaByTestPlan.SetValue(dr);
+
+                    Log.SaveLogToTxt("Begin to config environment.");
+                    Log.SaveLogToTxt("Temp = " + ConditionParaByTestPlan.Temp + " VCC = " + ConditionParaByTestPlan.VCC.ToString("f3") + " Channel = " + ConditionParaByTestPlan.Channel);
+                    //myDataIO.WriterLog(ctrlType_Condition, SNID, "", StrStartTime, StrStartTime, Convert.ToSingle(StrCurrentTemp), Convert.ToSingle(StrCurrentVcc), CurrentChannel, false, out CurrentLogId);
+                    if (!this.ConfigEnvironment(ConditionParaByTestPlan.Temp, ConditionParaByTestPlan.VCC, ConditionParaByTestPlan.Channel,
+                        ConditionParaByTestPlan.TempOffset, ConditionParaByTestPlan.TempWaitingTimes, GlobalParaByPN.OverLoadPoint))
+                    {
+                        Log.SaveLogToTxt("Failed to config environment.");
+                        return false;
+                    }
+
+                    Log.SaveLogToTxt("Try to get test model list under this condition.");
+                    string table = "TopoTestModel";
+                    string expression = "select B.ItemName,A.*,C.* , A.ID AS TestmodelID,c.ItemName as AppType from  TopoTestModel A,GlobalAllTestModelList B,GlobalAllAppModelList C where C.ID=B.PID AND A.PID="
+                        + ConditionParaByTestPlan.ID + " and A.IgnoreFlag=0  AND A.GID=B.ID order by SEQ ASC";
+                    DataTable dataTable_TestItems = myDataIO.GetDataTable(expression, table);// 获得TestModelList
+                    DataTable dataTable_TestItemsPara = GetCurrentConditionPrameter(dataTable_TestItems);
+                    if (ConditionParaByTestPlan.CtrlType == 2)
+                    {
+                        supply.OutPutSwitch(false);
+                        supply.OutPutSwitch(true);
+                        dut.FullFunctionEnable();
+
+                        Parallel.For(0, dataTable_TestItems.Rows.Count, (int i, ParallelLoopState pls) =>// 遍历Condition中的TestModel
+                        { 
+                            DataRow dr_TestItem = dataTable_TestItems.Rows[i];
+                            string ID_TestItem = dr_TestItem["TestmodelID"].ToString();
+                            string name_TestItem = dr_TestItem["ItemName"].ToString();
+                            string type_TestItem = dr_TestItem["AppType"].ToString();
+                            bool isFailedBreak_TestItem = Convert.ToBoolean(dr_TestItem["Failbreak"]);
+
+                            DataRow[] drs = dataTable_TestItemsPara.Select("TestmodelId='" + ID_TestItem + "'");
+                            Dictionary<string, string> inPara_TestItem = new Dictionary<string, string>();
+                            Log.SaveLogToTxt("Try to get test parameter for " + name_TestItem + ".");
+                            for (int j = 0; j < drs.Length; j++)
+                            {
+                                inPara_TestItem.Add(drs[j]["ItemName"].ToString(), drs[j]["ItemValue"].ToString());
+                                Log.SaveLogToTxt(drs[j]["ItemName"].ToString() + " " + drs[j]["ItemValue"].ToString());
+                            }
+                            Log.SaveLogToTxt("Test " + name_TestItem + "...");
+                            if (!RunTestItem(name_TestItem, ID_TestItem, type_TestItem, inPara_TestItem))
+                            {
+                                //bool result_TestItem = false;
+                                //pls.Break();
+                            }
+                            //GC.Collect();
+                        });
+                    }
+                    else
+                    {
+                        for (int i = 0; i < dataTable_TestItems.Rows.Count; i++)// 遍历Condition中的TestModel
+                        {
+
+                            DataRow dr_TestItem = dataTable_TestItems.Rows[i];
+                            string ID_TestItem = dr_TestItem["TestmodelID"].ToString();
+                            string name_TestItem = dr_TestItem["ItemName"].ToString();
+                            string type_TestItem = dr_TestItem["AppType"].ToString();
+                            bool isFailedBreak_TestItem = Convert.ToBoolean(dr_TestItem["Failbreak"]);
+
+                            DataRow[] drs = dataTable_TestItemsPara.Select("TestmodelId='" + ID_TestItem + "'");
+                            Dictionary<string, string> inPara_TestItem = new Dictionary<string, string>();
+                            Log.SaveLogToTxt("Try to get test parameter for " + name_TestItem + ".");
+                            for (int j = 0; j < drs.Length; j++)
+                            {
+                                inPara_TestItem.Add(drs[j]["ItemName"].ToString(), drs[j]["ItemValue"].ToString());
+                                Log.SaveLogToTxt(drs[j]["ItemName"].ToString() + " " + drs[j]["ItemValue"].ToString());
+                            }
+                            Log.SaveLogToTxt("Test " + name_TestItem + "...");
+                            if (!RunTestItem(name_TestItem, ID_TestItem, type_TestItem, inPara_TestItem))
+                            {
+                                //bool result_TestItem = false;
+                            }
+                            GC.Collect();
+                        }
+                    }
+                }
+
+                foreach (string key in testItemsObject.Keys)
+                {
+                    if (!testItemsObject[key].SaveTestData())
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                Log.SaveLogToTxt("Failed to test.");
+                return false;
+            }
+        }
+
         private DataTable BuildConditionTable()
         {
             string table = "TopoTestControl";
@@ -674,7 +779,6 @@ namespace NichTest
             }
 
             bool result = this.testItemsObject[name].BeginTest(dut, this.usedEquipments, inPara);
-            
             return true;
         } 
     }
