@@ -299,7 +299,8 @@ namespace NichTest
                 user.CreatFolderPath(folderPath);
 
                 tokenSource = new CancellationTokenSource();
-                Task<bool> task = Task.Factory.StartNew<bool>(() => (user.Initial()), tokenSource.Token);
+                //Task<bool> task = Task.Factory.StartNew<bool>(() => (user.Initial()), tokenSource.Token);
+                Task<bool> task = Task.Factory.StartNew<bool>(() => (user.ParallelInitial()), tokenSource.Token);
                 Task cwt = task.ContinueWith(t =>
                 {
                     if (this.InvokeRequired)
@@ -367,7 +368,7 @@ namespace NichTest
                     FilePath.LogFile = Application.StartupPath + @"\Log\" + fileName;
                                        
                     tokenSource = new CancellationTokenSource();
-                    Task<bool> task = Task.Factory.StartNew<bool>(() => (user.BeginTest()), tokenSource.Token);
+                    Task<bool> task = Task.Factory.StartNew<bool>(() => (user.ParallelBeginTest()), tokenSource.Token);
                     Task cwt = task.ContinueWith(t => 
                     {
                         if (this.InvokeRequired)
