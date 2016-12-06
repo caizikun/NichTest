@@ -9,16 +9,6 @@ namespace NichTest
 {
     public class QuickCheckTest : ITest
     {
-        private DUT dut;
-
-        private PowerSupply supply;
-
-        private Attennuator attennuator;
-
-        private OpticalSwitch opticalSwitch;
-
-        private PowerMeter powerMeter;
-
         private TestData testData;
         
         public QuickCheckTest()
@@ -34,11 +24,10 @@ namespace NichTest
                 int channel = ConditionParaByTestPlan.Channel;
                 Log.SaveLogToTxt("Start to do quick check test for channel " + channel);
                 //get equipment object
-                this.dut = dut;
-                this.supply = (PowerSupply)equipments["POWERSUPPLY"];
-                this.attennuator = (Attennuator)equipments["ATTENNUATOR"];
-                this.opticalSwitch = (OpticalSwitch)equipments["OPTICALSWITCH"];
-                this.powerMeter = (PowerMeter)equipments["POWERMETER"];
+                PowerSupply supply = (PowerSupply)equipments["POWERSUPPLY"];
+                Attennuator attennuator = (Attennuator)equipments["ATTENNUATOR"];
+                OpticalSwitch opticalSwitch = (OpticalSwitch)equipments["OPTICALSWITCH"];
+                PowerMeter powerMeter = (PowerMeter)equipments["POWERMETER"];
                 //get in parameters
                 string[] BiasDACs = inPara["BiasDACs"].Split(',');
                 string[] ModDACs = inPara["ModDACs"].Split(',');
@@ -56,7 +45,7 @@ namespace NichTest
 
                 //disable attennuator and Tx to read Rx/TxDarkADC
                 Log.SaveLogToTxt("Shut down attennuator and disable Tx to read Tx/RxDark ADC for channel " + channel);
-                this.attennuator.OutPutSwitch(false);                
+                attennuator.OutPutSwitch(false);                
                 ushort RxDarkADC = dut.ReadADC(DUT.NameOfADC.RXPOWERADC, channel);
                 dut.SetSoftTxDis();
                 ushort TxDarkADC = dut.ReadADC(DUT.NameOfADC.TXPOWERADC, channel);
@@ -65,8 +54,8 @@ namespace NichTest
 
                 //enable attennuator and Tx
                 Log.SaveLogToTxt("Power on attennuator and set value to 0");
-                this.attennuator.OutPutSwitch(true);
-                this.attennuator.SetAttnValue(0);
+                attennuator.OutPutSwitch(true);
+                attennuator.SetAttnValue(0);
                 Log.SaveLogToTxt("Light on all Tx channel.");
                 dut.TxAllChannelEnable();
                                 
@@ -87,8 +76,8 @@ namespace NichTest
                 dut.WriteChipDAC(DUT.NameOfChipDAC.BIASDAC, channel, BiasDACs[channel - 1]);
                 dut.WriteChipDAC(DUT.NameOfChipDAC.MODDAC, channel, ModDACs[channel - 1]);
                 //change to related change, and read Tx power
-                this.opticalSwitch.ChangeChannel(channel);
-                double TxP = this.powerMeter.ReadPower(channel) + offset;
+                opticalSwitch.ChangeChannel(channel);
+                double TxP = powerMeter.ReadPower(channel) + offset;
                 Log.SaveLogToTxt("Get Tx power is " + TxP.ToString("f3"));
 
                 //read SN again and check its format
@@ -176,12 +165,6 @@ namespace NichTest
             {
                 Log.SaveLogToTxt("Failed to quickcheck test.");
                 return false;
-            }
-            finally
-            {
-                // open apc
-                Log.SaveLogToTxt("Close apc for module.");
-                dut.CloseAndOpenAPC(Convert.ToByte(DUT.APCMODE.IBAISandIMODON));
             }
         }
 
