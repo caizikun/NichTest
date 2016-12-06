@@ -24,6 +24,15 @@ namespace NichTest
                 case "QuickCheck":
                     myTest = new QuickCheckTest();
                     break;
+                case "TestVccDmi":
+                    myTest = new TestVccDmi();
+                    break;
+                case "TestIcc":
+                    myTest = new TestIcc();
+                    break;
+                case "TestIBiasDmi":
+                    myTest = new TestIBiasDmi();
+                    break;
                 default:
                     myTest = new QuickCheckTest();
                     break;
