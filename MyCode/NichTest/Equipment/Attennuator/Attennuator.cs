@@ -13,29 +13,17 @@ namespace NichTest
     public class Attennuator : Equipment 
     {
         protected string attSlot;
-
         protected string attValue;
-
         protected string attChannel;
-
         protected string[] attChannelArray;
-
         protected string totalChannel;
-
         protected string wavelength;
-
         protected int openDelay;
-
         protected int closeDelay;
-
         protected int setattDelay;
-
         protected int sleepTime;
-
         protected double powerVariation;
-
         protected double lastAttValue = -5;
-
         protected byte lastattChannel = 0;
 
         public virtual bool ConfigWavelength( int syn = 0) { return true; }
