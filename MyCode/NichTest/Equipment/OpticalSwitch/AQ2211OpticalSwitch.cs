@@ -31,11 +31,12 @@ namespace NichTest
                 switch (IOType)
                 {
                     case "GPIB":
-                        myIO = new IOPort(IOType, "GPIB0::" + address);
-                        myIO.IOConnect();
-                        myIO.WriteString("*IDN?");
-                        string content = myIO.ReadString();
-                        this.isConnected = content.Contains("AQ22");
+                        lock (myIO)
+                        {
+                            myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "*IDN?");
+                            string content = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                            this.isConnected = content.Contains("AQ22");
+                        }
                         break;
 
                     default:
@@ -53,171 +54,186 @@ namespace NichTest
 
         public override bool Configure(int syn = 0)
         {
-            try
+            lock (myIO)
             {
-                if (this.isConfigured)//曾经设定过
+                try
                 {
+                    if (this.isConfigured)//曾经设定过
+                    {
+                        return true;
+                    }
+                    else//未曾经设定过
+                    {
+                        if (this.reset == true)
+                        {
+                            this.Reset();
+                        }
+                        this.SwitchChannel(syn);
+                        this.isConfigured = true;
+                    }
                     return true;
                 }
-                else//未曾经设定过
+                catch (Exception ex)
                 {
-                    if (this.reset == true)
-                    {
-                        this.Reset();
-                    }
-                    this.SwitchChannel(syn);
-                    this.isConfigured = true;
+                    Log.SaveLogToTxt(ex.Message);
+                    return false;
                 }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.SaveLogToTxt(ex.Message);
-                return false;
             }
         }
 
         public bool Reset()
         {
-            if (myIO.WriteString("*RST"))
+            lock (myIO)
             {
-                Thread.Sleep(3000);
-                return true;
-            }
-            else
-            {
-                return false;
+                if (myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "*RST"))
+                {
+                    Thread.Sleep(3000);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 
         public override bool ChangeChannel(int channel, int syn = 0)
         {
-            bool flag = false;
-            bool flag1 = false;
-            int k = 0;
-            string readtemp = "";
-            try
+            lock (myIO)
             {
-                if (syn == 0)
+                bool flag = false;
+                bool flag1 = false;
+                int k = 0;
+                string readtemp = "";
+                try
                 {
-                    Log.SaveLogToTxt("Optical switch change channel to " + channel);
-                    return myIO.WriteString(":route" + this.slots + ":chan" + this.channel + " A," + channel);
-                }
-                else
-                {
-                    for (int i = 0; i < 3; i++)
+                    if (syn == 0)
                     {
-                        flag1 = myIO.WriteString(":route" + this.slots + ":chan" + this.channel + " A," + channel);
-                        if (flag1 == true)
-                            break;
+                        Log.SaveLogToTxt("Optical switch change channel to " + channel);
+                        return myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":route" + this.slots + ":chan" + this.channel + " A," + channel);
                     }
-                    if (flag1 == true)
+                    else
                     {
-                        for (k = 0; k < 3; k++)
+                        for (int i = 0; i < 3; i++)
                         {
-
-                            myIO.WriteString(":route" + this.slots + "?");
-                            readtemp = myIO.ReadString();
-                            if (readtemp == " A," + channel)
-                            {
+                            flag1 = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":route" + this.slots + ":chan" + this.channel + " A," + channel);
+                            if (flag1 == true)
                                 break;
+                        }
+                        if (flag1 == true)
+                        {
+                            for (k = 0; k < 3; k++)
+                            {
+
+                                myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":route" + this.slots + "?");
+                                readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                                if (readtemp == " A," + channel)
+                                {
+                                    break;
+                                }
                             }
-                        }
 
-                        if (k <= 3)
-                        {
-                            Log.SaveLogToTxt("Optical switch change channel to " + channel);
-                            flag = true;
-                        }
-                        else
-                        {
-                            Log.SaveLogToTxt("Optical switch change channel failed.");
-                        }
+                            if (k <= 3)
+                            {
+                                Log.SaveLogToTxt("Optical switch change channel to " + channel);
+                                flag = true;
+                            }
+                            else
+                            {
+                                Log.SaveLogToTxt("Optical switch change channel failed.");
+                            }
 
+                        }
+                        return flag;
                     }
-                    return flag;
                 }
-            }
-            catch (Exception ex)
-            {
-                Log.SaveLogToTxt(ex.ToString());
-                return false;
+                catch (Exception ex)
+                {
+                    Log.SaveLogToTxt(ex.ToString());
+                    return false;
+                }
             }
         }
 
         public override bool SwitchChannel(int syn = 0)
         {
-            bool flag = false;
-            bool flag1 = false;
-            int k = 0;
-            string readtemp = "";
-            try
+            lock (myIO)
             {
-                if (syn == 0)
+                bool flag = false;
+                bool flag1 = false;
+                int k = 0;
+                string readtemp = "";
+                try
                 {
-                    Log.SaveLogToTxt("Optical switch change channel to " + this.toChannel);
-                    return myIO.WriteString(":route" + this.slots + ":chan" + this.channel + " A," + this.toChannel);
-                }
-                else
-                {
-                    for (int i = 0; i < 3; i++)
+                    if (syn == 0)
                     {
-                        flag1 = myIO.WriteString(":route" + this.slots + ":chan" + this.channel + " A," + this.toChannel);
-                        if (flag1 == true)
-                        {
-                            break;
-                        }
+                        Log.SaveLogToTxt("Optical switch change channel to " + this.toChannel);
+                        return myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":route" + this.slots + ":chan" + this.channel + " A," + this.toChannel);
                     }
-                    if (flag1 == true)
+                    else
                     {
-                        for (k = 0; k < 3; k++)
+                        for (int i = 0; i < 3; i++)
                         {
-
-                            myIO.WriteString(":route" + this.slots + "?");
-                            readtemp = myIO.ReadString();
-                            if (readtemp == "A," + this.toChannel)
+                            flag1 = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":route" + this.slots + ":chan" + this.channel + " A," + this.toChannel);
+                            if (flag1 == true)
                             {
                                 break;
                             }
                         }
+                        if (flag1 == true)
+                        {
+                            for (k = 0; k < 3; k++)
+                            {
 
-                        if (k <= 3)
-                        {
-                            Log.SaveLogToTxt("Optical switch change channel to " + this.toChannel);
-                            flag = true;
+                                myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":route" + this.slots + "?");
+                                readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                                if (readtemp == "A," + this.toChannel)
+                                {
+                                    break;
+                                }
+                            }
+
+                            if (k <= 3)
+                            {
+                                Log.SaveLogToTxt("Optical switch change channel to " + this.toChannel);
+                                flag = true;
+                            }
+                            else
+                            {
+                                Log.SaveLogToTxt("Optical switch change channel failed");
+                            }
                         }
-                        else
-                        {
-                            Log.SaveLogToTxt("Optical switch change channel failed");
-                        }
+                        return flag;
                     }
-                    return flag;
                 }
-            }
-            catch (Exception ex)
-            {
-                Log.SaveLogToTxt(ex.ToString());
-                return false;
+                catch (Exception ex)
+                {
+                    Log.SaveLogToTxt(ex.ToString());
+                    return false;
+                }
             }
         }
 
         public override bool CheckEquipmentRole(byte TestModelType, byte Channel)
         {//// 0=NA,1=TX,2=RX
-            int actualChannel = 1;
-
-            if (this.role == 0)//TX Rx 公用
+            lock (myIO)
             {
-                if (TestModelType == 1)//Tx
+                int actualChannel = 1;
+
+                if (this.role == 0)//TX Rx 公用
                 {
-                    actualChannel = Convert.ToInt32(BidiTx_Channel[Channel - 1]);
+                    if (TestModelType == 1)//Tx
+                    {
+                        actualChannel = Convert.ToInt32(BidiTx_Channel[Channel - 1]);
+                    }
+                    if (TestModelType == 2)//Rx
+                    {
+                        actualChannel = Convert.ToInt32(BidiRx_Channel[Channel - 1]);
+                    }
+                    this.ChangeChannel(actualChannel, 1);
                 }
-                if (TestModelType == 2)//Rx
-                {
-                    actualChannel = Convert.ToInt32(BidiRx_Channel[Channel - 1]);
-                }
-                this.ChangeChannel(actualChannel, 1);
-            }
-            return true;           
+                return true;
+            }  
         }
     }
 }

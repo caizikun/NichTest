@@ -27,19 +27,11 @@ namespace NichTest
         protected byte lastattChannel = 0;
 
         public virtual bool ConfigWavelength( int syn = 0) { return true; }
-
         public virtual bool AttnValue(string InputPow, int syn = 1) { return true; }
-
         public virtual bool AddCalFactor(string CalFactor) { return true; }
-
         public virtual double GetAtten() { return 0; }
-
         public virtual bool SetAllChannnel_RxOverLoad(float RxOverLoad) { return true; }
-
         public virtual bool SetAttnValue(double AttValue, int syn = 1) { return true; }
-
         public virtual bool AdjustAttnValue(double AttValue, int syn = 1) { return true; }// 在当前衰减器的衰减值上调整
-
-        //public virtual bool ChangeChannel(int channel, int syn = 0) { return true; }
     }
 }
