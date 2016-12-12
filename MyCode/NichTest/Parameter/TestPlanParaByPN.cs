@@ -58,5 +58,7 @@ namespace NichTest
         public static string Description;//描述
 
         public static int Version;//修订号
+
+        public static string SN;
     }
 }
