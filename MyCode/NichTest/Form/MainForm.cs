@@ -366,6 +366,8 @@ namespace NichTest
 
                     string fileName = SN + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
                     FilePath.LogFile = Application.StartupPath + @"\Log\" + fileName;
+
+                    TestPlanParaByPN.SN = SN;
                                        
                     tokenSource = new CancellationTokenSource();
                     Task<bool> task = Task.Factory.StartNew<bool>(() => (user.ParallelBeginTest()), tokenSource.Token);
