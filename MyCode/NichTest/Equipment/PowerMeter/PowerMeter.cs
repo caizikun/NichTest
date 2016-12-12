@@ -13,21 +13,13 @@ namespace NichTest
     public class PowerMeter : Equipment 
     {
         protected string slot;
-
         protected string wavelength;
-
         protected string channel;
-
         protected string[] channelArray;
-
         protected string unitType;//0 "dBm",1 "W"
         
         public virtual bool ConfigWavelength(int syn = 0) { return true; }
-
         public virtual double ReadPower(int channel) { return 0; }
-
-        public virtual bool SelectUnit(int syn = 0) { return true; }
-
-        
+        public virtual bool SelectUnit(int syn = 0) { return true; }        
     }
 }
