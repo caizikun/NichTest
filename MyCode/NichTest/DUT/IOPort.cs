@@ -375,6 +375,11 @@ namespace NichTest
             Failed = 1,
         }
 
+        public dynamic ReadIEEEBlock()
+        {
+            return myDmm.ReadIEEEBlock(IEEEBinaryType.BinaryType_UI1);
+        }
+
         public bool WriteString(Type type, string ioaddr, string str_Write)
         {
             return this.WriteReadString(type, ioaddr, str_Write, ReadWrite.Write) != Status.Failed.ToString();
