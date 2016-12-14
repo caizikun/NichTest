@@ -187,6 +187,7 @@ namespace NichTest
                     StrErArray += "," + myTextBox[i + 8].Text.ToString();
                 }
                 myXml.LightSourceEr = StrErArray;
+                GlobalParaByPN.OpticalSourceERArray = StrErArray;
                 //---------------------IccOffset & PsOffset           
 
                 double Vccoffset = Convert.ToDouble(myTextBox[12].Text);
