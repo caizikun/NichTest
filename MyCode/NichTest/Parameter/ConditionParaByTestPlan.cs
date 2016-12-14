@@ -8,6 +8,16 @@ namespace NichTest
 {
     public struct ConditionParaByTestPlan
     {
+        public static int ID;
+        public static string SEQ;
+        public static byte Channel;
+        public static double Temp;
+        public static double VCC;
+        public static string ItemName;
+        public static int CtrlType;
+        public static int TempWaitingTimes;
+        public static double TempOffset;
+
         public static void SetValue(DataRow dr)
         {
             ID = Convert.ToInt32(dr["ID"]);// 记录当前ConditionID号码
@@ -20,23 +30,5 @@ namespace NichTest
             TempWaitingTimes = Convert.ToInt32(dr["TempWaitTimes"]);
             TempOffset = Convert.ToDouble(dr["TempOffset"]);
         }
-
-        public static int ID;
-
-        public static string SEQ;
-
-        public static byte Channel;
-
-        public static double Temp;
-
-        public static double VCC;
-
-        public static string ItemName;
-
-        public static int CtrlType;
-
-        public static int TempWaitingTimes;
-
-        public static double TempOffset;        
     }
 }
