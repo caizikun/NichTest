@@ -366,7 +366,38 @@ namespace NichTest
                 Log.SaveLogToTxt(ex.ToString());
                 return Algorithm.MyNaN;
             }
-        }        
+        }
+
+        public override double ReadDmiRxP(int channel)
+        {            
+            try
+            {
+                double dmirxp = 0.0;
+                switch (channel)
+                {
+                    case 1:
+                        dmirxp = EEPROM.readdmirxp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 34);
+                        break;
+                    case 2:
+                        dmirxp = EEPROM.readdmirxp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 36);
+                        break;
+                    case 3:
+                        dmirxp = EEPROM.readdmirxp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 38);
+                        break;
+                    case 4:
+                        dmirxp = EEPROM.readdmirxp(TestPlanParaByPN.DUT_USB_Port, 0xA0, 40);
+                        break;
+                    default:
+                        break;
+                }
+                return dmirxp;
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLogToTxt(ex.ToString());
+                return Algorithm.MyNaN;
+            }
+        }
 
         public override ushort ReadADC(NameOfADC enumName, int channel)
         {

@@ -158,6 +158,21 @@ namespace NichTest
             return Algorithm.MyNaN;
         }
 
+        public double[] ReadDmiRxP()
+        {
+            double[] dmi = new double[GlobalParaByPN.TotalChCount];
+            for (int i = 0; i < GlobalParaByPN.TotalChCount; i++)
+            {
+                dmi[i] = this.ReadDmiRxP(i);
+            }
+            return dmi;
+        }
+
+        public virtual double ReadDmiRxP(int channel)
+        {
+            return Algorithm.MyNaN;
+        }
+
         public virtual ushort ReadADC(NameOfADC enumName, int channel)
         {
             return Algorithm.MyNaN;
