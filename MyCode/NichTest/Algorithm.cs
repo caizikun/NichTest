@@ -333,5 +333,150 @@ namespace NichTest
 
             return x;
         }//返回值是函数的系数
+
+        public static double ChangeUwtoDbm(double uw)
+        {
+            return Getlog10(uw / 1000) * 10;
+        }
+
+        public static double ChangeDbmtoUw(double dbm)
+        {
+            return Math.Pow(10, dbm / 10) * 1000;
+        }
+
+        public static double[] Getlog10(double[] input)
+        {
+            double[] inPut = new double[input.Length];
+            //inPut=input;
+            for (byte i = 0; i < input.Length; i++)
+            {
+                inPut[i] = System.Math.Log10(input[i]);
+
+            }
+            return inPut;
+        }
+
+        public static double Getlog10(double input)
+        {
+            double inPut = input;
+            //inPut=input;
+            inPut = Math.Log10(input);
+            return inPut;
+        }
+
+        public static double CalculateFromOMAtoDBM(double oma, double ER)
+        {
+            try
+            {
+                ER = Math.Pow(10, ER / 10.0);
+                oma = ChangeDbmtoUw(oma);
+                double dbm = oma * (ER + 1) / (2 * (ER - 1));
+                dbm = ChangeUwtoDbm(dbm);
+                if (double.IsInfinity(oma) || double.IsNaN(oma))
+                {
+                    dbm = -100000;
+                }
+                return dbm;
+            }
+            catch
+            {
+                return MyNaN;
+            }
+        }
+
+        public static ArrayList StringtoArraylistDeletePunctuations(string inputString, char[] segregatechars)
+        {
+            string segregatestring = "";
+            for (byte i = 0; i < segregatechars.Length; i++)
+            {
+                segregatestring += segregatechars[i];
+            }
+            if (inputString == null)
+            {
+                return null;
+            }
+            if (inputString.Length == 0)
+            {
+                return null;
+            }
+            return ArrayList.Adapter(inputString.Split(segregatechars));
+        }
+
+        public static double CalculateOMA(double PVG, double ER)
+        {
+            try
+            {
+                ER = Math.Pow(10, ER / 10.0);
+                PVG = ChangeDbmtoUw(PVG);
+                double oma = 2 * PVG * (ER - 1) / (ER + 1);
+                oma = ChangeUwtoDbm(oma);
+                if (double.IsInfinity(oma) || double.IsNaN(oma))
+                {
+                    oma = MyNaN;
+                }
+                return oma;
+            }
+            catch
+            {
+                return MyNaN;
+            }
+        }
+
+        // cense test algorithm
+        public static double LinearRegression(double[] x, double[] yList, out double slop, out double intercept)
+        {
+            double result = 0;
+            double β;
+            double α;
+            slop = 0;
+            intercept = 0;
+            int n = x.Length; //个数（n）
+            if (n == 0) { return 0; }
+            if (n == 1)
+            {
+                intercept = 0;
+                slop = yList[0];
+                return yList[0];
+            }
+            double predictX = x[n - 1] + 1; //预测指标值
+            //∑XiYi
+            double sumXiYi = 0;
+            //∑Xi
+            double sumXi = 0;
+            //∑Yi
+            double sumYi = 0;
+            //∑（Xi二次方）
+            double XiSqrtSum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                sumXiYi += x[i] * yList[i];
+                sumXi += x[i];
+                sumYi += yList[i];
+                XiSqrtSum += x[i] * x[i];
+            }
+            //∑Xi∑Yi
+            double sumXisumYi = sumXi * sumYi;
+            //（∑Xi）二次方
+            double sumXiSqrt = sumXi * sumXi;
+            //β= (n * ∑XiYi - ∑Xi * ∑Yi) / (n * ∑(Xi二次方) - (∑Xi)二次方)
+            β = ((n * sumXiYi) - (sumXi * sumYi)) / ((n * XiSqrtSum) - sumXiSqrt);
+            //α= (∑Yi / n) - β*(∑Xi / n)
+            α = (sumYi / n) - β * (sumXi / n);
+            //预测结果 = α+β* 预测指标值
+            slop = α;
+            intercept = β;
+            result = α + (β * predictX);
+            return Math.Round(result, 2);
+        }
+
+        public static double[] GetNegative(double[] input)
+        {
+            double[] inPut = new double[input.Length];
+            for (byte i = 0; i < input.Length; i++)
+            {
+                inPut[i] = input[i] * (-1);
+            }
+            return inPut;
+        }
     }
 }
