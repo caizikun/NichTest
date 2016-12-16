@@ -29,12 +29,12 @@ namespace NichTest
                 OpticalSwitch opticalSwitch = (OpticalSwitch)equipments["OPTICALSWITCH"];
                 PowerMeter powerMeter = (PowerMeter)equipments["POWERMETER"];
                 //get in parameters
-                string[] BiasDACs = inPara["BiasDACs"].Split(',');
-                string[] ModDACs = inPara["ModDACs"].Split(',');
-                double ratio = Convert.ToDouble(inPara["Ratio"]);
-                double U_Ref = Convert.ToDouble(inPara["URef"]);
-                double resolution = Convert.ToDouble(inPara["Resolution"]);
-                double R_rssi = Convert.ToDouble(inPara["Rrssi"]);
+                string[] BiasDACs = inPara["BIASDACS"].Split(',');
+                string[] ModDACs = inPara["MODDACS"].Split(',');
+                double ratio = Convert.ToDouble(inPara["RATIO"]);
+                double U_Ref = Convert.ToDouble(inPara["UREF"]);
+                double resolution = Convert.ToDouble(inPara["RESOLUTION"]);
+                double R_rssi = Convert.ToDouble(inPara["RRSSI"]);
 
                 //read current of power supply
                 double current = supply.GetCurrent();
@@ -158,12 +158,12 @@ namespace NichTest
                 }
                 testData.Rows.Add(dr);
                 dr = null;
-                Log.SaveLogToTxt("Completed quick check test for channel " + channel);
+                Log.SaveLogToTxt("End quick check test for channel " + channel + "\r\n");
                 return true;
             }
             catch
             {
-                Log.SaveLogToTxt("Failed to quickcheck test.");
+                Log.SaveLogToTxt("Failed quickcheck test.");
                 return false;
             }
         }
