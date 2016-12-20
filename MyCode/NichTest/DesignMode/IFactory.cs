@@ -33,6 +33,21 @@ namespace NichTest
                 case "TestIBiasDmi":
                     myTest = new TestIBiasDmi();
                     break;
+                case "TestTxEye":
+                    myTest = new TestTxEye();
+                    break;
+                case "TestBer":
+                    myTest = new TestBer();
+                    break;
+                case "TestRXLosAD":
+                    myTest = new TestRxLos();
+                    break;
+                case "TestTxPowerDmi":
+                    myTest = new TestTxPowerDmi();
+                    break;
+                case "TestRxPowerDmi":
+                    myTest = new TestRxPowerDmi();
+                    break;
                 default:
                     myTest = new QuickCheckTest();
                     break;
@@ -56,6 +71,15 @@ namespace NichTest
                     break;
                 case "AQ2211ATTEN":
                     myEquipment = new AQ2211Atten();
+                    break;
+                case "FLEX86100":
+                    myEquipment = new Flex86100();
+                    break;
+                case "MP1800PPG":
+                    myEquipment = new MP1800PPG();
+                    break;
+                case "MP1800ED":
+                    myEquipment = new MP1800ED();
                     break;
                 default:
                     myEquipment = null;
