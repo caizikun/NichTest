@@ -9,19 +9,17 @@ namespace NichTest
 {
     public class QSFP28 : DUT
     {
-        //EEPROM QSFP;
-
-        public byte[] WriteDriver40g(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte chipset, byte[] dataToWrite, bool Switch)
+        private byte[] WriteDriver40g(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte chipset, byte[] dataToWrite, bool Switch)
         {
             return EEPROM.ReadWriteDriverQSFP(deviceIndex, deviceAddress, StartAddress, regAddress, channel, 0x02, chipset, dataToWrite, Switch);
         }
 
-        public byte[] ReadDriver40g(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte chipset, int readLength, bool Switch)
+        private byte[] ReadDriver40g(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte chipset, int readLength, bool Switch)
         {
             return EEPROM.ReadWriteDriverQSFP(deviceIndex, deviceAddress, StartAddress, regAddress, channel, 0x01, chipset, new byte[readLength], Switch);
         }
-        
-        public byte[] StoreDriver40g(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte chipset, byte[] dataToWrite, bool Switch)
+
+        private byte[] StoreDriver40g(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte chipset, byte[] dataToWrite, bool Switch)
         {
             return EEPROM.ReadWriteDriverQSFP(deviceIndex, deviceAddress, StartAddress, regAddress, channel, 0x06, chipset, dataToWrite, Switch);
         }
@@ -125,7 +123,7 @@ namespace NichTest
             return SN.Trim();
         }
 
-        public void EnterEngMode(byte page)
+        private void EnterEngMode(byte page)
         {
             byte[] buff = new byte[5];
             buff[0] = 0xca;
@@ -722,6 +720,33 @@ namespace NichTest
                 Log.SaveLogToTxt("Failed to get value of " + coeffName);
                 return Algorithm.MyNaN.ToString();
             }
-        }        
+        }
+
+        public override bool ChkRxLos(int channel)
+        {
+            byte[] buff = new byte[1];
+            try
+            {
+                buff = IOPort.ReadReg(TestPlanParaByPN.DUT_USB_Port, 0xA0, 3, IOPort.SoftHard.HARDWARE_SEQUENT, 1);
+                switch (channel)
+                {
+                    case 1:
+                        return (buff[0] & 0x01) != 0;
+                    case 2:
+                        return (buff[0] & 0x02) != 0;
+                    case 3:
+                        return (buff[0] & 0x04) != 0;
+                    case 4:
+                        return (buff[0] & 0x08) != 0;
+                    default:
+                        return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLogToTxt(ex.ToString());
+                return false;
+            }
+        }
     }
 }

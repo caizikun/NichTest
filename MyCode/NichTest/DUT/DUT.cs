@@ -244,5 +244,7 @@ namespace NichTest
         {
             return Algorithm.MyNaN.ToString();
         }
+
+        public virtual bool ChkRxLos(int channel) { return false; }
     }
 }
