@@ -478,5 +478,23 @@ namespace NichTest
             }
             return inPut;
         }
+
+        public static double SelectMaxValue(ArrayList inPutArray, out byte maxIndex)
+        {
+            maxIndex = 0;
+            int firstitemindex = inPutArray.IndexOf(0);
+            float tempMinValue = float.Parse(inPutArray[0].ToString());
+            for (byte i = 0; i < inPutArray.Count; i++)
+            {
+                if (tempMinValue < float.Parse(inPutArray[i].ToString()))
+                {
+                    tempMinValue = float.Parse(inPutArray[i].ToString());
+                    maxIndex = i;
+                }
+
+            }
+            return double.Parse(inPutArray[maxIndex].ToString());
+        }
+
     }
 }
