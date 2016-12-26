@@ -7,18 +7,7 @@ namespace NichTest
 {
     public class EEPROM
     {
-        //private IOPort USBIO;
-
-        //public EEPROM(int INDEX)
-        //{
-        //    //USBIO = new IOPort("USB", INDEX.ToString());
-        //    //IOPort.IOConnect();
-
-            
-        //    USBIO = IOPort.GetIOPort();
-            
-        //}
-        ////read DMI
+        private EEPROM() { }//make sure it will not be instantiated
         public static double readdmitemp(int deviceIndex,int deviceAddress, int regAddress,int phycialAdress=0, int mdiomode=0)
         {
             byte[] buff = new byte[2];
