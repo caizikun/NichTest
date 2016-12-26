@@ -34,7 +34,7 @@ namespace NichTest
 
         public virtual bool ConfigOffset(int channel, double offset, int syn = 0)
         {
-            return false;
+            return true;
         }
 
         public virtual bool ConfigOffset(int channel, double offset_VCC, double offset_ICC, int syn = 0)
@@ -43,5 +43,15 @@ namespace NichTest
         }
 
         public virtual bool ChangeChannel(int channel, int syn = 0) { return true; }
+
+        protected virtual bool WriteString(string str_Write)
+        {
+            return myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, str_Write);
+        }
+
+        protected virtual string ReadString(int count = 0)
+        {
+            return myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address, count);
+        }
     }
 }
