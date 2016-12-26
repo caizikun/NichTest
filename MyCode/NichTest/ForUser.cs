@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NichTest
 {
-    class ForUser
+    public class ForUser
     {
         private Dictionary<string, IEquipment> usedEquipments;
         private Dictionary<string, ITest> testItemsObject;

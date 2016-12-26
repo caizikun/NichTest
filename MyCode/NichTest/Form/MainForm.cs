@@ -9,23 +9,15 @@ namespace NichTest
 {
     public partial class MainForm : Form
     {
-        string address_IP;
-
+        private string address_IP;
         private ForUser user;
-
         private TextBox[] myTextBox;
-
-        private DataTable dataTable_Family;        
-
+        private DataTable dataTable_Family; 
         private int ID_PN;
-
         private int ID_Family;
-
         private ConfigXmlIO myXml;
-
         private DataIO myDataIO;
-
-        CancellationTokenSource tokenSource;
+        private CancellationTokenSource tokenSource;
 
         /// <summary>
         /// 禁止使用还原按钮的方法
