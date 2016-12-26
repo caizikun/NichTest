@@ -7,17 +7,12 @@ namespace NichTest
 {
     public class DUT
     {
-        //protected IOPort USBIO = IOPort.GetIOPort();
-
         protected Log log;
-
         protected ChipControlByPN dataTable_ChipControlByPN;
-
         protected ChipDefaultValueByPN dataTable_ChipDefaultValueByPN;
-
         protected EEPROMDefaultValueByTestPlan dataTable_EEPROMDefaultValueByTestPlan;
-
         protected DUTCoeffControlByPN dataTable_DUTCoeffControlByPN;
+        protected static object syncRoot = new Object();//used for thread synchronization
 
         public enum NameOfADC : int
         {
@@ -145,12 +140,15 @@ namespace NichTest
 
         public double[] ReadDmiTxP()
         {
-            double[] dmi = new double[GlobalParaByPN.TotalChCount];
-            for (int i = 0; i < GlobalParaByPN.TotalChCount; i++)
+            lock (syncRoot)
             {
-                dmi[i] = this.ReadDmiTxP(i);
+                double[] dmi = new double[GlobalParaByPN.TotalChCount];
+                for (int i = 0; i < GlobalParaByPN.TotalChCount; i++)
+                {
+                    dmi[i] = this.ReadDmiTxP(i);
+                }
+                return dmi;
             }
-            return dmi;
         }
 
         public virtual double ReadDmiTxP(int channel)
@@ -160,12 +158,15 @@ namespace NichTest
 
         public double[] ReadDmiRxP()
         {
-            double[] dmi = new double[GlobalParaByPN.TotalChCount];
-            for (int i = 0; i < GlobalParaByPN.TotalChCount; i++)
+            lock (syncRoot)
             {
-                dmi[i] = this.ReadDmiRxP(i);
+                double[] dmi = new double[GlobalParaByPN.TotalChCount];
+                for (int i = 0; i < GlobalParaByPN.TotalChCount; i++)
+                {
+                    dmi[i] = this.ReadDmiRxP(i);
+                }
+                return dmi;
             }
-            return dmi;
         }
 
         public virtual double ReadDmiRxP(int channel)
@@ -180,13 +181,16 @@ namespace NichTest
 
         public ushort[] ReadADC(NameOfADC enumName)
         {
-            ushort[] valueADC = new ushort[GlobalParaByPN.TotalChCount];
-
-            for (int i = 0; i < GlobalParaByPN.TotalChCount; i++)
+            lock (syncRoot)
             {
-                valueADC[i] = this.ReadADC(enumName, i + 1);
+                ushort[] valueADC = new ushort[GlobalParaByPN.TotalChCount];
+
+                for (int i = 0; i < GlobalParaByPN.TotalChCount; i++)
+                {
+                    valueADC[i] = this.ReadADC(enumName, i + 1);
+                }
+                return valueADC;
             }
-            return valueADC;
         }
 
         public virtual bool WriteChipDAC(NameOfChipDAC enumName, int channel, object writeDAC)
@@ -196,14 +200,17 @@ namespace NichTest
 
         public bool WriteChipDAC(NameOfChipDAC enumName, object writeDAC)
         {
-            for (int i = 0; i < GlobalParaByPN.TotalChCount; i++)
+            lock (syncRoot)
             {
-                if (!this.WriteChipDAC(enumName, i + 1, writeDAC))
+                for (int i = 0; i < GlobalParaByPN.TotalChCount; i++)
                 {
-                    return false;
+                    if (!this.WriteChipDAC(enumName, i + 1, writeDAC))
+                    {
+                        return false;
+                    }
                 }
+                return true;
             }
-            return true;
         }
 
         public virtual bool ReadChipDAC(NameOfChipDAC enumName, int channel, out int readDAC)
@@ -214,15 +221,18 @@ namespace NichTest
 
         public bool ReadChipDAC(NameOfChipDAC enumName, out int readDAC)
         {
-            readDAC = 0;
-            for (int i = 0; i < GlobalParaByPN.TotalChCount; i++)
+            lock (syncRoot)
             {
-                if (!this.ReadChipDAC(enumName, i + 1, out readDAC))
+                readDAC = 0;
+                for (int i = 0; i < GlobalParaByPN.TotalChCount; i++)
                 {
-                    return false;
+                    if (!this.ReadChipDAC(enumName, i + 1, out readDAC))
+                    {
+                        return false;
+                    }
                 }
+                return true;
             }
-            return true;
         }
 
         public virtual double CalRxRes(double inputPower_dBm, int channel, double ratio, double U_Ref, double resolution, double R_rssi)
