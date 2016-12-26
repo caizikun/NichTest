@@ -313,7 +313,7 @@ namespace NichTest
                                 role = "_NA";
                                 break;
                         }
-                        dataTable_Equipment.Rows[i]["FullName"] = dataTable_Equipment.Rows[i]["Name"].ToString().ToUpper() + role + "_" + dataTable_Equipment.Rows[i]["Type"].ToString().ToUpper();
+                        dataTable_Equipment.Rows[i]["FullName"] = dataTable_Equipment.Rows[i]["Name"].ToString().Trim().ToUpper() + role + "_" + dataTable_Equipment.Rows[i]["Type"].ToString().ToUpper();
                     }
                     DataTable equipList = dataTable_Equipment.Clone();
                     DataView dv = dataTable_Equipment.DefaultView;
@@ -478,7 +478,7 @@ namespace NichTest
                     ConditionParaByTestPlan.SetValue(dr);
 
                     Log.SaveLogToTxt("Begin to config environment.");
-                    Log.SaveLogToTxt("Temp = " + ConditionParaByTestPlan.Temp + " VCC = " + ConditionParaByTestPlan.VCC + " Channel = " + ConditionParaByTestPlan.Channel);
+                    Log.SaveLogToTxt("Temp = " + ConditionParaByTestPlan.Temp + " VCC = " + ConditionParaByTestPlan.VCC.ToString("f3") + " Channel = " + ConditionParaByTestPlan.Channel);
                     //myDataIO.WriterLog(ctrlType_Condition, SNID, "", StrStartTime, StrStartTime, Convert.ToSingle(StrCurrentTemp), Convert.ToSingle(StrCurrentVcc), CurrentChannel, false, out CurrentLogId);
                     if (!this.ConfigEnvironment(ConditionParaByTestPlan.Temp, ConditionParaByTestPlan.VCC, ConditionParaByTestPlan.Channel, 
                         ConditionParaByTestPlan.TempOffset, ConditionParaByTestPlan.TempWaitingTimes, GlobalParaByPN.OverLoadPoint))
@@ -514,7 +514,7 @@ namespace NichTest
                         Log.SaveLogToTxt("Try to get test parameter for " + name_TestItem + ".");
                         for (int j = 0; j < drs.Length; j++)
                         {
-                            inPara_TestItem.Add(drs[j]["ItemName"].ToString(), drs[j]["ItemValue"].ToString());
+                            inPara_TestItem.Add(drs[j]["ItemName"].ToString().Trim().ToUpper(), drs[j]["ItemValue"].ToString().Trim().ToUpper());
                             Log.SaveLogToTxt(drs[j]["ItemName"].ToString() + " " + drs[j]["ItemValue"].ToString());
                         }
                         Log.SaveLogToTxt("Test " + name_TestItem + "...");
@@ -598,7 +598,7 @@ namespace NichTest
                             Log.SaveLogToTxt("Try to get test parameter for " + name_TestItem + ".");
                             for (int j = 0; j < drs.Length; j++)
                             {
-                                inPara_TestItem.Add(drs[j]["ItemName"].ToString(), drs[j]["ItemValue"].ToString());
+                                inPara_TestItem.Add(drs[j]["ItemName"].ToString().Trim().ToUpper(), drs[j]["ItemValue"].ToString().Trim().ToUpper());
                                 Log.SaveLogToTxt(drs[j]["ItemName"].ToString() + " " + drs[j]["ItemValue"].ToString());
                             }
                             Log.SaveLogToTxt("Test " + name_TestItem + "...");

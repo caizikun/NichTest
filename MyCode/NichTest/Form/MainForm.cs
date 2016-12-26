@@ -372,6 +372,7 @@ namespace NichTest
                                        
                     tokenSource = new CancellationTokenSource();
                     Task<bool> task = Task.Factory.StartNew<bool>(() => (user.ParallelBeginTest()), tokenSource.Token);
+                    //Task<bool> task = Task.Factory.StartNew<bool>(() => (user.BeginTest()), tokenSource.Token);
                     Task cwt = task.ContinueWith(t => 
                     {
                         if (this.InvokeRequired)
