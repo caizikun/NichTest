@@ -9,12 +9,13 @@ namespace NichTest
     public class AQ2211Atten: Attennuator
     {
         private string[] slots;
-        private double currentOffset;               
+        private double currentOffset;
+        private static object syncRoot = SyncRoot_AQ2211.Get_SyncRoot_AQ2211();//used for thread synchronization
 
         public override bool Initial(Dictionary<string, string> inPara, int syn = 0)
         {
             try
-            {
+            { 
                 this.IOType = inPara["IOTYPE"];
                 this.address = inPara["ADDR"];
                 this.name = inPara["NAME"];
@@ -34,10 +35,10 @@ namespace NichTest
                 switch (IOType)
                 {
                     case "GPIB": 
-                        lock (myIO)
+                        lock (syncRoot)
                         {
-                            myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "*IDN?");
-                            string content = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                            this.WriteString("*IDN?");
+                            string content = this.ReadString();
                             this.isConnected = content.Contains("AQ22");
                         }
                         break;
@@ -57,7 +58,7 @@ namespace NichTest
 
         public override bool Configure(int syn = 0)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 if (this.isConfigured)//曾经设定过
                 {
@@ -92,9 +93,9 @@ namespace NichTest
 
         public bool Reset()
         {
-            lock (myIO)
+            lock (syncRoot)
             {
-                if (myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "*RST"))
+                if (this.WriteString("*RST"))
                 {
                     Thread.Sleep(3000);
                     return true;
@@ -108,7 +109,7 @@ namespace NichTest
 
         private bool ConfigWavelength(string dutcurrentchannel, int syn = 0)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 bool flag = false;
                 bool flag1 = false;
@@ -125,13 +126,13 @@ namespace NichTest
                     if (syn == 0)
                     {
                         Log.SaveLogToTxt("Attennuator slot is " + attSlot + " Channel " + attChannel + " Wavelength is " + wavtemp[i] + "nm");
-                        return myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":Channel" + attChannel + ":WAV " + wavtemp[i] + "nm");
+                        return this.WriteString(":INP" + attSlot + ":Channel" + attChannel + ":WAV " + wavtemp[i] + "nm");
                     }
                     else
                     {
                         for (int j = 0; j < 3; j++)
                         {
-                            flag1 = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":Channel" + attChannel + ":WAV " + wavtemp[i] + "nm");
+                            flag1 = this.WriteString(":INP" + attSlot + ":Channel" + attChannel + ":WAV " + wavtemp[i] + "nm");
                             if (flag1 == true)
                                 break;
                         }
@@ -140,8 +141,8 @@ namespace NichTest
                         {
                             for (k = 0; k < 3; k++)
                             {
-                                myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":Channel" + attChannel + ":WAV?");
-                                readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                                this.WriteString(":INP" + attSlot + ":Channel" + attChannel + ":WAV?");
+                                readtemp = this.ReadString();
                                 waveinput = Convert.ToDouble(wavtemp[i]);
                                 waveoutput = Convert.ToDouble(readtemp) * Math.Pow(10, 9);
                                 if (waveinput == waveoutput)
@@ -174,7 +175,7 @@ namespace NichTest
 
         public override bool AttnValue(string InputPower, int syn = 1)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 bool flag = false;
                 bool flag1 = false;
@@ -195,13 +196,13 @@ namespace NichTest
                         int i = 0;
                         do
                         {
-                            myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":Channel" + attChannel + ":ATT?");
-                            Str = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                            this.WriteString(":INP" + attSlot + ":Channel" + attChannel + ":ATT?");
+                            Str = this.ReadString();
                             Thread.Sleep(200);
                             i++;
                         } while (Str == null && i < 3);
 
-                        myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":Channel" + attChannel + ":ATT?");
+                        this.WriteString(":INP" + attSlot + ":Channel" + attChannel + ":ATT?");
 
                         double TempVale = double.Parse(Str);
                         sleepTime = Convert.ToInt16(Math.Abs(double.Parse(attValue) - TempVale) * 120);
@@ -214,13 +215,13 @@ namespace NichTest
                     if (syn == 0)
                     {
                         Log.SaveLogToTxt("Attennuator slot is " + attSlot + " attennuator value is " + attValue);
-                        flag = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":Channel" + attChannel + ":ATT " + attValue);
+                        flag = this.WriteString(":INP" + attSlot + ":Channel" + attChannel + ":ATT " + attValue);
                     }
                     else
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            flag1 = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":Channel" + attChannel + ":ATT " + attValue);
+                            flag1 = this.WriteString(":INP" + attSlot + ":Channel" + attChannel + ":ATT " + attValue);
                             Thread.Sleep(sleepTime);
                             if (flag1 == true)
                             {
@@ -232,9 +233,9 @@ namespace NichTest
                         {
                             for (int k = 0; k < 3; k++)
                             {
-                                myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":Channel" + attChannel + ":ATT?");
+                                this.WriteString(":INP" + attSlot + ":Channel" + attChannel + ":ATT?");
                                 Thread.Sleep(100);
-                                readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                                readtemp = this.ReadString();
                                 if (Convert.ToDouble(readtemp) == Convert.ToDouble(attValue))
                                 {
                                     flag = true;
@@ -268,7 +269,7 @@ namespace NichTest
 
         public override bool OutPutSwitch(bool Swith, int syn = 0)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 string index;
                 bool flag = false;
@@ -295,7 +296,7 @@ namespace NichTest
                     {//MyIO.WriteString(":INP" + AttSlot+"Channel"+attChannelannel + ":ATT " + AttValue);
                      //":OUTP" + AttSlot + ":STAT " + index  :OUTP7:STAT 0    :OUTP7:Channel1:STAT 0
                         Log.SaveLogToTxt("Attennuator slot is " + attSlot + " state is " + index);
-                        flag = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":OUTP" + attSlot + ":Channel" + attChannel + ":STAT " + index);
+                        flag = this.WriteString(":OUTP" + attSlot + ":Channel" + attChannel + ":STAT " + index);
                         Thread.Sleep(delay);
                         return flag;
                     }
@@ -303,7 +304,7 @@ namespace NichTest
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            flag1 = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":OUTP" + attSlot + ":Channel" + attChannel + ":STAT " + index);
+                            flag1 = this.WriteString(":OUTP" + attSlot + ":Channel" + attChannel + ":STAT " + index);
 
                             if (flag1 == true)
                                 break;
@@ -312,8 +313,8 @@ namespace NichTest
                         {
                             for (k = 0; k < 3; k++)
                             {
-                                myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":OUTP" + attSlot + ":Channel" + attChannel + ":STAT?");
-                                readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                                this.WriteString(":OUTP" + attSlot + ":Channel" + attChannel + ":STAT?");
+                                readtemp = this.ReadString();
                                 if (readtemp == intswitch)
                                     break;
                             }
@@ -342,7 +343,7 @@ namespace NichTest
 
         public override bool ConfigOffset(int channel, double offset, int syn = 0)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 this.offsetByCh.Add(channel, offset);
                 return true;
@@ -351,7 +352,7 @@ namespace NichTest
 
         public override bool ChangeChannel(int channel, int syn = 0)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 string[] wavtemp = new string[4];
                 wavelength = wavelength.Trim();
@@ -405,7 +406,7 @@ namespace NichTest
 
         private bool SetOffset(double offset, int syn = 0)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 bool flag = false;
                 bool flag1 = false;
@@ -417,14 +418,14 @@ namespace NichTest
                     if (syn == 0)
                     {
                         Log.SaveLogToTxt("attennuator slot is " + attSlot + " offset is " + offset);
-                        return myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":OFFS " + offset);
+                        return this.WriteString(":INP" + attSlot + ":OFFS " + offset);
                     }
                     else
                     {
                         offset = offset * -1;
                         for (int i = 0; i < 3; i++)
                         {
-                            flag1 = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":OFFS " + offset);
+                            flag1 = this.WriteString(":INP" + attSlot + ":OFFS " + offset);
                             if (flag1 == true)
                                 break;
                         }
@@ -432,8 +433,8 @@ namespace NichTest
                         {
                             for (k = 0; k < 3; k++)
                             {
-                                myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":OFFS?");
-                                readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                                this.WriteString(":INP" + attSlot + ":OFFS?");
+                                readtemp = this.ReadString();
                                 if (Convert.ToDouble(readtemp) == Convert.ToDouble(offset))
                                 {
                                     break;
@@ -463,7 +464,7 @@ namespace NichTest
 
         public override bool SetAllChannnel_RxOverLoad(float RxOverLoad)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 for (int i = 0; i < Convert.ToInt32(totalChannel); i++)
                 {
@@ -478,7 +479,7 @@ namespace NichTest
 
         public override bool SetAttnValue(double attValue, int syn = 1)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 bool flag = false;
                 bool flag1 = false;
@@ -488,7 +489,7 @@ namespace NichTest
                     if (syn == 0)
                     {
                         Log.SaveLogToTxt("Attennuator slot is " + attSlot + "attennuator value is " + attValue);
-                        flag = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":Channel" + attChannel + ":ATT " + attValue);
+                        flag = this.WriteString(":INP" + attSlot + ":Channel" + attChannel + ":ATT " + attValue);
                         // Thread.Sleep(SleepTime);
                         //Thread.Sleep(setattdelay);
                     }
@@ -497,7 +498,7 @@ namespace NichTest
                         for (int i = 0; i < 3; i++)
                         {
                             //:INP7:Channel1:Att 8
-                            flag1 = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":Channel" + attChannel + ":ATT " + attValue);
+                            flag1 = this.WriteString(":INP" + attSlot + ":Channel" + attChannel + ":ATT " + attValue);
                             // Thread.Sleep(setattdelay);
                             if (flag1 == true)
                                 break;
@@ -506,9 +507,9 @@ namespace NichTest
                         {
                             for (k = 0; k < 3; k++)
                             {
-                                myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":INP" + attSlot + ":Channel" + attChannel + ":ATT?");
+                                this.WriteString(":INP" + attSlot + ":Channel" + attChannel + ":ATT?");
                                 Thread.Sleep(100);
-                                string readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                                string readtemp = this.ReadString();
 
                                 if (Convert.ToDouble(readtemp) == Convert.ToDouble(attValue))
                                 {

@@ -13,6 +13,7 @@ namespace NichTest
     public class AQ2211PowerMeter : PowerMeter
     {
         private string[] slots;
+        private static object syncRoot = SyncRoot_AQ2211.Get_SyncRoot_AQ2211();//used for thread synchronization
 
         public override bool Initial(Dictionary<string, string> inPara, int syn = 0)
         {
@@ -34,10 +35,10 @@ namespace NichTest
                 switch (IOType)
                 {
                     case "GPIB":
-                        lock (myIO)
+                        lock (syncRoot)
                         {
-                            myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "*IDN?");
-                            string content = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                            this.WriteString("*IDN?");
+                            string content = this.ReadString();
                             this.isConnected = content.Contains("AQ22");
                         }
                         break;
@@ -57,9 +58,9 @@ namespace NichTest
         
         public bool Reset()
         {
-            lock (myIO)
+            lock (syncRoot)
             {
-                if (myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "*RST"))
+                if (this.WriteString("*RST"))
                 {
                     Thread.Sleep(3000);
                     return true;
@@ -73,7 +74,7 @@ namespace NichTest
 
         public override bool Configure(int syn = 0)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 try
                 {
@@ -101,8 +102,8 @@ namespace NichTest
                                 channel = channelArray[i];
                             }
 
-                            this.ConfigWavelength((i + 1).ToString(), syn);
-                            this.SelectUnit(syn);
+                            this.isConfigured = this.ConfigWavelength((i + 1).ToString(), syn);
+                            this.isConfigured = isConfigured && this.SelectUnit(syn);
                         }
                         this.isConfigured = true;
                     }
@@ -123,7 +124,7 @@ namespace NichTest
 
         private bool ConfigWavelength(string dutcurrentchannel, int syn = 0)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 bool flag = false;
                 bool flag1 = false;
@@ -141,13 +142,13 @@ namespace NichTest
                     if (syn == 0)
                     {
                         Log.SaveLogToTxt("Power meter slot is " + this.slot + " wavelength is " + wavtemp[i] + "nm");
-                        return myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":SENSE" + this.slot + ":Channel" + this.channel + ":POWer" + ":WAVelength " + wavtemp[i] + "nm");
+                        return this.WriteString(":SENSE" + this.slot + ":Channel" + this.channel + ":POWer" + ":WAVelength " + wavtemp[i] + "nm");
                     }
                     else
                     {
                         for (int j = 0; j < 3; j++)
                         {
-                            flag1 = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":SENSE" + this.slot + ":Channel" + this.channel + ":POWer" + ":WAVelength " + wavtemp[i] + "nm");
+                            flag1 = this.WriteString(":SENSE" + this.slot + ":Channel" + this.channel + ":POWer" + ":WAVelength " + wavtemp[i] + "nm");
                             if (flag1 == true)
                                 break;
                         }
@@ -156,8 +157,8 @@ namespace NichTest
                         {
                             for (k = 0; k < 3; k++)
                             {
-                                myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":SENSE" + this.slot + ":Channel" + this.channel + ":POWer" + ":WAVelength?");
-                                readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                                this.WriteString(":SENSE" + this.slot + ":Channel" + this.channel + ":POWer" + ":WAVelength?");
+                                readtemp = this.ReadString();
                                 waveinput = Convert.ToDouble(wavtemp[i]);
                                 waveoutput = Convert.ToDouble(readtemp) * Math.Pow(10, 9);
                                 if (waveinput == waveoutput)
@@ -189,14 +190,14 @@ namespace NichTest
 
         public override double ReadPower(int channel)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 double power = 99;
                 try
                 {
-                    myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":SENSE" + this.slots[channel - 1] + ":Channel" + this.channelArray[channel - 1] + ":POWer:REFerence:Display");
-                    myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":SENSE" + this.slots[channel - 1] + ":Channel" + this.channelArray[channel - 1] + ":POWer:REFerence? TORef");
-                    string readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                    this.WriteString(":SENSE" + this.slots[channel - 1] + ":Channel" + this.channelArray[channel - 1] + ":POWer:REFerence:Display");
+                    this.WriteString(":SENSE" + this.slots[channel - 1] + ":Channel" + this.channelArray[channel - 1] + ":POWer:REFerence? TORef");
+                    string readtemp = this.ReadString();
                     power = Convert.ToDouble(readtemp);
                 }
                 catch (Exception ex)
@@ -210,7 +211,7 @@ namespace NichTest
 
         public override bool SelectUnit(int syn = 0)//0 "dBm",1 "W"
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 bool flag = false;
                 bool flag1 = false;
@@ -218,17 +219,17 @@ namespace NichTest
                 string readtemp = "";
                 try
                 {
-                    myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":SENSE" + this.slot + ":Channel" + this.channel + ":POWer:REFerence:state 0");
+                    this.WriteString(":SENSE" + this.slot + ":Channel" + this.channel + ":POWer:REFerence:state 0");
                     if (syn == 0)
                     {
                         Log.SaveLogToTxt("Power meter slot is " + this.slot + " Channel is " + this.channel + " Unit type is " + this.unitType);
-                        return myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":SENSE" + this.slot + ":Channel" + this.channel + ":POWer:UNIT " + this.unitType);
+                        return this.WriteString(":SENSE" + this.slot + ":Channel" + this.channel + ":POWer:UNIT " + this.unitType);
                     }
                     else
                     {
                         for (int j = 0; j < 3; j++)
                         {
-                            flag1 = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":SENSE" + this.slot + ":Channel" + this.channel + ":POWer:UNIT " + this.unitType);
+                            flag1 = this.WriteString(":SENSE" + this.slot + ":Channel" + this.channel + ":POWer:UNIT " + this.unitType);
                             if (flag1 == true)
                                 break;
                         }
@@ -237,8 +238,8 @@ namespace NichTest
                         {
                             for (k = 0; k < 3; k++)
                             {
-                                myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":SENSE" + this.slot + ":Channel" + this.channel + ":POWer:UNIT?");
-                                readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                                this.WriteString(":SENSE" + this.slot + ":Channel" + this.channel + ":POWer:UNIT?");
+                                readtemp = this.ReadString();
                                 if (readtemp == ("+" + this.unitType))
                                 {
                                     break;

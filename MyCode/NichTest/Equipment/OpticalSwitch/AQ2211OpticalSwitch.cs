@@ -12,10 +12,12 @@ namespace NichTest
 {
     public class AQ2211OpticalSwitch : OpticalSwitch
     {
+        private static object syncRoot = SyncRoot_AQ2211.Get_SyncRoot_AQ2211();//used for thread synchronization
+
         public override bool Initial(Dictionary<string, string> inPara, int syn = 0)
         {
             try
-            { 
+            {
                 this.IOType = inPara["IOTYPE"];
                 this.address = inPara["ADDR"];
                 this.name = inPara["NAME"];
@@ -31,10 +33,10 @@ namespace NichTest
                 switch (IOType)
                 {
                     case "GPIB":
-                        lock (myIO)
+                        lock (syncRoot)
                         {
-                            myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "*IDN?");
-                            string content = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                            this.WriteString("*IDN?");
+                            string content = this.ReadString();
                             this.isConnected = content.Contains("AQ22");
                         }
                         break;
@@ -54,7 +56,7 @@ namespace NichTest
 
         public override bool Configure(int syn = 0)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 try
                 {
@@ -83,9 +85,9 @@ namespace NichTest
 
         public bool Reset()
         {
-            lock (myIO)
+            lock (syncRoot)
             {
-                if (myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "*RST"))
+                if (this.WriteString("*RST"))
                 {
                     Thread.Sleep(3000);
                     return true;
@@ -99,7 +101,7 @@ namespace NichTest
 
         public override bool ChangeChannel(int channel, int syn = 0)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 bool flag = false;
                 bool flag1 = false;
@@ -110,13 +112,13 @@ namespace NichTest
                     if (syn == 0)
                     {
                         Log.SaveLogToTxt("Optical switch change channel to " + channel);
-                        return myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":route" + this.slots + ":chan" + this.channel + " A," + channel);
+                        return this.WriteString(":route" + this.slots + ":chan" + this.channel + " A," + channel);
                     }
                     else
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            flag1 = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":route" + this.slots + ":chan" + this.channel + " A," + channel);
+                            flag1 = this.WriteString(":route" + this.slots + ":chan" + this.channel + " A," + channel);
                             if (flag1 == true)
                                 break;
                         }
@@ -125,8 +127,8 @@ namespace NichTest
                             for (k = 0; k < 3; k++)
                             {
 
-                                myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":route" + this.slots + "?");
-                                readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                                this.WriteString(":route" + this.slots + "?");
+                                readtemp = this.ReadString();
                                 if (readtemp == " A," + channel)
                                 {
                                     break;
@@ -157,7 +159,7 @@ namespace NichTest
 
         public override bool SwitchChannel(int syn = 0)
         {
-            lock (myIO)
+            lock (syncRoot)
             {
                 bool flag = false;
                 bool flag1 = false;
@@ -168,13 +170,13 @@ namespace NichTest
                     if (syn == 0)
                     {
                         Log.SaveLogToTxt("Optical switch change channel to " + this.toChannel);
-                        return myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":route" + this.slots + ":chan" + this.channel + " A," + this.toChannel);
+                        return this.WriteString(":route" + this.slots + ":chan" + this.channel + " A," + this.toChannel);
                     }
                     else
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            flag1 = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":route" + this.slots + ":chan" + this.channel + " A," + this.toChannel);
+                            flag1 = this.WriteString(":route" + this.slots + ":chan" + this.channel + " A," + this.toChannel);
                             if (flag1 == true)
                             {
                                 break;
@@ -185,8 +187,8 @@ namespace NichTest
                             for (k = 0; k < 3; k++)
                             {
 
-                                myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, ":route" + this.slots + "?");
-                                readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                                this.WriteString(":route" + this.slots + "?");
+                                readtemp = this.ReadString();
                                 if (readtemp == "A," + this.toChannel)
                                 {
                                     break;
@@ -216,7 +218,7 @@ namespace NichTest
 
         public override bool CheckEquipmentRole(byte TestModelType, byte Channel)
         {//// 0=NA,1=TX,2=RX
-            lock (myIO)
+            lock (syncRoot)
             {
                 int actualChannel = 1;
 

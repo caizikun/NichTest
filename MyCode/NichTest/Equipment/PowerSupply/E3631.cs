@@ -8,12 +8,12 @@ namespace NichTest
 {
     class E3631 : PowerSupply
     {
-        private static object syncRoot = new Object();
+        private static object syncRoot = new object();//used for thread synchronization
 
         public override bool Initial(Dictionary<string, string> inPara, int syn = 0)
         {
             try
-            {
+            {                
                 this.IOType = inPara["IOTYPE"];
                 this.address = inPara["ADDR"];
                 this.name = inPara["NAME"];
@@ -34,8 +34,8 @@ namespace NichTest
                     case "GPIB":
                         lock (syncRoot)
                         {
-                            myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "*IDN?");
-                            string content = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                            this.WriteString("*IDN?");
+                            string content = this.ReadString();
                             this.isConnected = content.Contains("E3631");
                         }
                         break;
@@ -96,7 +96,7 @@ namespace NichTest
         {
             lock (syncRoot)
             {
-                if (myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "*RST"))
+                if (this.WriteString("*RST"))
                 {
                     Thread.Sleep(3000);
                     return true;
@@ -135,7 +135,7 @@ namespace NichTest
                     bool result = false;
                     if (syn == 0)
                     {
-                        result = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "OUTP " + command);
+                        result = this.WriteString("OUTP " + command);
                         Thread.Sleep(delay);
                         return result;
                     }
@@ -143,7 +143,7 @@ namespace NichTest
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            result = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "OUTP " + command);
+                            result = this.WriteString("OUTP " + command);
                             if (result == true)
                             {
                                 break;
@@ -155,8 +155,8 @@ namespace NichTest
                             int k;
                             for (k = 0; k < 3; k++)
                             {
-                                myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "OUTP?");
-                                string readtemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address);
+                                this.WriteString("OUTP?");
+                                string readtemp = this.ReadString();
                                 if (readtemp == intswitch + "\n")
                                 {
                                     break;
@@ -217,7 +217,7 @@ namespace NichTest
                 try
                 {
                     Log.SaveLogToTxt("E3631 channel is " + command_channel + " voltage is " + voltage.ToString("f3") + " current is" + current);
-                    return myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, command);
+                    return this.WriteString(command);
                 }
                 catch (Exception ex)
                 {
@@ -250,9 +250,9 @@ namespace NichTest
                 {
                     if (syn == 0)
                     {
-                        myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, command);
-                        myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "*opc?");
-                        string StrTemp = myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address).Replace("\n", "");
+                        this.WriteString(command);
+                        this.WriteString("*opc?");
+                        string StrTemp = this.ReadString().Replace("\n", "");
                         if (StrTemp == "1")
                         {
                             flag = true;
@@ -273,7 +273,7 @@ namespace NichTest
                         for (int i = 0; i < 3; i++)
                         {
 
-                            flag = myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, command);
+                            flag = this.WriteString(command);
                             Thread.Sleep(500);
                             // MyIO.WriteString(str_channel + "?");
                             string StrVoltage = GetVoltage().ToString();
@@ -307,8 +307,8 @@ namespace NichTest
             {
                 try
                 {
-                    myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "MEAS:CURR? P6V");
-                    double current = (Convert.ToDouble((myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address, 25)))) * 1000;
+                    this.WriteString("MEAS:CURR? P6V");
+                    double current = (Convert.ToDouble((this.ReadString(25)))) * 1000;
                     // 因为读取当前的电压值(电流)，会导致仪器脱离程控(一直在执行指令), 所以加延时等仪器恢复。                    
                     Thread.Sleep(10000);
                     return current - currentOffset;
@@ -327,8 +327,8 @@ namespace NichTest
             {
                 try
                 {  
-                    myIO.WriteString(IOPort.Type.GPIB, "GPIB0::" + address, "MEAS:VOLT? P6V");
-                    double voltage = Convert.ToDouble((myIO.ReadString(IOPort.Type.GPIB, "GPIB0::" + address, 10)));
+                    this.WriteString("MEAS:VOLT? P6V");
+                    double voltage = Convert.ToDouble((this.ReadString(10)));
                     // 因为读取当前的电压值(电流)，会导致仪器脱离程控(一直在执行指令), 所以加延时等仪器恢复。                    
                     Thread.Sleep(10000);
                     return voltage;
