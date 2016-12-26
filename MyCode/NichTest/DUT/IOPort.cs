@@ -9,10 +9,7 @@ using System.Runtime.InteropServices;
 namespace NichTest
 {
     public class IOPort
-    {
-        private Ivi.Visa.Interop.ResourceManager rm; // VIsa  GPIB
-        private Ivi.Visa.Interop.FormattedIO488 myDmm; // VIsa  GPIB
-
+    { 
         [DllImport("CH375DLL.dll")]
         static extern int CH375ResetDevice(byte iIndex);// 复位CH375设备,返回句柄,出错则无效
 
@@ -342,7 +339,10 @@ namespace NichTest
         private static volatile IOPort instance = null;
         private static object syncRoot_GPIB = new Object();
         private static object syncRoot_RS232 = new Object();
-        
+        private static volatile Dictionary<string, IMessage> dicMyDmm = null;
+        private Ivi.Visa.Interop.ResourceManager rm; // VIsa  GPIB
+        private Ivi.Visa.Interop.FormattedIO488 myDmm; // VIsa  GPIB
+
         private IOPort() { }
 
         public static IOPort GetIOPort()
@@ -375,9 +375,13 @@ namespace NichTest
             Failed = 1,
         }
 
-        public dynamic ReadIEEEBlock()
+        public dynamic ReadIEEEBlock(Type type, string ioaddr, string str_Write)
         {
-            return myDmm.ReadIEEEBlock(IEEEBinaryType.BinaryType_UI1);
+            lock (syncRoot_GPIB)
+            {
+                this.WriteString(type, ioaddr, str_Write);
+                return myDmm.ReadIEEEBlock(IEEEBinaryType.BinaryType_UI1);
+            }
         }
 
         public bool WriteString(Type type, string ioaddr, string str_Write)
@@ -431,13 +435,30 @@ namespace NichTest
                         myDmm.IO.Timeout = 5000; //You can also set your timeout by doing this command, sets to 3 seconds
                                                  //myDmm.IO.Clear(); //Send a device clear first to stop any measurements in process    
                                                  //myDmm.WriteString("*RST", true);  
+                        dicMyDmm = new Dictionary<string, IMessage>();
+                        dicMyDmm.Add(ioaddr, myDmm.IO);
                     }
 
-                    if (myDmm.IO != null && myDmm.IO.ResourceName != ioaddr + "::INSTR")
+                    if (myDmm.IO != null && dicMyDmm.ContainsKey(ioaddr))
                     {
+                        myDmm.IO = dicMyDmm[ioaddr];
+                    }
+                    else
+                    {
+                        Thread.Sleep(100);
                         myDmm.IO = (IMessage)rm.Open(ioaddr, AccessMode.NO_LOCK, 5000, ""); //Open up a handle to the DMM with a 2 second timeout
                         myDmm.IO.Timeout = 5000; //You can also set your timeout by doing this command, sets to 3 seconds
+                        dicMyDmm.Add(ioaddr, myDmm.IO);
                     }
+
+
+                    //if (myDmm.IO != null && myDmm.IO.ResourceName != ioaddr + "::INSTR")
+                    //{
+                    //    Thread.Sleep(100);
+                    //    myDmm.IO = (IMessage)rm.Open(ioaddr, AccessMode.NO_LOCK, 5000, ""); //Open up a handle to the DMM with a 2 second timeout
+                    //    myDmm.IO.Timeout = 5000; //You can also set your timeout by doing this command, sets to 3 seconds
+                    //    Thread.Sleep(100);
+                    //}
                     //myDmm.IO.Clear(); //Send a device clear first to stop any measurements in process    
                     //myDmm.WriteString("*RST", true);
 
@@ -463,7 +484,7 @@ namespace NichTest
             }
             catch (Exception ex)
             {
-                Log.SaveLogToTxt(ex.Message + "\n" + "failed to operate GPIB");
+                Log.SaveLogToTxt(ex.Message + "\r\n" + "failed to operate GPIB");
                 return buf;
             }
         }
