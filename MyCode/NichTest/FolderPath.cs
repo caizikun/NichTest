@@ -9,6 +9,10 @@ namespace NichTest
 {
     public struct FolderPath
     {
+        public static string OpticalEyeDiagram;
+        public static string ElecEyeDiagram;
+        public static string PlariltyEyeDiagram;
+
         public static void SetValue(string[] folderPath)
         {
             foreach (string path in folderPath)
@@ -22,20 +26,12 @@ namespace NichTest
             ElecEyeDiagram = folderPath[1] + "\\";
             PlariltyEyeDiagram = folderPath[2] + "\\";
         }
-
-        public static string OpticalEyeDiagram;
-
-        public static string ElecEyeDiagram;
-
-        public static string PlariltyEyeDiagram;
     }
 
     public struct FilePath
     {
         public static string ConfigXml;
-
         public static string TestDataXml;
-
         public static string LogFile;
 
         public static void SaveTableToExcel(DataTable table, string fileName)
