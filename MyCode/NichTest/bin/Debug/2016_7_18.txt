@@ -1,0 +1,242 @@
+[2016/7/18 10:00:17][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 10:00:17][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 10:00:17][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 10:00:17][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 10:00:17][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 10:00:18][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 10:00:18][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 10:00:18][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 10:00:18][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 10:00:20][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 10:00:20][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 10:00:20][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 10:00:20][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 10:00:21][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 10:00:21][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 10:00:21][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 10:00:21][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 10:00:22][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISOFF
+[2016/7/18 10:00:47][Error][IOPort.ReadString]:VI_ERROR_TMO: A timeout occurred
+[2016/7/18 10:00:47][Error][AQ2211PowerMeter.ConfigWavelength]:System.FormatException: 输入字符串的格式不正确。
+   在 System.Number.ParseDouble(String value, NumberStyles options, NumberFormatInfo numfmt)
+   在 System.Convert.ToDouble(String value)
+   在 QuickCheck.AQ2211PowerMeter.ConfigWavelength(String dutcurrentchannel, Int32 syn) 位置 F:\documents\visual studio 2010\Projects\QuickCheck\QuickCheck\Equipment\PowerMeter\AQ2211PowerMeter.cs:行号 161
+[2016/7/18 10:00:47][Infor][AQ2211PowerMeter.SelectUnit]:PowerMeterSlot is3Channel is1UnitType is0
+[2016/7/18 10:00:51][Infor][E3631.ConfigVoltageCurrent]:E3631 channel isAPPL P6Vvoltage is3.3current is1.5
+[2016/7/18 10:00:51][Infor][E3631.ConfigVoltageCurrent]:E3631 channel isAPPL P25Vvoltage is3.3current is1
+[2016/7/18 10:00:51][Infor][E3631.OutPutSwitch]:E3631 Switch isON
+[2016/7/18 10:00:53][Infor][E3631.OutPutSwitch]:E3631 Switch isOFF
+[2016/7/18 10:02:25][Infor][AQ2211OpticalSwitch.SwitchChannel]:OpticalSwitch change channel to1
+[2016/7/18 10:02:35][Infor][MainForm.RunInitial]:ConfigEquipment sucessfully.
+[2016/7/18 10:03:42][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 10:03:42][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 10:03:42][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 10:03:42][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 10:03:43][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 10:03:44][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 10:03:44][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 10:03:44][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 10:03:44][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 10:03:45][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 10:03:45][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 10:03:45][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 10:03:45][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 10:03:46][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 10:03:47][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 10:03:47][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 10:03:47][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 10:03:48][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISOFF
+[2016/7/18 17:13:05][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:13:05][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 17:13:06][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:13:06][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:13:06][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:13:07][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:13:07][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:13:07][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:13:07][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:13:08][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:13:08][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:13:08][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:13:08][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:13:09][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:13:10][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:13:10][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:13:10][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:13:11][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISOFF
+[2016/7/18 17:13:12][Infor][AQ2211PowerMeter.ConfigWavelength]:PowerMeterSlot is3:Channel1:WAV 1310nm
+[2016/7/18 17:13:12][Infor][AQ2211PowerMeter.SelectUnit]:PowerMeterSlot is3Channel is1UnitType is0
+[2016/7/18 17:13:12][Infor][E3631.ConfigVoltageCurrent]:E3631 channel isAPPL P6Vvoltage is3.3current is1.5
+[2016/7/18 17:13:12][Infor][E3631.ConfigVoltageCurrent]:E3631 channel isAPPL P25Vvoltage is3.3current is1.5
+[2016/7/18 17:13:12][Infor][E3631.OutPutSwitch]:E3631 Switch isON
+[2016/7/18 17:13:14][Infor][E3631.OutPutSwitch]:E3631 Switch isOFF
+[2016/7/18 17:13:15][Infor][AQ2211OpticalSwitch.SwitchChannel]:OpticalSwitch change channel to1
+[2016/7/18 17:13:15][Infor][MainForm.btnInitial_Click]:ConfigEquipment sucessfully.
+[2016/7/18 17:13:17][Infor][E3631.OutPutSwitch]:E3631 Switch isON
+[2016/7/18 17:13:20][Infor][MainForm.btnStart_Click]:***********************  SN=INFBI005D005 ************************
+[2016/7/18 17:13:20][Infor][MainForm.btnStart_Click]:***********************  SN=INFBI005D005 ************************
+[2016/7/18 17:13:20][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:13:21][Infor][E3631.OutPutSwitch]:E3631 Switch isON
+[2016/7/18 17:14:23][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:15:01][Infor][AQ2211Atten.SetOffset]:AttSlot is2offset is0
+[2016/7/18 17:16:14][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.10
+[2016/7/18 17:16:39][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.10
+[2016/7/18 17:17:25][Infor][AQ2211Atten.ChangeChannel]:ATT CurrentChannel is1ATT Wavelength isATT offset is0.1
+[2016/7/18 17:18:25][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 17:18:50][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:19:01][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:19:12][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:19:12][Infor][AQ2211Atten.SetOffset]:AttSlot is2offset is0
+[2016/7/18 17:19:13][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.40
+[2016/7/18 17:19:13][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.40
+[2016/7/18 17:19:13][Infor][AQ2211Atten.ChangeChannel]:ATT CurrentChannel is2ATT Wavelength isATT offset is0.4
+[2016/7/18 17:19:13][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 17:19:13][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:19:13][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:19:13][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:22:11][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:22:11][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 17:22:11][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:22:11][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:22:11][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:22:12][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:22:13][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:22:13][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:22:13][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:22:14][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:22:14][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:22:14][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:22:14][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:22:15][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:22:15][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:22:15][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:22:15][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:22:17][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISOFF
+[2016/7/18 17:22:18][Infor][AQ2211PowerMeter.ConfigWavelength]:PowerMeterSlot is3:Channel1:WAV 1310nm
+[2016/7/18 17:22:18][Infor][AQ2211PowerMeter.SelectUnit]:PowerMeterSlot is3Channel is1UnitType is0
+[2016/7/18 17:22:18][Infor][E3631.ConfigVoltageCurrent]:E3631 channel isAPPL P6Vvoltage is3.3current is1.5
+[2016/7/18 17:22:18][Infor][E3631.ConfigVoltageCurrent]:E3631 channel isAPPL P25Vvoltage is3.3current is1.5
+[2016/7/18 17:22:18][Infor][E3631.OutPutSwitch]:E3631 Switch isON
+[2016/7/18 17:22:20][Infor][E3631.OutPutSwitch]:E3631 Switch isOFF
+[2016/7/18 17:22:20][Infor][AQ2211OpticalSwitch.SwitchChannel]:OpticalSwitch change channel to1
+[2016/7/18 17:22:20][Infor][MainForm.btnInitial_Click]:ConfigEquipment sucessfully.
+[2016/7/18 17:22:23][Infor][E3631.OutPutSwitch]:E3631 Switch isON
+[2016/7/18 17:22:26][Infor][MainForm.btnStart_Click]:***********************  SN=INFBI005D005 ************************
+[2016/7/18 17:22:26][Infor][MainForm.btnStart_Click]:***********************  SN=INFBI005D005 ************************
+[2016/7/18 17:22:26][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:22:27][Infor][E3631.OutPutSwitch]:E3631 Switch isON
+[2016/7/18 17:26:02][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:26:02][Infor][AQ2211Atten.SetOffset]:AttSlot is2offset is0
+[2016/7/18 17:26:02][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.10
+[2016/7/18 17:26:02][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.10
+[2016/7/18 17:26:02][Infor][AQ2211Atten.ChangeChannel]:ATT CurrentChannel is1ATT Wavelength isATT offset is0.1
+[2016/7/18 17:26:02][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 17:26:03][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:26:03][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:26:03][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:26:03][Infor][AQ2211Atten.SetOffset]:AttSlot is2offset is0
+[2016/7/18 17:26:04][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.40
+[2016/7/18 17:26:04][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.40
+[2016/7/18 17:26:04][Infor][AQ2211Atten.ChangeChannel]:ATT CurrentChannel is2ATT Wavelength isATT offset is0.4
+[2016/7/18 17:26:04][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 17:26:04][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:26:04][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:26:04][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:35:27][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:35:27][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 17:35:27][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:35:27][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:35:27][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:35:28][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:35:28][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:35:28][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:35:28][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:35:30][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:35:30][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:35:30][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:35:30][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:35:31][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:35:31][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:35:31][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.00
+[2016/7/18 17:35:31][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:35:32][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISOFF
+[2016/7/18 17:35:33][Infor][E3631.ConfigVoltageCurrent]:E3631 channel isAPPL P6Vvoltage is3.3current is1.5
+[2016/7/18 17:35:33][Infor][E3631.ConfigVoltageCurrent]:E3631 channel isAPPL P25Vvoltage is3.3current is1.5
+[2016/7/18 17:35:33][Infor][E3631.OutPutSwitch]:E3631 Switch isON
+[2016/7/18 17:35:35][Infor][E3631.OutPutSwitch]:E3631 Switch isOFF
+[2016/7/18 17:35:36][Infor][AQ2211OpticalSwitch.SwitchChannel]:OpticalSwitch change channel to1
+[2016/7/18 17:35:36][Infor][MainForm.btnInitial_Click]:ConfigEquipment sucessfully.
+[2016/7/18 17:35:39][Infor][E3631.OutPutSwitch]:E3631 Switch isON
+[2016/7/18 17:35:42][Infor][MainForm.btnStart_Click]:***********************  SN=INFBI005D005 ************************
+[2016/7/18 17:35:42][Infor][MainForm.btnStart_Click]:***********************  SN=INFBI005D005 ************************
+[2016/7/18 17:35:42][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:35:43][Infor][E3631.OutPutSwitch]:E3631 Switch isON
+[2016/7/18 17:35:47][Error][ForUser.BeginTest]: CDR ByPass Error
+[2016/7/18 17:35:47][Error][ForUser.BeginTest]:failed to test.
+[2016/7/18 17:35:47][Error][MainForm.btnStart_Click]:start error
+[2016/7/18 17:35:47][Error][MainForm.btnStart_Click]:System.IO.FileNotFoundException: 未能找到文件“F:\documents\visual studio 2010\Projects\QuickCheck\QuickCheck\bin\Debug\TestData”。
+文件名:“F:\documents\visual studio 2010\Projects\QuickCheck\QuickCheck\bin\Debug\TestData”
+   在 System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   在 System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   在 System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)
+   在 System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)
+   在 System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)
+   在 System.Xml.XmlTextReaderImpl.OpenUrlDelegate(Object xmlResolver)
+   在 System.Threading.CompressedStack.runTryCode(Object userData)
+   在 System.Runtime.CompilerServices.RuntimeHelpers.ExecuteCodeWithGuaranteedCleanup(TryCode code, CleanupCode backoutCode, Object userData)
+   在 System.Threading.CompressedStack.Run(CompressedStack compressedStack, ContextCallback callback, Object state)
+   在 System.Xml.XmlTextReaderImpl.OpenUrl()
+   在 System.Xml.XmlTextReaderImpl.Read()
+   在 System.Xml.XmlTextReader.Read()
+   在 System.Xml.XmlReader.MoveToContent()
+   在 System.Data.DataTable.ReadXml(XmlReader reader, Boolean denyResolving)
+   在 System.Data.DataTable.ReadXml(String fileName)
+   在 QuickCheck.MainForm.btnStart_Click(Object sender, EventArgs e) 位置 F:\documents\visual studio 2010\Projects\QuickCheck\QuickCheck\MainForm.cs:行号 346
+[2016/7/18 17:36:22][Infor][E3631.OutPutSwitch]:E3631 Switch isON
+[2016/7/18 17:36:25][Infor][MainForm.btnStart_Click]:***********************  SN=INFBI005D005 ************************
+[2016/7/18 17:36:25][Infor][MainForm.btnStart_Click]:***********************  SN=INFBI005D005 ************************
+[2016/7/18 17:36:25][Infor][AQ2211Atten.OutPutSwitch]:AttSlot is2state ISON
+[2016/7/18 17:36:26][Infor][E3631.OutPutSwitch]:E3631 Switch isON
+[2016/7/18 17:36:47][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:36:47][Infor][AQ2211Atten.SetOffset]:AttSlot is2offset is0
+[2016/7/18 17:36:48][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.10
+[2016/7/18 17:36:48][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.10
+[2016/7/18 17:36:48][Infor][AQ2211Atten.ChangeChannel]:ATT CurrentChannel is1ATT Wavelength isATT offset is0.1
+[2016/7/18 17:36:48][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 17:36:49][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:36:49][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:36:49][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:36:49][Infor][AQ2211Atten.SetOffset]:AttSlot is2offset is0
+[2016/7/18 17:36:49][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.40
+[2016/7/18 17:36:49][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.40
+[2016/7/18 17:36:49][Infor][AQ2211Atten.ChangeChannel]:ATT CurrentChannel is2ATT Wavelength isATT offset is0.4
+[2016/7/18 17:36:49][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 17:36:50][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:36:50][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:36:50][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:36:50][Infor][AQ2211Atten.SetOffset]:AttSlot is2offset is0
+[2016/7/18 17:36:51][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS11.60
+[2016/7/18 17:36:51][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS11.60
+[2016/7/18 17:36:51][Infor][AQ2211Atten.ChangeChannel]:ATT CurrentChannel is3ATT Wavelength isATT offset is1.6
+[2016/7/18 17:36:52][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.60
+[2016/7/18 17:36:52][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0.60
+[2016/7/18 17:36:52][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:36:52][Infor][AQ2211Atten.SetOffset]:AttSlot is2offset is0
+[2016/7/18 17:36:53][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.70
+[2016/7/18 17:36:53][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.70
+[2016/7/18 17:36:53][Infor][AQ2211Atten.ChangeChannel]:ATT CurrentChannel is4ATT Wavelength isATT offset is0.7
+[2016/7/18 17:36:53][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 17:36:54][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:36:54][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:36:54][Error][AQ2211Atten.AttnValue]:Light Source Power Too Smal
+[2016/7/18 17:36:55][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:36:55][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS0
+[2016/7/18 17:36:55][Infor][AQ2211Atten.ConfigWavelength]:AttSlot is2:Channel1Wavelength is1310nm
+[2016/7/18 17:36:55][Infor][AQ2211Atten.SetOffset]:AttSlot is2offset is0
+[2016/7/18 17:36:55][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.10
+[2016/7/18 17:36:55][Infor][AQ2211Atten.AttnValue]:AttSlot is2ATT VALUE IS10.10
+[2016/7/18 17:36:55][Infor][AQ2211Atten.ChangeChannel]:ATT CurrentChannel is1ATT Wavelength isATT offset is0.1
+[2016/7/18 17:36:55][Infor][AQ2211OpticalSwitch.ChangeChannel]:OpticalSwitch change channel to1
+[2016/7/18 17:36:55][Infor][E3631.ConfigVoltageCurrent]:E3631 channel isAPPL P6Vvoltage is3.49999995231628current is1.5
+[2016/7/18 17:37:01][Error][ForUser.BeginTest]:环境切换的时候出错```
+[2016/7/18 17:37:01][Error][ForUser.BeginTest]:failed to test.

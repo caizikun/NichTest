@@ -1,0 +1,12 @@
+[16:25:55] Load config...
+[16:25:55] Done.
+[16:25:56] Load test data recording...
+[16:25:56] Done.
+[16:25:56] Get production family information from server.
+[16:25:56] Done.
+[16:26:01] Get production name list from server, according selected family SFP.
+[16:26:01] Done.
+[16:26:03] Get test plan list from server, according its PN TR_ONU863_G1.
+[16:26:03] Done.
+[16:26:05] Get parameters and spec of test plan DEV_TR_FUL_P.
+[16:26:05] Done.

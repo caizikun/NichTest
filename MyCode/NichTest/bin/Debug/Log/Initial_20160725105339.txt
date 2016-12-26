@@ -1,0 +1,69 @@
+[10:53:39] Load config...
+[10:53:39] Done.
+[10:53:39] Load test data recording...
+[10:53:39] Done.
+[10:53:39] Get production family information from server.
+[10:53:39] Done.
+[10:53:41] Get production name list from server, according selected family QSFP28.
+[10:53:41] Done.
+[10:53:42] Get test plan list from server, according its PN TR_CGR4_G3.
+[10:53:42] Done.
+[10:53:45] Get parameters and spec of test plan DEV_TR_QuickCheck.
+[10:53:45] Done.
+[10:53:47] Selected test station PreModule.
+[10:53:48] Begin to initial...
+[10:53:48] Saved calibration data to config file.
+[10:53:48] Try to get equipment infomation from server.
+[10:53:49] Config offset for equipment AQ2211ATTEN_NA_ATTENNUATOR
+[10:53:49] Get parameter for equipment AQ2211ATTEN_NA_ATTENNUATOR
+[10:53:49] Initial equipment AQ2211ATTEN_NA_ATTENNUATOR
+[10:53:50] AttSlot is2:Channel1Wavelength is1310nm
+[10:53:50] Light Source Power Too Smal
+[10:53:50] AttSlot is2ATT VALUE IS0
+[10:53:50] AttSlot is2ATT VALUE IS0
+[10:53:50] AttSlot is2state ISON
+[10:53:51] AttSlot is2:Channel1Wavelength is1310nm
+[10:53:52] AttSlot is2ATT VALUE IS0.00
+[10:53:52] AttSlot is2ATT VALUE IS0.00
+[10:53:52] AttSlot is2state ISON
+[10:53:53] AttSlot is2:Channel1Wavelength is1310nm
+[10:53:53] AttSlot is2ATT VALUE IS0.00
+[10:53:53] AttSlot is2ATT VALUE IS0.00
+[10:53:53] AttSlot is2state ISON
+[10:53:55] AttSlot is2:Channel1Wavelength is1310nm
+[10:53:55] AttSlot is2ATT VALUE IS0.00
+[10:53:55] AttSlot is2ATT VALUE IS0.00
+[10:53:55] AttSlot is2state ISON
+[10:53:56] AttSlot is2state ISOFF
+[10:53:57] Config offset for equipment E3631_NA_POWERSUPPLY
+[10:53:57] Get parameter for equipment E3631_NA_POWERSUPPLY
+[10:53:57] Initial equipment E3631_NA_POWERSUPPLY
+[10:53:57] E3631 channel isAPPL P6Vvoltage is3.5current is1.5
+[10:53:57] E3631 channel isAPPL P25Vvoltage is3.5current is1
+[10:53:57] E3631 Switch isON
+[10:53:59] E3631 Switch isOFF
+[10:54:00] Get parameter for equipment AQ2211OPTICALSWITCH_TX_OPTICALSWITCH
+[10:54:00] Initial equipment AQ2211OPTICALSWITCH_TX_OPTICALSWITCH
+[10:54:00] OpticalSwitch change channel to1
+[10:54:00] Get parameter for equipment AQ2211POWERMETER_NA_POWERMETER
+[10:54:00] Initial equipment AQ2211POWERMETER_NA_POWERMETER
+[10:54:00] PowerMeterSlot is3:Channel1:WAV 1310nm
+[10:54:01] PowerMeterSlot is3Channel is1UnitType is0
+[10:54:01] PowerMeterSlot is3:Channel1:WAV 1310nm
+[10:54:01] PowerMeterSlot is3Channel is1UnitType is0
+[10:54:01] PowerMeterSlot is3:Channel1:WAV 1310nm
+[10:54:01] PowerMeterSlot is3Channel is1UnitType is0
+[10:54:01] PowerMeterSlot is3:Channel1:WAV 1310nm
+[10:54:01] PowerMeterSlot is3Channel is1UnitType is0
+[10:54:01] Initial equipment successfully.
+[10:54:03] Prepare to test...
+[10:54:06] E3631 Switch isON
+[10:54:17] Prepare to test...
+[10:54:27] E3631 Switch isON
+[10:55:12] E3631 Switch isON
+[10:55:41] Prepare to test...
+[10:55:46] E3631 Switch isON
+[10:57:07] Prepare to test...
+[10:57:17] E3631 Switch isON
+[10:57:34] Prepare to test...
+[10:57:41] E3631 Switch isON

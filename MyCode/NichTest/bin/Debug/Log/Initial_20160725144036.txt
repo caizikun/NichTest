@@ -1,0 +1,11 @@
+[14:40:36] Load config...
+[14:40:36] Done.
+[14:40:37] Load test data recording...
+[14:40:37] Done.
+[14:40:37] Get production family information from server.
+[14:40:38] Done.
+[14:40:44] No taken source.
+[14:40:46] No taken source.
+[14:40:47] No taken source.
+[14:40:47] No taken source.
+[14:40:47] No taken source.

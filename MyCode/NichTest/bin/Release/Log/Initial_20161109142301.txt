@@ -1,0 +1,13 @@
+[14:23:01] Load config...
+[14:23:01] Done.
+[14:23:02] Load test data recording...
+[14:23:02] Done.
+[14:23:02] Get production family information from server.
+[14:23:03] Done.
+[14:23:08] Get production name list from server, according selected family QSFP28.
+[14:23:08] Done.
+[14:23:11] Get test plan list from server, according its PN TR_CGR4_G3.
+[14:23:11] Done.
+[14:23:15] Get parameters and spec of test plan DEV_TR_QuickCheck.
+[14:23:15] Done.
+[14:23:17] Selected test station PreModule.

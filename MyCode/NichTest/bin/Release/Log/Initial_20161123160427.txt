@@ -1,0 +1,22 @@
+[16:04:27] Load config...
+[16:04:27] Done.
+[16:04:27] Load test data recording...
+[16:04:28] Done.
+[16:04:28] Get production family information from server.
+[16:04:28] Done.
+[16:04:35] Get production name list from server, according selected family QSFP28.
+[16:04:36] Done.
+[16:04:38] Get test plan list from server, according its PN TR_CGR4_G3.
+[16:04:38] Done.
+[16:04:40] Get parameters and spec of test plan DEV_TR_QuickCheck_Parallel.
+[16:04:40] Done.
+[16:04:42] Selected test station PreModule.
+[16:04:45] Begin to initial...
+[16:04:45] Saved calibration data to config file.
+[16:04:46] Try to get equipment infomation from server.
+[16:04:46] Config offset for equipment aq2211atten
+[16:04:46] Get parameter for equipment aq2211atten
+[16:04:46] Initial equipment aq2211atten
+[16:04:52] VI_ERROR_TMO: A timeout occurred
+[16:04:52] Failed to initial AQ2211 attennuator.
+[16:04:52] Failed to initial equipment aq2211atten

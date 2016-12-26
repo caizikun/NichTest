@@ -1,0 +1,6 @@
+[15:34:54] Load config...
+[15:34:54] Done.
+[15:34:54] Load test data recording...
+[15:34:54] Done.
+[15:34:54] Get production family information from server.
+[15:34:54] Done.
