@@ -699,16 +699,17 @@ namespace NichTest
         }
 
         private bool ConfigEnvironment(double temp, double voltage, byte channel, double tempOffset, int tempWaitTime, float RxOverload)
-        { 
+        {
+            bool result = false;
             if (tempControl != null)
             {
-                ConfigTemp(temp, tempOffset);
+                result = result && ConfigTemp(temp, tempOffset);
                 Thread.Sleep(tempWaitTime * 1000);  
             }
 
             if (attennuator != null)
             {
-                attennuator.SetAllChannnel_RxOverLoad(RxOverload);
+                result = result && attennuator.SetAllChannnel_RxOverLoad(RxOverload);
             }
 
             foreach (string key in this.usedEquipments.Keys)
@@ -720,7 +721,7 @@ namespace NichTest
             {
                 return false;
             }
-            return true;
+            return result;
         }
 
         private bool ConfigTemp(double temp, double tempOffset)

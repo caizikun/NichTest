@@ -78,6 +78,7 @@
     <Compile Include="Equipment\Scope\Flex86100.cs" />
     <Compile Include="Equipment\Scope\Scope.cs" />
     <Compile Include="Equipment\SyncLock.cs" />
+    <Compile Include="Equipment\Thermocontroller\TPO4300.cs" />
     <Compile Include="Form\CalculatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,7 +101,7 @@
     <Compile Include="Equipment\PowerMeter\PowerMeter.cs" />
     <Compile Include="Equipment\PowerSupply\E3631.cs" />
     <Compile Include="Equipment\PowerSupply\PowerSupply.cs" />
-    <Compile Include="Equipment\Thermocontroller.cs" />
+    <Compile Include="Equipment\Thermocontroller\Thermocontroller.cs" />
     <Compile Include="FolderPath.cs" />
     <Compile Include="Form\MineClearanceForm.cs">
       <SubType>Form</SubType>
