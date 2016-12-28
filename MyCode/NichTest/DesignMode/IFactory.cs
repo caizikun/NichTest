@@ -81,6 +81,9 @@ namespace NichTest
                 case "MP1800ED":
                     myEquipment = new MP1800ED();
                     break;
+                case "TPO4300":
+                    myEquipment = new TPO4300();
+                    break;
                 default:
                     myEquipment = null;
                     break;
