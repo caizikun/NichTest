@@ -164,6 +164,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Table\RxOTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Table\TxOTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TestModel\QuickCheckTest.cs" />
     <Compile Include="DesignMode\ITest.cs" />
     <Compile Include="TestData.cs">
@@ -292,6 +298,10 @@
     <None Include="Resources\calculat05.ico" />
     <None Include="Resources\8++.ico" />
     <None Include="Resources\8.ico" />
+    <Content Include="bin\Debug\TestData\RxO.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="bin\Debug\TestData\TxO.xml" />
     <Content Include="Resources\Cool.png" />
     <Content Include="Resources\Cry.png" />
     <None Include="Resources\Exploding.png" />
