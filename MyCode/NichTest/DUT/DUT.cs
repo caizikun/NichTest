@@ -12,7 +12,7 @@ namespace NichTest
         protected ChipDefaultValueByPN dataTable_ChipDefaultValueByPN;
         protected EEPROMDefaultValueByTestPlan dataTable_EEPROMDefaultValueByTestPlan;
         protected DUTCoeffControlByPN dataTable_DUTCoeffControlByPN;
-        protected static object syncRoot = new Object();//used for thread synchronization
+        private static object syncRoot = new Object();//used for thread synchronization
 
         public enum NameOfADC : int
         {

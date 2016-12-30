@@ -9,6 +9,8 @@ namespace NichTest
 {
     public class QSFP28 : DUT
     {
+        private static object syncRoot = new Object();//used for thread synchronization
+
         private static byte[] WriteDriver40g(int deviceIndex, int deviceAddress, int StartAddress, int regAddress, byte channel, byte chipset, byte[] dataToWrite, bool Switch)
         {
             return EEPROM.ReadWriteDriverQSFP(deviceIndex, deviceAddress, StartAddress, regAddress, channel, 0x02, chipset, dataToWrite, Switch);
