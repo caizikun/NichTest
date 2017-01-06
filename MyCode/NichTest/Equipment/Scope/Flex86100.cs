@@ -2778,27 +2778,32 @@ namespace NichTest
                 {
                     MessageBox.Show("准备校验slot{0}的模组，请拔除该模组上的所有输入信号再继续！", slot.ToString());
                     this.WriteString(":CALibrate:SLOT" + slot.ToString() + ":STARt");
-                    Log.SaveLogToTxt("111");
+                    
                     this.WriteString(":CALibrate:SDONe?");
-                    for (int i = 0; i < 10; i++)
-                    {
-                        if (this.ReadString() != "") break;
-                        else Thread.Sleep(500);
-                    }
-                    Log.SaveLogToTxt("222");
+                    Thread.Sleep(5000);
+                    if (this.ReadString() == "Failed") return false;
+                    //for (int i = 0; i < 10; i++)
+                    //{
+                    //    if (this.ReadString() != "") break;
+                    //    else Thread.Sleep(500);
+                    //}
+
+
                     this.WriteString(":CALibrate:CONTinue");
                     this.WriteString(":CALibrate:SDONe?");
-                    for (int i = 0; i < 100; i++)
-                    {
-                        Thread.Sleep(3000);
-                        try
-                        {
-                            if (this.ReadString() != "Failed") break;
-                        }
-                        catch
-                        {
-                        }
-                    }
+                    Thread.Sleep(200000);
+                    if (this.ReadString() == "Failed") return false;
+                    //for (int i = 0; i < 100; i++)
+                    //{
+                    //    Thread.Sleep(3000);
+                    //    try
+                    //    {
+                    //        if (this.ReadString() != "Failed") break;
+                    //    }
+                    //    catch
+                    //    {
+                    //    }
+                    //}
                     Log.SaveLogToTxt("333");
                     this.WriteString(":CALibrate:CONTinue");
                     return true;
