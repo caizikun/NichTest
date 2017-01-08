@@ -258,6 +258,14 @@ namespace NichTest
                             equipment.ConfigOffset(1, offset_VCC, offset_ICC);
                         }
 
+                        if (equipmentFullName.Contains("NA_OPTICALSWITCH"))
+                        {
+                            Log.SaveLogToTxt("Failed.");
+                            Log.SaveLogToTxt("It can not parallel initial, due to Tx/Rx have common equipment NA_OPTICALSWITCH.");
+                            result = false;
+                            pls.Break();
+                        }
+
                         if (equipment.Initial(currentEquipmentPara) && equipment.Configure(1))
                         {
                             usedEquipments.Add(equipmentType, equipment);
@@ -486,6 +494,7 @@ namespace NichTest
                         Log.SaveLogToTxt("Failed to config environment.");
                         return false;
                     }
+                    ConditionParaByTestPlan.LastTemp = ConditionParaByTestPlan.Temp;
 
                     Log.SaveLogToTxt("Try to get test model list under this condition.");
                     string table = "TopoTestModel";
@@ -498,7 +507,8 @@ namespace NichTest
                         supply.OutPutSwitch(false);
                         supply.OutPutSwitch(true);
                         dut.FullFunctionEnable();
-                    }                    
+                    }
+                    
 
                     for (int i = 0; i < dataTable_TestItems.Rows.Count; i++)// 遍历Condition中的TestModel
                     {
@@ -572,6 +582,7 @@ namespace NichTest
                         Log.SaveLogToTxt("Failed to config environment.");
                         return false;
                     }
+                    ConditionParaByTestPlan.LastTemp = ConditionParaByTestPlan.Temp;
 
                     Log.SaveLogToTxt("Try to get test model list under this condition.");
                     string table = "TopoTestModel";
@@ -700,16 +711,21 @@ namespace NichTest
 
         private bool ConfigEnvironment(double temp, double voltage, byte channel, double tempOffset, int tempWaitTime, float RxOverload)
         {
-            bool result = false;
+            bool result = true;
             if (tempControl != null)
             {
-                result = result && ConfigTemp(temp, tempOffset);
-                Thread.Sleep(tempWaitTime * 1000);  
+                if (temp != ConditionParaByTestPlan.LastTemp)
+                {
+                    result = result && ConfigTemp(temp, tempOffset);
+                    Log.SaveLogToTxt("keep temp " + tempWaitTime + " s.");
+                    Thread.Sleep(tempWaitTime * 1000);
+                }      
             }
 
             if (attennuator != null)
             {
                 result = result && attennuator.SetAllChannnel_RxOverLoad(RxOverload);
+                Log.SaveLogToTxt("set rx overload");
             }
 
             foreach (string key in this.usedEquipments.Keys)
@@ -731,7 +747,7 @@ namespace NichTest
 
             tempControl.SetPointTemp(temp);
             double CurrentTemp = Convert.ToDouble(tempControl.ReadCurrentTemp());
-            i = 0;
+            i = 0;            
             while (Math.Abs(CurrentTemp - temp) > 0.5)
             {
                 Thread.Sleep(2000);
@@ -743,7 +759,8 @@ namespace NichTest
                     //MessageBox.Show("无法调整到当前温度");
                     return false;
                 }
-            } 
+            }
+            
             return true;
         }
 

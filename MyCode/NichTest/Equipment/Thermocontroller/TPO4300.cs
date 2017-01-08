@@ -287,7 +287,7 @@ namespace NichTest
                             {
                                 this.WriteString("LLIM?");
                                 readtemp = this.ReadString();
-                                if (Convert.ToDouble(readtemp) == Convert.ToDouble(upperLimit))
+                                if (Convert.ToDouble(readtemp) == Convert.ToDouble(lowerLimit))
                                     break;
                             }
                             if (k <= 3)
