@@ -16,12 +16,15 @@ namespace NichTest
                 //get equipment object
                 Scope scope = (Scope)equipments["SCOPE"];
 
-                ////change to Tx path, no need this switch, otherwise it can't run parallel test
-                //if (equipments.Keys.Contains("NA_OPTICALSWITCH"))
-                //{
-                //    OpticalSwitch opticalSwitch = (OpticalSwitch)equipments["NA_OPTICALSWITCH"];
-                //    opticalSwitch.CheckEquipmentRole(1, (byte)channel);
-                //}
+                //change to Tx path, if have this equipment, it can not run parallel test, just to do one by one.
+                //due to it is the common equipment between Tx and Rx.
+                if (equipments.Keys.Contains("NA_OPTICALSWITCH"))
+                {
+                    Log.SaveLogToTxt("It can not parallel initial, due to Tx/Rx have common equipment NA_OPTICALSWITCH.");
+                    Log.SaveLogToTxt("have to test one by one.");
+                    OpticalSwitch opticalSwitch = (OpticalSwitch)equipments["NA_OPTICALSWITCH"];
+                    opticalSwitch.CheckEquipmentRole(1, (byte)channel);
+                }
 
                 lock (scope)
                 {                    
@@ -45,7 +48,7 @@ namespace NichTest
                     dut.CloseAndOpenAPC(Convert.ToByte(DUT.APCMODE.IBAISandIMODON));
 
                     //Algorithm.GetSpec(specParameters, "MASKMARGIN(%)", 0, out MaskSpecMax, out MaskSpecMin);
-                    double MaskSpecMax = 255, MaskSpecMin = -255;
+                    double MaskSpecMax = 255, MaskSpecMin = 0;
 
                     //TxEye test
                     Dictionary<string, double> outData = new Dictionary<string, double>();

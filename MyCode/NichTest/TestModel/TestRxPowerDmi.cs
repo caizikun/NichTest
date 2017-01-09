@@ -18,6 +18,16 @@ namespace NichTest
                 //get equipment object
                 Attennuator attennuator = (Attennuator)equipments["ATTENNUATOR"];
 
+                //change to Rx path, if have this equipment, it can not run parallel test, just to do one by one.
+                //due to it is the common equipment between Tx and Rx.
+                if (equipments.Keys.Contains("NA_OPTICALSWITCH"))
+                {
+                    Log.SaveLogToTxt("It can not parallel initial, due to Tx/Rx have common equipment NA_OPTICALSWITCH.");
+                    Log.SaveLogToTxt("have to test one by one.");
+                    OpticalSwitch opticalSwitch = (OpticalSwitch)equipments["NA_OPTICALSWITCH"];
+                    opticalSwitch.CheckEquipmentRole(2, (byte)channel);
+                }
+
                 lock (attennuator)
                 {                    
                     Log.SaveLogToTxt("Start to do RxPowerDmi test for channel " + channel);
