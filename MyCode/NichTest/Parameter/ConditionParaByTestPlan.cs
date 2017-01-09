@@ -12,6 +12,7 @@ namespace NichTest
         public static string SEQ;
         public static byte Channel;
         public static double Temp;
+        public static double LastTemp = Algorithm.MyNaN;
         public static double VCC;
         public static string ItemName;
         public static int CtrlType;
