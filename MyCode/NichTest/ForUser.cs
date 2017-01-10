@@ -769,7 +769,7 @@ namespace NichTest
             DataTable dt = new DataTable();
             if (dtTestModelList.Rows.Count > 0)
             {
-                String SS = "";
+                string SS = "";
                 for (int i = 0; i < dtTestModelList.Rows.Count; i++)
                 {
                     SS += dtTestModelList.Rows[i]["id"].ToString();
