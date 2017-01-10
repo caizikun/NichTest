@@ -275,6 +275,7 @@ namespace NichTest
                     return;
                 }
                 this.btnInitial.Enabled = false;
+                this.btnStart.Enabled = false;
                 this.groupBoxCalibratioon.Enabled = false;
                 this.groupBoxConfig.Enabled = false;
                 this.groupBoxStatus.BackColor = Color.Yellow;
@@ -332,6 +333,7 @@ namespace NichTest
                 this.groupBoxStatus.BackColor = Color.LightCoral;
             }
             this.btnInitial.Enabled = true;
+            this.btnStart.Enabled = true;
             this.groupBoxCalibratioon.Enabled = true;
             this.groupBoxConfig.Enabled = true;
             this.labelStatus.Text = "初始化完成";
