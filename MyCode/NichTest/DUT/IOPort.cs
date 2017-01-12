@@ -215,6 +215,7 @@ namespace NichTest
             }
 
             byte[] arrRead = CH375ReadData(deviceIndex, buffer.Length);
+            System.Threading.Thread.Sleep(100);
             CloseDevice(deviceIndex);
             semaphore.Release();
             //System.Threading.Thread.Sleep(50);
