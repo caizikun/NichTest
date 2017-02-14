@@ -12,14 +12,20 @@ namespace NichTest
     {
         private Dictionary<string, IEquipment> usedEquipments;
         private Dictionary<string, ITest> testItemsObject;
+        private IFactory myFactory;
         private DataTable dataTable_Spec;
         private ConfigXmlIO myXml;
-        private DataIO myDataIO;
-        private IFactory myFactory;
+        private DataIO myDataIO;        
+        //equipment
         private PowerSupply supply;
         private Thermocontroller tempControl;
         private Attennuator attennuator;
-        private DUT dut;          
+        private DUT dut;
+        //testdata table
+        private TxOTable txoTable;
+        private RxOTable rxoTable;
+        private DataRow drOfTxOTable;
+        private DataRow drOfRxOTable;
 
         public string GetIP()
         {
@@ -480,8 +486,48 @@ namespace NichTest
                 Log.SaveLogToTxt("Try to get test condition from server.");
                 testItemsObject = new Dictionary<string, ITest>();
                 DataTable dataTable_Condition = this.BuildConditionTable();
+
+                //create testdata table
+                if (TestPlanParaByPN.ItemName.Contains("TR"))
+                {
+                    txoTable = new TxOTable();
+                    rxoTable = new RxOTable();
+                }
+                else if (TestPlanParaByPN.ItemName.Contains("TX"))
+                {
+                    txoTable = new TxOTable();
+                }
+                else if (TestPlanParaByPN.ItemName.Contains("RX"))
+                {
+                    rxoTable = new RxOTable();
+                }
+                else
+                {
+                    Log.SaveLogToTxt("Name of test plan is not corrected");
+                    return false;
+                }
+
                 for (int row = 0; row < dataTable_Condition.Rows.Count; row++)//遍历测试环境条件
                 {
+                    if (txoTable != null)
+                    {
+                        //create testdata table new row, set the default value for new row, excepte for ID column
+                        drOfTxOTable = txoTable.NewRow();
+                        for (int i = 1; i < txoTable.Columns.Count; i++)
+                        {
+                            drOfTxOTable[i] = Algorithm.MyNaN;
+                        }
+                    }
+
+                    if (rxoTable != null)
+                    {
+                        drOfRxOTable = rxoTable.NewRow();
+                        for (int i = 1; i < rxoTable.Columns.Count; i++)
+                        {
+                            drOfRxOTable[i] = Algorithm.MyNaN;
+                        }
+                    }
+
                     DataRow dr = dataTable_Condition.Rows[row];
                     ConditionParaByTestPlan.SetValue(dr);
 
@@ -534,7 +580,48 @@ namespace NichTest
                         }
                         GC.Collect();
                     }
+
+                    if (drOfTxOTable != null)
+                    {
+                        drOfTxOTable["Family"] = GlobalParaByPN.Family;
+                        drOfTxOTable["PartNumber"] = GlobalParaByPN.PN;
+                        drOfTxOTable["SerialNumber"] = TestPlanParaByPN.SN;
+                        drOfTxOTable["Channel"] = ConditionParaByTestPlan.Channel;
+                        drOfTxOTable["Temp"] = ConditionParaByTestPlan.Temp;
+                        drOfTxOTable["Station"] = "TXO";
+                        drOfTxOTable["Time"] = DateTime.Now.ToString();
+                        drOfTxOTable["Status"] = 0;
+                        txoTable.Rows.Add(drOfTxOTable);
+                    }
+
+                    if (drOfRxOTable != null)
+                    {
+                        drOfRxOTable["Family"] = GlobalParaByPN.Family;
+                        drOfRxOTable["PartNumber"] = GlobalParaByPN.PN;
+                        drOfRxOTable["SerialNumber"] = TestPlanParaByPN.SN;
+                        drOfRxOTable["Channel"] = ConditionParaByTestPlan.Channel;
+                        drOfRxOTable["Temp"] = ConditionParaByTestPlan.Temp;
+                        drOfRxOTable["Station"] = "RXO";
+                        drOfRxOTable["Time"] = DateTime.Now.ToString();
+                        drOfRxOTable["Status"] = 0;
+                        rxoTable.Rows.Add(drOfRxOTable);
+                    }
+                    drOfTxOTable = null;
+                    drOfRxOTable = null;
                 }
+
+                //Save test data to xml file
+                if (txoTable != null)
+                {
+                    txoTable.WriteXml("TxOData", FilePath.TxODataXml);
+                }
+
+                if (rxoTable != null)
+                {
+                    rxoTable.WriteXml("RxOData", FilePath.RxODataXml);
+                }
+                txoTable = null;
+                rxoTable = null;
 
                 foreach (string key in testItemsObject.Keys)
                 {
@@ -545,8 +632,9 @@ namespace NichTest
                 }
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                Log.SaveLogToTxt(ex.Message);
                 Log.SaveLogToTxt("Failed to test.");
                 return false;
             }
@@ -568,8 +656,48 @@ namespace NichTest
                 Log.SaveLogToTxt("Try to get test condition from server.");
                 testItemsObject = new Dictionary<string, ITest>();
                 DataTable dataTable_Condition = this.BuildConditionTable();
+
+                //create testdata table
+                if (TestPlanParaByPN.ItemName.Contains("TR"))
+                {
+                    txoTable = new TxOTable();
+                    rxoTable = new RxOTable();
+                }
+                else if (TestPlanParaByPN.ItemName.Contains("TX"))
+                {
+                    txoTable = new TxOTable();
+                }
+                else if (TestPlanParaByPN.ItemName.Contains("RX"))
+                {
+                    rxoTable = new RxOTable();
+                }
+                else
+                {
+                    Log.SaveLogToTxt("Name of test plan is not corrected");
+                    return false;
+                }                                             
+
                 for (int row = 0; row < dataTable_Condition.Rows.Count; row++)//遍历测试环境条件
                 {
+                    if (txoTable != null)
+                    {
+                        //create testdata table new row, set the default value for new row, excepte for ID column
+                        drOfTxOTable = txoTable.NewRow();
+                        for (int i = 1; i < txoTable.Columns.Count; i++)
+                        {
+                            drOfTxOTable[i] = Algorithm.MyNaN;
+                        }                        
+                    }
+
+                    if (rxoTable != null)
+                    {
+                        drOfRxOTable = rxoTable.NewRow();
+                        for (int i = 1; i < rxoTable.Columns.Count; i++)
+                        {
+                            drOfRxOTable[i] = Algorithm.MyNaN;
+                        }
+                    }
+
                     DataRow dr = dataTable_Condition.Rows[row];
                     ConditionParaByTestPlan.SetValue(dr);
 
@@ -595,7 +723,7 @@ namespace NichTest
                         supply.OutPutSwitch(false);
                         supply.OutPutSwitch(true);
                         dut.FullFunctionEnable();
-
+                        //parallel test for FMT
                         Parallel.For(0, dataTable_TestItems.Rows.Count, (int i, ParallelLoopState pls) =>// 遍历Condition中的TestModel
                         { 
                             DataRow dr_TestItem = dataTable_TestItems.Rows[i];
@@ -623,6 +751,7 @@ namespace NichTest
                     }
                     else
                     {
+                        //onebyone test for adjust
                         for (int i = 0; i < dataTable_TestItems.Rows.Count; i++)// 遍历Condition中的TestModel
                         {
 
@@ -648,7 +777,48 @@ namespace NichTest
                             GC.Collect();
                         }
                     }
+
+                    if (drOfTxOTable != null)
+                    {
+                        drOfTxOTable["Family"] = GlobalParaByPN.Family;
+                        drOfTxOTable["PartNumber"] = GlobalParaByPN.PN;
+                        drOfTxOTable["SerialNumber"] = TestPlanParaByPN.SN;
+                        drOfTxOTable["Channel"] = ConditionParaByTestPlan.Channel;
+                        drOfTxOTable["Temp"] = ConditionParaByTestPlan.Temp;
+                        drOfTxOTable["Station"] = "TXO";
+                        drOfTxOTable["Time"] = DateTime.Now.ToString();
+                        drOfTxOTable["Status"] = 0;
+                        txoTable.Rows.Add(drOfTxOTable);
+                    }
+
+                    if (drOfRxOTable != null)
+                    {
+                        drOfRxOTable["Family"] = GlobalParaByPN.Family;
+                        drOfRxOTable["PartNumber"] = GlobalParaByPN.PN;
+                        drOfRxOTable["SerialNumber"] = TestPlanParaByPN.SN;
+                        drOfRxOTable["Channel"] = ConditionParaByTestPlan.Channel;
+                        drOfRxOTable["Temp"] = ConditionParaByTestPlan.Temp;
+                        drOfRxOTable["Station"] = "RXO";
+                        drOfRxOTable["Time"] = DateTime.Now.ToString();
+                        drOfRxOTable["Status"] = 0;
+                        rxoTable.Rows.Add(drOfRxOTable);
+                    }                    
+                    drOfTxOTable = null;
+                    drOfRxOTable = null;
                 }
+
+                //Save test data to xml file
+                if (txoTable != null)
+                {
+                    txoTable.WriteXml("TxOData", FilePath.TxODataXml);
+                }
+
+                if (rxoTable != null)
+                {
+                    rxoTable.WriteXml("RxOData", FilePath.RxODataXml);
+                }
+                txoTable = null;
+                rxoTable = null;               
 
                 foreach (string key in testItemsObject.Keys)
                 {
@@ -659,8 +829,10 @@ namespace NichTest
                 }
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                Log.SaveLogToTxt(ex.Message);
+                Log.SaveLogToTxt(ex.StackTrace);
                 Log.SaveLogToTxt("Failed to test.");
                 return false;
             }
@@ -796,8 +968,32 @@ namespace NichTest
                 this.testItemsObject.Add(name, testItem);  
             }
 
-            bool result = this.testItemsObject[name].BeginTest(dut, this.usedEquipments, inPara);
-            return true;
+            Dictionary<string, double> result = this.testItemsObject[name].BeginTest(dut, this.usedEquipments, inPara);
+
+            if (result == null)
+            {
+                return false;
+            }
+
+            foreach(string key in result.Keys)
+            {
+                if (drOfTxOTable != null)
+                {
+                    if (txoTable.Columns.Contains(key))
+                    {
+                        drOfTxOTable[key] = result[key];
+                    }                    
+                }
+
+                if (drOfRxOTable != null)
+                {
+                    if (rxoTable.Columns.Contains(key))
+                    {
+                        drOfRxOTable[key] = result[key];
+                    }
+                }                
+            }
+            return Convert.ToBoolean(result["Result"]);
         } 
     }
 }
