@@ -15,7 +15,7 @@ namespace NichTest
         /// <param name="equipments">used equipmentes by test item</param>
         /// <param name="inPara">input parameters for test item</param>
         /// <returns>the result of test, is true or false</returns>
-        bool BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara);
+        Dictionary<string, double> BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara);
 
         /// <summary>
         /// Upload test data to server, or save them to lochost.
