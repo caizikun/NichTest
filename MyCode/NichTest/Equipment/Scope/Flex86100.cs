@@ -1138,18 +1138,18 @@ namespace NichTest
                         double eyeHeight = ReadEyeHeight();
                         double bitRate = ReadBitRate();
 
-                        result.Add("AP(DBM)", opticalPower);
-                        result.Add("ER(DB)", er);
+                        result.Add("AP_dBm", opticalPower);
+                        result.Add("ER_dB", er);
                         result.Add("AMP", amp);
                         result.Add("OEOMA", OEOMA);
-                        result.Add("TXOMA(DBM)", OEOMADBM);
-                        result.Add("CROSSING(%)", crossing);
-                        result.Add("JITTERPP(PS)", jitterPP);
-                        result.Add("JITTERRMS(PS)", jitterRMS);
-                        result.Add("RISETIME(PS)", riseTime);
-                        result.Add("FALLTIME(PS)", fallTime);
-                        result.Add("EYEHEIGHT(MW)", eyeHeight);
-                        result.Add("BitRate(GB/S)", bitRate);
+                        result.Add("TxOMA_dBm", OEOMADBM);
+                        result.Add("Crossing", crossing);
+                        result.Add("JitterPP_ps", jitterPP);
+                        result.Add("JitterRMS_ps", jitterRMS);
+                        result.Add("RiseTime_ps", riseTime);
+                        result.Add("FallTime_ps", fallTime);
+                        result.Add("EyeHeight_mW", eyeHeight);
+                        result.Add("BitRate_Gbs", bitRate);
 
                         int j = 0;
                         foreach (string key in result.Keys)
@@ -1177,7 +1177,7 @@ namespace NichTest
                         LoadMask(strChannel, opticalMaskName, syn);
                         MaskTestMarginSetup(1, marginType, 0, marginHitType, marginHitRatio, marginHitCount, syn);
                         MaskMargin1 = ReadMaskMargin();
-                        result.Add("MASKMARGIN(%)", MaskMargin1);
+                        result.Add("MaskMargin", MaskMargin1);
                         for (int k = 0; k < 3; k++)
                         {
                             SaveFlag1 = SaveEyeDiagram(FolderPath.OpticalEyeDiagram, 0, 0);
@@ -1190,7 +1190,7 @@ namespace NichTest
                             LoadMask(strChannel, opticalMaskName2, syn);
                             MaskTestMarginSetup(1, marginType, 0, marginHitType, marginHitRatio, marginHitCount, syn);
                             MaskMargin2 = ReadMaskMargin();
-                            result.Add("XMASKMARGIN2(%)", MaskMargin2);
+                            result.Add("XMaskMargin2", MaskMargin2);
                             for (int k = 0; k < 3; k++)
                             {
                                 SaveFlag2 = SaveEyeDiagram(FolderPath.OpticalEyeDiagram, 0, 0);
