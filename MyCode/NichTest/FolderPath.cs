@@ -12,6 +12,9 @@ namespace NichTest
         public static string OpticalEyeDiagram;
         public static string ElecEyeDiagram;
         public static string PlariltyEyeDiagram;
+        public static string LogPath;
+        public static string TestDataPath;
+        public static string BackupTestDataPath;
 
         public static void SetValue(string[] folderPath)
         {
@@ -25,6 +28,9 @@ namespace NichTest
             OpticalEyeDiagram = folderPath[0] + "\\";
             ElecEyeDiagram = folderPath[1] + "\\";
             PlariltyEyeDiagram = folderPath[2] + "\\";
+            LogPath = folderPath[3];
+            TestDataPath = folderPath[4];
+            BackupTestDataPath = folderPath[5];
         }
     }
 
@@ -32,6 +38,8 @@ namespace NichTest
     {
         public static string ConfigXml;
         public static string TestDataXml;
+        public static string RxODataXml;
+        public static string TxODataXml;
         public static string LogFile;
 
         public static void SaveTableToExcel(DataTable table, string fileName)
