@@ -10,10 +10,10 @@
     <PWD>05ac06c806b8065d0206061f066906680676</PWD>
   </Node>
   <Node Item="EquipmentOffset">
-    <Scope>1.7,1.9,1.9,1.9</Scope>
-    <Attennuator>0.4,0.8,2.4,0.4</Attennuator>
-    <LightSourceEr>7.4,7.3,7.8,7.3</LightSourceEr>
-    <Vcc>0.25</Vcc>
+    <Scope>1.59,1.65,1.79,1.8</Scope>
+    <Attennuator>4.46,4.26,4.91,5.09</Attennuator>
+    <LightSourceEr>3.8,3.8,3.8,3.8</LightSourceEr>
+    <Vcc>0.28</Vcc>
     <Icc>0</Icc>
   </Node>
 </Config>
