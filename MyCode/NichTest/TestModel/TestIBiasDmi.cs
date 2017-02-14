@@ -7,7 +7,7 @@ namespace NichTest
 {
     class TestIBiasDmi : ITest
     {
-        public bool BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
+        public Dictionary<string, double> BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
         {
             //get the current test channel
             int channel = ConditionParaByTestPlan.Channel;
@@ -26,13 +26,18 @@ namespace NichTest
                     double ibiasDmi = dut.ReadDmiBias(channel);
                     Log.SaveLogToTxt("Read IBiasDMI is " + ibiasDmi.ToString("f3"));
                     Log.SaveLogToTxt("End DMI_IBias test for channel " + channel + "\r\n");
-                    return true;
+
+                    //save testdata
+                    Dictionary<string, double> dic = new Dictionary<string, double>();
+                    dic.Add("DmiIBias", ibiasDmi);
+                    dic.Add("Result", 1);
+                    return dic;
                 }
             }
             catch
             {
                 Log.SaveLogToTxt("Failed DMI_IBias test for channel " + channel + "\r\n");
-                return false;
+                return null;
             }
         }
 

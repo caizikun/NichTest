@@ -16,7 +16,7 @@ namespace NichTest
             testData = new TestData();
         }
 
-        public bool BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
+        public Dictionary<string, double> BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace NichTest
                 if (!Algorithm.CheckSerialNumberFormat(dut_SN))
                 {
                     Log.SaveLogToTxt("Module' serial number is not correct");
-                    return false;
+                    return null;
                 }
 
                 Log.SaveLogToTxt("Again. Read module' serial number is " + dut_SN);
@@ -159,12 +159,16 @@ namespace NichTest
                 testData.Rows.Add(dr);
                 dr = null;
                 Log.SaveLogToTxt("End quick check test for channel " + channel + "\r\n");
-                return true;
+
+                //save testdata
+                Dictionary<string, double> dic = new Dictionary<string, double>();
+                dic.Add("Result", 1);
+                return dic;
             }
             catch
             {
                 Log.SaveLogToTxt("Failed quickcheck test.");
-                return false;
+                return null;
             }
         }
 

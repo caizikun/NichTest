@@ -7,7 +7,7 @@ namespace NichTest
 {
     public class TestIcc: ITest
     {
-        public bool BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
+        public Dictionary<string, double> BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
         {
             try
             {
@@ -17,12 +17,16 @@ namespace NichTest
                 double current = supply.GetCurrent();
                 Log.SaveLogToTxt("Get ICC is " + current.ToString("f3"));
                 Log.SaveLogToTxt("End DMI_ICC test" + "\r\n");
-                return true;
+                //save testdata
+                Dictionary<string, double> dictionary = new Dictionary<string, double>();
+                dictionary.Add("Current", current);
+                dictionary.Add("Result", 1);
+                return dictionary;
             }
             catch
             {
                 Log.SaveLogToTxt("Failed DMI_ICC test.");
-                return false;
+                return null;
             }
         }
 

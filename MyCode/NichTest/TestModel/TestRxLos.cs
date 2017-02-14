@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Collections;
 
 namespace NichTest
 {
     public class TestRxLos : ITest
     {
-        public bool BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
+        public Dictionary<string, double> BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
         {
             //get the current test channel
             int channel = ConditionParaByTestPlan.Channel;
@@ -135,13 +136,27 @@ namespace NichTest
                     Log.SaveLogToTxt("LosD = " + losD);
                     Log.SaveLogToTxt("LosH = " + losH.ToString("f3"));
                     Log.SaveLogToTxt("End rxlos test for channel " + channel + "\r\n");
-                    return true;
+
+                    //get erList
+                    ArrayList erList = Algorithm.StringtoArraylistDeletePunctuations(GlobalParaByPN.OpticalSourceERArray, new char[] { ',' });
+                    double losA_OMA = Algorithm.CalculateOMA(losA, Convert.ToDouble(erList[channel - 1]));
+                    double losD_OMA = Algorithm.CalculateOMA(losD, Convert.ToDouble(erList[channel - 1]));
+
+                    //save testdata
+                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
+                    dictionary.Add("LosA", losA);
+                    dictionary.Add("LosD", losD);
+                    dictionary.Add("LosH", losH);
+                    dictionary.Add("LosA_OMA", losA);
+                    dictionary.Add("LosD_OMA", losD);
+                    dictionary.Add("Result", 1);
+                    return dictionary;
                 }
             }
             catch
             {
                 Log.SaveLogToTxt("Failed rxlos test for channel " + channel + "\r\n");
-                return false;
+                return null;
             }
         }
 

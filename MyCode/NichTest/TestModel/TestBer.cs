@@ -9,7 +9,7 @@ namespace NichTest
 {
     public class TestBer: ITest
     {
-        public bool BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
+        public Dictionary<string, double> BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
         {
             //get the current test channel
             int channel = ConditionParaByTestPlan.Channel;
@@ -69,7 +69,7 @@ namespace NichTest
                     if (!ed.AutoAlign(true))
                     {
                         Log.SaveLogToTxt("Auto align failed");
-                        return false;
+                        return null;
                     }
                     Log.SaveLogToTxt("Auto align successfully");
 
@@ -87,7 +87,7 @@ namespace NichTest
                         if (currentBer >= 1)
                         {
                             sensitivity = 1;
-                            return false;
+                            return null;
                         }
 
                         if (currentBer <= ber_ERP)
@@ -99,7 +99,15 @@ namespace NichTest
                             sensitivity = currentBer;
                             Log.SaveLogToTxt("AttPoint=" + senStartingRxPwr.ToString() + ber_ERP.ToString());
                         }
-                        return true;
+                        //calculate the OMA sensitivity
+                        double sensitivity_OMA = Algorithm.CalculateOMA(sensitivity, Convert.ToDouble(erList[channel - 1]));
+
+                        //save testdata
+                        Dictionary<string, double> dictionary = new Dictionary<string, double>();
+                        dictionary.Add("Sensitivity", sensitivity);
+                        dictionary.Add("Sensitivity_OMA", sensitivity_OMA);
+                        dictionary.Add("Result", 1);
+                        return dictionary;
                     }
 
                     //detailed search points
@@ -274,13 +282,19 @@ namespace NichTest
                     double sensOMA = Algorithm.CalculateOMA(sensitivity, Convert.ToDouble(erList[channel - 1]));
                     Log.SaveLogToTxt("OMA sensitivity = " + sensOMA.ToString("f2"));
                     Log.SaveLogToTxt("End sensitivity test for channel " + channel + "\r\n");
-                    return true;
+
+                    //save testdata
+                    Dictionary<string, double> dic = new Dictionary<string, double>();
+                    dic.Add("Sensitivity", sensitivity);
+                    dic.Add("Sensitivity_OMA", sensOMA);
+                    dic.Add("Result", 1);
+                    return dic;
                 }
             }
             catch
             {
                 Log.SaveLogToTxt("Failed sensitivity test for channel " + channel + "\r\n");
-                return false;
+                return null;
             }
         }
 

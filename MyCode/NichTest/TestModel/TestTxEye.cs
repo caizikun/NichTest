@@ -7,7 +7,7 @@ namespace NichTest
 {
     class TestTxEye : ITest
     {
-        public bool BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
+        public Dictionary<string, double> BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
         {
             //get the current test channel
             int channel = ConditionParaByTestPlan.Channel;
@@ -40,7 +40,7 @@ namespace NichTest
                     else
                     {
                         Log.SaveLogToTxt("PrepareEnvironment Fail!");
-                        return false;
+                        return null;
                     }
 
                     // open apc
@@ -78,18 +78,23 @@ namespace NichTest
                         }
                     }
 
+                    //save testdata
+                    Dictionary<string, double> dic = new Dictionary<string, double>();
                     foreach (string key in outData.Keys)
                     {
                         Log.SaveLogToTxt(key + " = " + outData[key].ToString("f2"));
+                        dic.Add(key, outData[key]);
                     }
-                    Log.SaveLogToTxt("End tx eye test for channel " + channel + "\r\n");
-                    return true;
+                    Log.SaveLogToTxt("End tx eye test for channel " + channel + "\r\n");                                     
+                    
+                    dic.Add("Result", 1);
+                    return dic;
                 }
             }
             catch
             {
                 Log.SaveLogToTxt("Failed tx eye test for channel " + channel + "\r\n");
-                return false;
+                return null;
             }
         }
 

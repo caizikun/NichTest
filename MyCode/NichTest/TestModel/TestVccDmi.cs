@@ -7,7 +7,7 @@ namespace NichTest
 {
     public class TestVccDmi: ITest
     {
-        public bool BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
+        public Dictionary<string, double> BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
         {
             try
             {
@@ -20,12 +20,17 @@ namespace NichTest
                 double delta = dut.ReadDmiVcc() - ConditionParaByTestPlan.VCC;
                 Log.SaveLogToTxt("Calculate delta of VCC is " + delta.ToString("f3"));
                 Log.SaveLogToTxt("End DMI_VCC test" + "\r\n");
-                return true;
+
+                //save testdata
+                Dictionary<string, double> dictionary = new Dictionary<string, double>();
+                dictionary.Add("DmiVccErr", delta);
+                dictionary.Add("Result", 1);
+                return dictionary;
             }
             catch
             {
                 Log.SaveLogToTxt("Failed DMI_VCC test.");
-                return false;
+                return null;
             }
         }
 

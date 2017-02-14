@@ -9,7 +9,7 @@ namespace NichTest
 {
     public class TestRxPowerDmi : ITest
     {
-        public bool BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
+        public Dictionary<string, double> BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
         {
             //get the current test channel
             int channel = ConditionParaByTestPlan.Channel;
@@ -36,7 +36,7 @@ namespace NichTest
                     ArrayList rxInputPower = Algorithm.StringtoArraylistDeletePunctuations(inPara["RXPOWERARRLIST(DBM)"], new char[] { ',' });
                     if (rxInputPower == null)
                     {
-                        return false;
+                        return null;
                     }
                     
                     //set different point to get rxPowerDmi
@@ -69,13 +69,19 @@ namespace NichTest
                     attennuator.OutPutSwitch(true);
 
                     Log.SaveLogToTxt("End RxPowerDmi test for channel " + channel + "\r\n");
-                    return true;
+
+                    //save testdata
+                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
+                    dictionary.Add("DmiRxPWRErr", maxErr);
+                    dictionary.Add("DmiRxNOptical", rxNopticalPoint);
+                    dictionary.Add("Result", 1);
+                    return dictionary;
                 }
             }
             catch
             {
                 Log.SaveLogToTxt("Failed DMI_ICC test for channel " + channel + "\r\n");
-                return false;
+                return null;
             }
         }
 

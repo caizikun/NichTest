@@ -8,7 +8,7 @@ namespace NichTest
 {
     public class TestTxPowerDmi : ITest
     {
-        public bool BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
+        public Dictionary<string, double> BeginTest(DUT dut, Dictionary<string, IEquipment> equipments, Dictionary<string, string> inPara)
         {
             //get the current test channel
             int channel = ConditionParaByTestPlan.Channel;
@@ -48,7 +48,7 @@ namespace NichTest
                     else
                     {
                         Log.SaveLogToTxt("PrepareEnvironment Fail!");
-                        return false;
+                        return null;
                     }
 
                     //test dmi
@@ -61,6 +61,10 @@ namespace NichTest
                     double txDmiPowerErr = txPowerDmi - txDCAPowerDmi;
                     Log.SaveLogToTxt("txDmiPowerErr = " + txDmiPowerErr.ToString("f2"));
 
+                    //save testdata
+                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
+                    dictionary.Add("DmiTxPowerErr", txDmiPowerErr);
+
                     //test disable power
                     //have to lock this object, due to it can't run parallel test with TestIBiasDmi
                     //as this will disable TxPower, ibiasDmi will be defected.
@@ -70,24 +74,27 @@ namespace NichTest
                         scope.ClearDisplay();
                         double txDisablePower = scope.GetAveragePowerdBm();
                         Log.SaveLogToTxt("txDisablePower = " + txDisablePower.ToString());
+                        dictionary.Add("TxDisablePower", txDisablePower);
                         Thread.Sleep(200);
                         if (!dut.TxAllChannelEnable())
                         {
                             scope.ClearDisplay();
                             Thread.Sleep(200);
-                            return false;
+                            return null;
                         }
                     }
                     scope.ClearDisplay();
                     Thread.Sleep(200);
-                    Log.SaveLogToTxt("End TxPowerDmi test " + channel + "\r\n");
-                    return true;
+                    Log.SaveLogToTxt("End TxPowerDmi test " + channel + "\r\n"); 
+                    
+                    dictionary.Add("Result", 1);
+                    return dictionary;
                 }
             }
             catch
             {
                 Log.SaveLogToTxt("Failed TxPowerDmi test for channel " + channel + "\r\n");
-                return false;
+                return null;
             }
         }
 
