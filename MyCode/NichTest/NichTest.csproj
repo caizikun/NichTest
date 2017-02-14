@@ -103,6 +103,12 @@
     <Compile Include="Equipment\PowerSupply\PowerSupply.cs" />
     <Compile Include="Equipment\Thermocontroller\Thermocontroller.cs" />
     <Compile Include="FolderPath.cs" />
+    <Compile Include="Form\LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form\MineClearanceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +192,9 @@
     <Compile Include="TestModel\TestVccDmi.cs" />
     <EmbeddedResource Include="Form\CalculatorForm.resx">
       <DependentUpon>CalculatorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -298,10 +307,6 @@
     <None Include="Resources\calculat05.ico" />
     <None Include="Resources\8++.ico" />
     <None Include="Resources\8.ico" />
-    <Content Include="bin\Debug\TestData\RxO.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="bin\Debug\TestData\TxO.xml" />
     <Content Include="Resources\Cool.png" />
     <Content Include="Resources\Cry.png" />
     <None Include="Resources\Exploding.png" />
@@ -332,6 +337,9 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\TestData\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
