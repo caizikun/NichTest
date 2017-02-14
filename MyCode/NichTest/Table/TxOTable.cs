@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.IO;
 
 namespace NichTest
 {
     public class TxOTable : DataTable
     {
-        private static volatile TxOTable instance = null;
         private static object syncRoot = new Object();
 
-        private TxOTable()
+        public TxOTable()
         {
             DataColumn dc = this.Columns.Add("ID", typeof(int));
             dc.AllowDBNull = false;
@@ -33,36 +33,22 @@ namespace NichTest
             this.Columns.Add("TxDisablePower", typeof(double));
             this.Columns.Add("IBias", typeof(double));
             this.Columns.Add("IMod", typeof(double));
-            this.Columns.Add("AP", typeof(double));
-            this.Columns.Add("ER", typeof(double));
-            this.Columns.Add("OMA", typeof(double));
+            this.Columns.Add("AP_dBm", typeof(double));
+            this.Columns.Add("ER_dB", typeof(double));
+            this.Columns.Add("OEOMA", typeof(double));
+            this.Columns.Add("TxOMA_dBm", typeof(double));
             this.Columns.Add("MaskMargin", typeof(double));
-            this.Columns.Add("XMASKMARGIN2", typeof(double));
-            this.Columns.Add("JitterPP", typeof(double));
-            this.Columns.Add("JitterRMS", typeof(double));
+            this.Columns.Add("XMaskMargin2", typeof(double));
+            this.Columns.Add("JitterPP_ps", typeof(double));
+            this.Columns.Add("JitterRMS_ps", typeof(double));
             this.Columns.Add("Crossing", typeof(double));
-            this.Columns.Add("RiseTime", typeof(double));
-            this.Columns.Add("FallTime", typeof(double));
-            this.Columns.Add("EyeHeight", typeof(double));
+            this.Columns.Add("RiseTime_ps", typeof(double));
+            this.Columns.Add("FallTime_ps", typeof(double));
+            this.Columns.Add("EyeHeight_mW", typeof(double));
             this.Columns.Add("AMP", typeof(double));
             this.Columns.Add("Wavelength", typeof(double));
-            this.Columns.Add("Result", typeof(int));
+            this.Columns.Add("Status", typeof(int));
         }        
-
-        public static TxOTable Get_TxOTable()
-        {
-            if (instance == null)
-            {
-                lock (syncRoot)
-                {
-                    if (instance == null)
-                    {
-                        instance = new TxOTable();
-                    }
-                }
-            }
-            return instance;
-        }
 
         public void ReadXml(string name, string xmlFilePath)
         {
@@ -79,6 +65,46 @@ namespace NichTest
             {
                 this.TableName = name;
                 this.WriteXml(xmlFilePath);
+            }
+        }
+
+        public void SaveTableToExcel(string fileName)
+        {
+            lock (syncRoot)
+            {
+                DirectoryInfo directoryInfo = Directory.GetParent(fileName);
+                if (!directoryInfo.Exists)
+                {
+                    directoryInfo.Create();
+                }
+
+                FileStream fileStream = new FileStream(fileName, FileMode.OpenOrCreate);
+                StreamWriter writer = new StreamWriter(fileStream, Encoding.Default);
+
+                StringBuilder title = new StringBuilder();
+                for (int i = 0; i < this.Columns.Count; i++)//栏位：自动跳到下一单元格
+                {
+                    title.Append(this.Columns[i].ColumnName);
+                    title.Append("\t");
+                }
+                writer.WriteLine(title);
+
+                StringBuilder content = new StringBuilder();
+                foreach (DataRow row in this.Rows)//内容：自动跳到下一单元格
+                {
+                    for (int i = 0; i < this.Columns.Count; i++)
+                    {
+                        content.Append(row[i]);
+                        content.Append("\t");
+                    }
+                    content.Append("\n");
+                }
+                writer.Write(content);
+
+                writer.Close();
+                writer.Dispose();
+                fileStream.Close();
+                fileStream.Dispose();
             }
         }
     }
