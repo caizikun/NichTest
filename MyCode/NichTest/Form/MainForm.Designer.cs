@@ -69,6 +69,8 @@
             this.labelFW = new System.Windows.Forms.Label();
             this.labelResult = new System.Windows.Forms.Label();
             this.labelSN = new System.Windows.Forms.Label();
+            this.checkBoxParallelTest = new System.Windows.Forms.CheckBox();
+            this.btnTraceView = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.btnInitial = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -194,7 +196,7 @@
             // 
             this.initialToolStripMenuItem.Image = global::NichTest.Properties.Resources.initial;
             this.initialToolStripMenuItem.Name = "initialToolStripMenuItem";
-            this.initialToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.initialToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.initialToolStripMenuItem.Text = "初始化";
             this.initialToolStripMenuItem.Click += new System.EventHandler(this.btnInitial_Click);
             // 
@@ -202,7 +204,7 @@
             // 
             this.runToolStripMenuItem.Image = global::NichTest.Properties.Resources.link;
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.runToolStripMenuItem.Text = "运行";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.btnStart_Click);
             // 
@@ -210,7 +212,7 @@
             // 
             this.stopToolStripMenuItem.Image = global::NichTest.Properties.Resources.stop;
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.stopToolStripMenuItem.Text = "停止";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.toolStripBtnStop_Click);
             // 
@@ -218,7 +220,7 @@
             // 
             this.testPlanToolStripMenuItem.Image = global::NichTest.Properties.Resources.Google_Profile;
             this.testPlanToolStripMenuItem.Name = "testPlanToolStripMenuItem";
-            this.testPlanToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.testPlanToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.testPlanToolStripMenuItem.Text = "TestPlan";
             this.testPlanToolStripMenuItem.Click += new System.EventHandler(this.testPlanToolStripMenuItem_Click);
             // 
@@ -452,6 +454,8 @@
             // 
             this.panel5.BackColor = System.Drawing.Color.White;
             this.panel5.Controls.Add(this.groupBoxStatus);
+            this.panel5.Controls.Add(this.checkBoxParallelTest);
+            this.panel5.Controls.Add(this.btnTraceView);
             this.panel5.Controls.Add(this.btnStart);
             this.panel5.Controls.Add(this.btnInitial);
             this.panel5.Controls.Add(this.pictureBox1);
@@ -511,9 +515,32 @@
             this.labelSN.TabIndex = 4;
             this.labelSN.Text = "ABC123456789";
             // 
+            // checkBoxParallelTest
+            // 
+            this.checkBoxParallelTest.AutoSize = true;
+            this.checkBoxParallelTest.Checked = true;
+            this.checkBoxParallelTest.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxParallelTest.Location = new System.Drawing.Point(861, 140);
+            this.checkBoxParallelTest.Name = "checkBoxParallelTest";
+            this.checkBoxParallelTest.Size = new System.Drawing.Size(93, 21);
+            this.checkBoxParallelTest.TabIndex = 17;
+            this.checkBoxParallelTest.Text = "ParallelTest";
+            this.checkBoxParallelTest.UseVisualStyleBackColor = true;
+            // 
+            // btnTraceView
+            // 
+            this.btnTraceView.Enabled = false;
+            this.btnTraceView.Location = new System.Drawing.Point(960, 129);
+            this.btnTraceView.Name = "btnTraceView";
+            this.btnTraceView.Size = new System.Drawing.Size(75, 40);
+            this.btnTraceView.TabIndex = 16;
+            this.btnTraceView.Text = "TraceView";
+            this.btnTraceView.UseVisualStyleBackColor = true;
+            this.btnTraceView.Click += new System.EventHandler(this.btnTraceView_Click);
+            // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(870, 101);
+            this.btnStart.Location = new System.Drawing.Point(960, 61);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 40);
             this.btnStart.TabIndex = 16;
@@ -523,7 +550,7 @@
             // 
             // btnInitial
             // 
-            this.btnInitial.Location = new System.Drawing.Point(870, 29);
+            this.btnInitial.Location = new System.Drawing.Point(860, 61);
             this.btnInitial.Name = "btnInitial";
             this.btnInitial.Size = new System.Drawing.Size(75, 40);
             this.btnInitial.TabIndex = 16;
@@ -903,6 +930,7 @@
             this.panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestData)).EndInit();
             this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.groupBoxStatus.ResumeLayout(false);
             this.groupBoxStatus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -992,6 +1020,8 @@
         private System.Windows.Forms.ToolStripMenuItem MineToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripBtnMine;
         private System.Windows.Forms.ToolStripButton toolStripBtnCalculator;
+        private System.Windows.Forms.Button btnTraceView;
+        private System.Windows.Forms.CheckBox checkBoxParallelTest;
     }
 }
 

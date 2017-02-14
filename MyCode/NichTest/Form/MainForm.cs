@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
+using System.IO;
 
 namespace NichTest
 {
@@ -18,6 +20,7 @@ namespace NichTest
         private ConfigXmlIO myXml;
         private DataIO myDataIO;
         private CancellationTokenSource tokenSource;
+        private LogForm logForm;
 
         /// <summary>
         /// 禁止使用还原按钮的方法
@@ -46,11 +49,10 @@ namespace NichTest
             {
                 InitializeComponent();
 
-                FilePath.LogFile = Application.StartupPath + @"\Log\" + "Initial_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
+                //FilePath.LogFile = Application.StartupPath + @"\Log\" + "Initial_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
                 user = new ForUser();
 
                 this.RenameTextBox();
-                Log.SaveLogToTxt("Load config...");
                 this.LoadConfigXmlInfo();
                 if (myXml.DataBaseUserLever == "1")
                 {
@@ -76,11 +78,9 @@ namespace NichTest
                 {
                     myXml.DatabaseType = "SqlDatabase";
                 }
-                Log.SaveLogToTxt("Done.");
             }
             catch
             {
-                Log.SaveLogToTxt("Filed to load config.");
                 var result = MessageBox.Show("缺少Config文件，请确认，并重启软件。", "错误", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.Yes)
                 {
@@ -141,8 +141,6 @@ namespace NichTest
             }
             catch(Exception ex)
             {
-                Log.SaveLogToTxt("form load error");
-                Log.SaveLogToTxt(ex.ToString());
                 var result = MessageBox.Show("导入Config文件出错，请确认，并重启软件。", "错误", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.Yes)
                 {
@@ -195,7 +193,7 @@ namespace NichTest
             }
             catch
             {
-                Log.SaveLogToTxt("Save XML file error!");
+                return;
             }
         }
 
@@ -203,14 +201,13 @@ namespace NichTest
         {
             try
             {
-                Log.SaveLogToTxt("Load test data recording...");
                 //load dataGridViewTestData
                 this.dataGridViewTestData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                 this.dataGridViewTestData.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridViewTestData.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridViewTestData.AllowUserToAddRows = false;
                 TestData dt = new TestData();
-                FilePath.TestDataXml = Application.StartupPath + @"\TestData.xml";
+                FilePath.TestDataXml = Application.StartupPath + @"\TestData.xml";                
                 dt.ReadXml("TestData", FilePath.TestDataXml);
                 dt.Columns.Remove("Family");
                 dt.Columns.Remove("Current");
@@ -219,18 +216,15 @@ namespace NichTest
 
                 this.dataGridViewTestData.DataSource = dt;
                 this.dataGridViewTestData.Columns["Result"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                Log.SaveLogToTxt("Done.");
 
                 this.btnInitial.Enabled = false;
                 this.btnStart.Enabled = false;
 
                 //get Production Family
-                Log.SaveLogToTxt("Get production family information from server.");
                 string[] member = user.GetProductionFamily(myXml, ref myDataIO, ref dataTable_Family);
                 this.comboBoxFamily.Items.Clear();
                 if (member == null)
                 {
-                    Log.SaveLogToTxt("Can't connect to server.");
                     var result = MessageBox.Show("不能连接服务器，是否继续？", "错误", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                     if (result == DialogResult.No)
                     {
@@ -242,19 +236,16 @@ namespace NichTest
                 {
                     this.comboBoxFamily.Items.Add(one);
                 }
-                Log.SaveLogToTxt("Done.");
                 //check IP address   
                 address_IP = user.GetIP();
                 if (address_IP == "")
-                {
-                    Log.SaveLogToTxt("Can't tet IP address.");                    
+                {                
                     this.comboBoxFamily.Text = "";
                     this.comboBoxFamily.Enabled = false;
                 }
             }
             catch
             {
-                Log.SaveLogToTxt("Error. Please check network and 'TestData.xml' file");
                 var result = MessageBox.Show("连接服务器或导入Config文件出错，请确认，并重启软件。", "错误", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.Yes)
                 {
@@ -276,25 +267,55 @@ namespace NichTest
                 }
                 this.btnInitial.Enabled = false;
                 this.btnStart.Enabled = false;
+                this.btnTraceView.Enabled = true;
                 this.groupBoxCalibratioon.Enabled = false;
                 this.groupBoxConfig.Enabled = false;
                 this.groupBoxStatus.BackColor = Color.Yellow;
                 this.labelStatus.Text = "正在初始化...";
+
+                if(logForm!=null)
+                {
+                    logForm.Close();
+                    logForm.Dispose();
+                }
+
+                Log.ReportRecord += new Report(UpdateLogForm);
+                logForm = new LogForm();
+                logForm.Show();
+
+                FilePath.LogFile = Application.StartupPath + @"\Log\" + "Initial_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
                 Log.SaveLogToTxt("Begin to initial...");
 
                 this.SaveConfigXmlInfo();
                 Log.SaveLogToTxt("Saved calibration data to config file.");
-                //创建存放眼图的文件夹位置
+                //创建存放眼图和数据的文件夹位置
                 string time = DateTime.Now.ToString("yyyy-MM-dd");
-                string[] folderPath = new string[3];
+                string[] folderPath = new string[6];
                 folderPath[0] = Application.StartupPath + @"\EyeDiagram\" + this.comboBoxFamily.Text.ToUpper() + "\\" + this.comboBoxPN.Text.ToUpper() + "\\" + this.comboBoxTestPlan.Text.ToUpper() + "\\" + time + "\\OptEyeDiagram\\";
                 folderPath[1] = Application.StartupPath + @"\EyeDiagram\" + this.comboBoxFamily.Text.ToUpper() + "\\" + this.comboBoxPN.Text.ToUpper() + "\\" + this.comboBoxTestPlan.Text.ToUpper() + "\\" + time + "\\ElecEyeDiagram\\";
                 folderPath[2] = Application.StartupPath + @"\EyeDiagram\" + this.comboBoxFamily.Text.ToUpper() + "\\" + this.comboBoxPN.Text.ToUpper() + "\\" + this.comboBoxTestPlan.Text.ToUpper() + "\\" + time + "\\Polarity\\";
+                folderPath[3] = Application.StartupPath + @"\Log\";
+                folderPath[4] = Application.StartupPath + @"\TestData\xml\";
+                folderPath[5] = Application.StartupPath + @"\TestData\backup\";
                 user.CreatFolderPath(folderPath);
 
+                //上传以前未上传的测试数据到数据库
+                DirectoryInfo theFolder = new DirectoryInfo(FolderPath.TestDataPath);
+                foreach (FileInfo nextFile in theFolder.GetFiles())
+                {
+                    UploadTestData(nextFile.FullName);
+                }
+
                 tokenSource = new CancellationTokenSource();
-                //Task<bool> task = Task.Factory.StartNew<bool>(() => (user.Initial()), tokenSource.Token);
-                Task<bool> task = Task.Factory.StartNew<bool>(() => (user.ParallelInitial()), tokenSource.Token);
+                Task<bool> task;
+                if (this.checkBoxParallelTest.Checked)
+                {
+                    task = Task.Factory.StartNew<bool>(() => (user.ParallelInitial()), tokenSource.Token);
+                }
+                else
+                {
+                    task = Task.Factory.StartNew<bool>(() => (user.Initial()), tokenSource.Token);
+                }
                 Task cwt = task.ContinueWith(t =>
                 {
                     if (this.InvokeRequired)
@@ -311,14 +332,40 @@ namespace NichTest
                     }                    
                 });
             }
-            catch
+            catch(Exception ex)
             {
+                Log.SaveLogToTxt(ex.Message);
                 Log.SaveLogToTxt("Failed to initial. Please check equipments infomation.");
                 this.btnInitial.Enabled = true;
+                this.btnTraceView.Enabled = false;
                 this.groupBoxCalibratioon.Enabled = true;
                 this.groupBoxConfig.Enabled = true;
                 this.groupBoxStatus.BackColor = Color.LightCoral;
             }           
+        }
+
+        private void UpdateLogForm()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(delegate 
+                { 
+                    if (logForm == null || logForm.IsDisposed)
+                    {
+                        logForm = new LogForm();
+                    }
+                    logForm.ChangeText();
+                }
+                ));
+            }
+            else
+            {
+                if (logForm == null || logForm.IsDisposed)
+                {
+                    logForm = new LogForm();
+                }
+                logForm.ChangeText();
+            }
         }
 
         private void UpdateControlAfterInitial(bool initialResult)
@@ -334,6 +381,7 @@ namespace NichTest
             }
             this.btnInitial.Enabled = true;
             this.btnStart.Enabled = true;
+            this.btnTraceView.Enabled = false;
             this.groupBoxCalibratioon.Enabled = true;
             this.groupBoxConfig.Enabled = true;
             this.labelStatus.Text = "初始化完成";
@@ -345,6 +393,7 @@ namespace NichTest
             {
                 this.btnInitial.Enabled = false;
                 this.btnStart.Enabled = false;
+                this.btnTraceView.Enabled = true;
                 this.groupBoxCalibratioon.Enabled = false;
                 this.groupBoxConfig.Enabled = false;
                 this.groupBoxStatus.BackColor = Color.Yellow;
@@ -354,31 +403,72 @@ namespace NichTest
                 string SN, FW;
                 string path = "ReadyForTest" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
                 FilePath.LogFile = Application.StartupPath + @"\Log\" + path;
+                
                 if (user.ReadyForTest(out SN, out FW))
                 {
                     this.labelSN.Text = SN;
                     this.labelFW.Text = FW;
 
-                    string fileName = SN + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-                    FilePath.LogFile = Application.StartupPath + @"\Log\" + fileName;
+                    string logFileName = SN + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
+                    FilePath.LogFile = FolderPath.LogPath + logFileName;
+                    string rxoFileName = SN + "_RxO_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xml";
+                    FilePath.RxODataXml = FolderPath.TestDataPath + rxoFileName;
+                    string txoFileName = SN + "_TxO_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xml";
+                    FilePath.TxODataXml = FolderPath.TestDataPath + txoFileName;
 
                     TestPlanParaByPN.SN = SN;
                                        
                     tokenSource = new CancellationTokenSource();
-                    Task<bool> task = Task.Factory.StartNew<bool>(() => (user.ParallelBeginTest()), tokenSource.Token);
-                    //Task<bool> task = Task.Factory.StartNew<bool>(() => (user.BeginTest()), tokenSource.Token);
+                    Task<bool> task;
+                    if (this.checkBoxParallelTest.Checked)
+                    {
+                        task = Task.Factory.StartNew<bool>(() => (user.ParallelBeginTest()), tokenSource.Token);
+                    }
+                    else
+                    {
+                        task = Task.Factory.StartNew<bool>(() => (user.BeginTest()), tokenSource.Token);
+                    }
+
                     Task cwt = task.ContinueWith(t => 
                     {
                         if (this.InvokeRequired)
                         {
                             this.BeginInvoke(new UpdateControl(delegate
                             {
-                                this.UpdateControlAfterTest(task.Result);
+                                //Save test data to server
+                                if (TestPlanParaByPN.ItemName.Contains("TR"))
+                                {
+                                    this.UploadTestData(FilePath.TxODataXml);
+                                    this.UploadTestData(FilePath.RxODataXml);
+                                }
+                                else if (TestPlanParaByPN.ItemName.Contains("TX"))
+                                {
+                                    this.UploadTestData(FilePath.TxODataXml);
+                                }
+                                else if (TestPlanParaByPN.ItemName.Contains("RX"))
+                                {
+                                    this.UploadTestData(FilePath.RxODataXml);
+                                }
 
+                                this.UpdateControlAfterTest(task.Result);
                             }), task.Result);
                         }
                         else
                         {
+                            //Save test data to server
+                            if (TestPlanParaByPN.ItemName.Contains("TR"))
+                            {
+                                this.UploadTestData(FilePath.TxODataXml);
+                                this.UploadTestData(FilePath.RxODataXml);
+                            }
+                            else if (TestPlanParaByPN.ItemName.Contains("TX"))
+                            {
+                                this.UploadTestData(FilePath.TxODataXml);
+                            }
+                            else if (TestPlanParaByPN.ItemName.Contains("RX"))
+                            {
+                                this.UploadTestData(FilePath.RxODataXml);
+                            }
                             this.UpdateControlAfterTest(task.Result);
                         }
                     });
@@ -388,6 +478,7 @@ namespace NichTest
                     this.labelStatus.Text = "测试完成";
                     this.btnInitial.Enabled = true;
                     this.btnStart.Enabled = true;
+                    this.btnTraceView.Enabled = false;
                     this.groupBoxCalibratioon.Enabled = true;
                     this.groupBoxConfig.Enabled = true;
                     this.groupBoxStatus.BackColor = Color.LightCoral;
@@ -401,6 +492,122 @@ namespace NichTest
                 this.groupBoxCalibratioon.Enabled = true;
                 this.groupBoxConfig.Enabled = true;
                 this.groupBoxStatus.BackColor = Color.LightCoral;
+            }
+        }
+
+        private void UploadTestData(string xmlfile)
+        {
+            try
+            {
+                if(!xmlfile.Contains(".xml"))
+                {
+                    return;
+                }
+
+                //Save test data to server
+                if (xmlfile.Contains("TxO"))
+                {
+                    TxOTable dtTxO = new TxOTable();
+                    dtTxO.ReadXml("TxOData", xmlfile);
+                    //save to excel
+                    dtTxO.SaveTableToExcel(xmlfile.Replace("xml", "xls"));
+
+                    Log.SaveLogToTxt("upload test data: " + xmlfile);
+                    if (this.UploadTestDataToServer(dtTxO, "select * from my_databases.txo") == true)
+                    {
+                        try
+                        {
+                            File.Move(xmlfile, FolderPath.BackupTestDataPath + Path.GetFileName(xmlfile));
+                        }
+                        catch
+                        {
+                            MessageBox.Show("移动测试数据到备份文件夹失败，你可以继续测试。");
+                        }
+                    }
+                    dtTxO = null;
+                }
+
+                if (xmlfile.Contains("RxO"))
+                {
+                    RxOTable dtRxO = new RxOTable();
+                    dtRxO.ReadXml("RxOData", xmlfile);
+                    //save to excel
+                    dtRxO.SaveTableToExcel(xmlfile.Replace("xml", "xls"));
+
+                    Log.SaveLogToTxt("upload test data: " + xmlfile);
+                    if (this.UploadTestDataToServer(dtRxO, "select * from my_databases.rxo") == true)
+                    {
+                        try
+                        {
+                            File.Move(xmlfile, FolderPath.BackupTestDataPath + Path.GetFileName(xmlfile));
+                        }
+                        catch
+                        {
+                            MessageBox.Show("移动测试数据到备份文件夹失败，你可以继续测试。");
+                        }
+                    }
+                    dtRxO = null;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("上传以前未上传的测试数据到数据库失败，请检测网络。当然你也可以离线测试。");
+            }
+        }
+
+        private bool UploadTestDataToServer(DataTable table, string command)
+        {
+            try
+            {
+                if (table == null)
+                {
+                    return true;
+                }
+
+                Log.SaveLogToTxt("Upload test data to server...");
+                string mysqlconCommand = "Database=my_databases;Data Source=localhost;User Id=root;Password=abc@123;pooling=false;CharSet=utf8;port=3306";
+                MySqlConnection mycon = new MySqlConnection();
+                mycon.ConnectionString = mysqlconCommand;
+                MySqlTransaction tr;
+                mycon.Open();
+                tr = mycon.BeginTransaction(IsolationLevel.RepeatableRead);
+                try
+                {
+                    //string mysqlCommand = "select * from my_databases.quickcheck_testdata";///
+                    string mysqlCommand = command;
+                    MySqlCommand cmd = new MySqlCommand(mysqlCommand, mycon);
+                    MySqlDataAdapter mda = new MySqlDataAdapter(cmd);
+                    MySqlCommandBuilder cb = new MySqlCommandBuilder(mda);
+
+                    mda.SelectCommand.Transaction = tr;
+
+                    if (table.GetErrors() != null)
+                    {
+                        //upload test data to mysql database
+                        mda.Update(table);
+                        tr.Commit();
+                        Log.SaveLogToTxt("Upload test data to server sucessfully.");
+                        return true;
+                    }
+                    Log.SaveLogToTxt("Test data is abnormal.");
+                    return false;
+                }
+                catch
+                {
+                    tr.Rollback();//回滚（出错的时候)
+                    Log.SaveLogToTxt("Failed to upload test data to MySQL.");
+                    return false;
+                }
+                finally
+                {
+                    mycon.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.SaveLogToTxt(ex.Message);
+                Log.SaveLogToTxt("Failed to communicate server.");
+                return false;
             }
         }
 
@@ -424,6 +631,7 @@ namespace NichTest
             }
             this.btnInitial.Enabled = true;
             this.btnStart.Enabled = true;
+            this.btnTraceView.Enabled = false;
             this.groupBoxCalibratioon.Enabled = true;
             this.groupBoxConfig.Enabled = true;
             this.labelStatus.Text = "测试完成";
@@ -440,7 +648,6 @@ namespace NichTest
                 string productFamlily = this.comboBoxFamily.SelectedItem.ToString();
                 DataRow[] dr = dataTable_Family.Select("ItemName='" + productFamlily + "'");
                 ID_Family = Convert.ToInt32(dr[0]["ID"].ToString());
-                Log.SaveLogToTxt("Get production name list from server, according selected family " + productFamlily +".");  
 
                 //Fit ProductionName Combox
                 string expression = "Select* from GlobalProductionName where PID=" + ID_Family + " and IgnoreFlag='false' order by id";
@@ -454,11 +661,10 @@ namespace NichTest
                     comboBoxPN.Items.Add(dt.Rows[i]["PN"].ToString());
                 }
                 this.comboBoxTestPlan.Items.Clear();
-                Log.SaveLogToTxt("Done.");  
             }
             catch
             {
-                Log.SaveLogToTxt("Faied to get production name list.");   
+                MessageBox.Show("Faied to get production name list.");   
             }
         }
 
@@ -472,7 +678,6 @@ namespace NichTest
                 {
                      
                     string productPN = this.comboBoxPN.SelectedItem.ToString();
-                    Log.SaveLogToTxt("Get test plan list from server, according its PN " + productPN + "."); 
                     string expression = "Select* from GlobalProductionName where GlobalProductionName.pid=" + ID_Family + " and GlobalProductionName.IgnoreFlag='false' and GlobalProductionName.PN='" + productPN + "' order by GlobalProductionName.id";
                     DataTable dataTable_PN = myDataIO.GetDataTable(expression, "GlobalProductionName");
                     DataRow[] dr = dataTable_PN.Select("PN='" + productPN + "'");
@@ -489,12 +694,11 @@ namespace NichTest
                     {
                         comboBoxTestPlan.Items.Add(dt.Rows[i]["ItemName"].ToString());
                     }
-                    Log.SaveLogToTxt("Done.");  
                 }
             }            
             catch
             {
-                Log.SaveLogToTxt("Faied to get test plan list."); 
+                MessageBox.Show("Faied to get test plan list."); 
             }
         }
 
@@ -510,16 +714,14 @@ namespace NichTest
                     DataTable dt = myDataIO.GetDataTable(expression, "GlobalProductionName");
                     int ID_TestPlan = Convert.ToInt32(dt.Rows[0]["id"]);
 
-                    Log.SaveLogToTxt("Get parameters and spec of test plan " + testPlan + "."); 
                     user.GetTestPlanParaByPN(ID_TestPlan);
                     user.GetSpec(ID_TestPlan);
-                    Log.SaveLogToTxt("Done.");
                     this.comboBoxStation.Text = "";
                 }
             }
             catch
             {
-                Log.SaveLogToTxt("Faied to get parameters and spec."); 
+                MessageBox.Show("Faied to get parameters and spec."); 
             }
         }
 
@@ -531,7 +733,6 @@ namespace NichTest
                 GlobalParaByPN.Station = station;
 
                 this.btnInitial.Enabled = true;
-                Log.SaveLogToTxt("Selected test station " + station + ".");
                 MessageBox.Show("确认是该站点:" + station + "?");
             }            
         }
@@ -596,7 +797,7 @@ namespace NichTest
             }
             catch
             {
-                Log.SaveLogToTxt("Save test data failed.");
+                MessageBox.Show("Save test data failed.");
             }
         }
 
@@ -610,6 +811,21 @@ namespace NichTest
         {
             MineClearanceForm mc = new MineClearanceForm();
             mc.Show();
+        }
+
+        private void btnTraceView_Click(object sender, EventArgs e)
+        {
+            if (logForm == null || logForm.IsDisposed)
+            {
+                logForm = new LogForm();
+                logForm.Show();
+            }
+            else
+            {
+                logForm.WindowState = FormWindowState.Normal;
+                logForm.Show();
+                logForm.Activate();
+            }
         }
     }
 }
