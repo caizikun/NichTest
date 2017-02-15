@@ -27,31 +27,6 @@ namespace NichTest
             InitializeComponent();
         }
 
-        private const int SC_MINIMIZE = 0xF020;//窗体最小化消息
-
-        private const int SC_MAXIMIZE = 0xF030;//窗体最大化消息
-
-        private const int SC_NOMAL = 0xF120;//窗体还原消息
-
-        /// <summary>
-        /// 禁止使用还原按钮的方法
-        /// </summary>
-        /// <param name="m"></param>
-        protected override void WndProc(ref Message m)
-        {
-            if (m.WParam.ToInt32() == SC_MINIMIZE)//点击最小化
-            {
-                //还可以做些其它的操作
-                //m.WParam = (IntPtr)SC_MAXIMIZE;
-            }
-            if (m.WParam.ToInt32() == SC_MAXIMIZE)//点击还原
-            {
-                //还可以做些点还原按钮时其它的操作
-                m.WParam = (IntPtr)SC_NOMAL;
-            }
-            base.WndProc(ref m);
-        }
-
         private void txtListSN_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -78,11 +53,27 @@ namespace NichTest
 
                 string groupSN = "";
                 string experisson = "";
+                string table = "";
+                if(this.radioButtonTxO.Checked)
+                {
+                    table = "my_databases.txo";
+                }
+
+                if(this.radioButtonRxO.Checked)
+                {
+                    table = "my_databases.rxo";
+                }
+
+                if(this.radioButtonQuickCheck.Checked)
+                {
+                    table = "my_databases.quickcheck_testdata";
+                }
+
                 if (this.radioButtonByGroup.Checked)
                 {
                     groupSN = this.txtListSN.Text + "%";
                     groupSN = groupSN.Replace("\r\n", "%");
-                    experisson = "SELECT * FROM my_databases.quickcheck_testdata where Serialnumber like '" +
+                    experisson = "SELECT * FROM " + table + " where Serialnumber like '" +
                         groupSN + "' order by ID";
                 }
                 else if (this.radioButtonBySN.Checked)
@@ -99,7 +90,7 @@ namespace NichTest
                             groupSN += "'" + this.txtListSN.Lines[i] + "',";
                         }
                     }
-                    experisson = "SELECT * FROM my_databases.quickcheck_testdata where Serialnumber in (" +
+                    experisson = "SELECT * FROM " + table + " where Serialnumber in (" +
                         groupSN + ") order by ID";
                 }
                 else
@@ -120,7 +111,6 @@ namespace NichTest
                     MySqlConnection mycon = new MySqlConnection();
                     mycon.ConnectionString = mysqlconCommand;
                     mycon.Open();
-                    string table = "my_databases.quickcheck_testdata";
                     MySqlDataAdapter da = new MySqlDataAdapter(experisson, mycon);
                     MySqlCommandBuilder cb = new MySqlCommandBuilder(da);
                     DataSet ds = new DataSet(table);
@@ -128,10 +118,20 @@ namespace NichTest
                     DataTable dt = ds.Tables[table];
                     mycon.Close();
 
-                    if (isGettingLatestData)
+                    if (isGettingLatestData == false)
                     {
-                        //get the last test recording by total channel and station
-                        int count = dt.Rows.Count;
+                        return dt;
+                    }
+
+                    int count = dt.Rows.Count;
+                    DataTable newdt = dt.Clone();
+                    newdt.Clear();
+                    string expression = "";
+                    DataRow[] drs;
+
+                    if (table == "my_databases.quickcheck_testdata")
+                    {
+                        //get the last test recording by total channel and station                        
                         int recordingCount = 1;
                         if (dt.Rows[count - 1]["Family"].ToString().Contains("QSFP"))
                         {
@@ -148,15 +148,13 @@ namespace NichTest
                         else
                         {
                             recordingCount = count;
-                        }
+                        }                        
                         
-                        DataTable newdt = dt.Clone();
-                        newdt.Clear();
                         string[] stations = { "PreModule", "PreTCT", "PostTCT", "PostBurnIn"};
                         for (int i = 0; i < stations.Length; i++)
                         {
-                            string expression = "Station = '" + stations[i] + "'";
-                            DataRow[] drs = dt.Select(expression);
+                            expression = "Station = '" + stations[i] + "'";
+                            drs = dt.Select(expression);
                             if (drs.Length == 0)
                             {
                                 continue;
@@ -169,10 +167,30 @@ namespace NichTest
                         }
                         return newdt;
                     }
-                    else
-                    {                        
-                        return dt;
+                    
+                    //get the last test recording by comparing test time
+                    DateTime lastTime = DateTime.MinValue;
+                    for (int i = 0; i < count; i++)
+                    {
+                        DateTime time = Convert.ToDateTime(dt.Rows[i]["Time"]);
+                        if (time >= lastTime)
+                        {
+                            lastTime = time;
+                        }
+                    }
+                    expression = "Time = '" + lastTime.ToString() + "'";
+                    drs = dt.Select(expression);
+                    if (drs == null || drs.Length == 0)
+                    {
+                        return null;
+                    }
+
+                    for (int i = 0; i < drs.Length; i++)
+                    {
+                        newdt.Rows.Add(drs[i].ItemArray);
                     }                    
+                    drs = null;
+                    return newdt;                                                        
                 });
 
                 Task cwt = task.ContinueWith(t =>
@@ -205,7 +223,7 @@ namespace NichTest
         {
             try
             {
-                if (testDataTable.Rows.Count == 0)
+                if (testDataTable == null || testDataTable.Rows.Count == 0)
                 {
                     MessageBox.Show("无测试记录！", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
