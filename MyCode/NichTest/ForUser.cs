@@ -507,6 +507,8 @@ namespace NichTest
                     return false;
                 }
 
+                string beginTime = DateTime.Now.ToString();
+
                 for (int row = 0; row < dataTable_Condition.Rows.Count; row++)//遍历测试环境条件
                 {
                     if (txoTable != null)
@@ -589,7 +591,7 @@ namespace NichTest
                         drOfTxOTable["Channel"] = ConditionParaByTestPlan.Channel;
                         drOfTxOTable["Temp"] = ConditionParaByTestPlan.Temp;
                         drOfTxOTable["Station"] = "TXO";
-                        drOfTxOTable["Time"] = DateTime.Now.ToString();
+                        drOfTxOTable["Time"] = beginTime;
                         drOfTxOTable["Status"] = 0;
                         txoTable.Rows.Add(drOfTxOTable);
                     }
@@ -602,7 +604,7 @@ namespace NichTest
                         drOfRxOTable["Channel"] = ConditionParaByTestPlan.Channel;
                         drOfRxOTable["Temp"] = ConditionParaByTestPlan.Temp;
                         drOfRxOTable["Station"] = "RXO";
-                        drOfRxOTable["Time"] = DateTime.Now.ToString();
+                        drOfRxOTable["Time"] = beginTime;
                         drOfRxOTable["Status"] = 0;
                         rxoTable.Rows.Add(drOfRxOTable);
                     }
@@ -675,7 +677,9 @@ namespace NichTest
                 {
                     Log.SaveLogToTxt("Name of test plan is not corrected");
                     return false;
-                }                                             
+                }
+
+                string beginTime = DateTime.Now.ToString();
 
                 for (int row = 0; row < dataTable_Condition.Rows.Count; row++)//遍历测试环境条件
                 {
@@ -786,7 +790,7 @@ namespace NichTest
                         drOfTxOTable["Channel"] = ConditionParaByTestPlan.Channel;
                         drOfTxOTable["Temp"] = ConditionParaByTestPlan.Temp;
                         drOfTxOTable["Station"] = "TXO";
-                        drOfTxOTable["Time"] = DateTime.Now.ToString();
+                        drOfTxOTable["Time"] = beginTime;
                         drOfTxOTable["Status"] = 0;
                         txoTable.Rows.Add(drOfTxOTable);
                     }
@@ -799,7 +803,7 @@ namespace NichTest
                         drOfRxOTable["Channel"] = ConditionParaByTestPlan.Channel;
                         drOfRxOTable["Temp"] = ConditionParaByTestPlan.Temp;
                         drOfRxOTable["Station"] = "RXO";
-                        drOfRxOTable["Time"] = DateTime.Now.ToString();
+                        drOfRxOTable["Time"] = beginTime;
                         drOfRxOTable["Status"] = 0;
                         rxoTable.Rows.Add(drOfRxOTable);
                     }                    
