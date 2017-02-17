@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Data;
+using System.Security.AccessControl;
 
 namespace NichTest
 {
@@ -31,6 +32,24 @@ namespace NichTest
             LogPath = folderPath[3];
             TestDataPath = folderPath[4];
             BackupTestDataPath = folderPath[5];
+        }
+
+        public static void ClearFolder(string folderPath)
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(folderPath);
+            if (directoryInfo.Exists)
+            {
+                //先删除整个文件夹及下所有文件
+                Directory.Delete(folderPath, true);
+            }
+
+            //然后在创建文件夹
+            //如果不指定DirectorySecurity权限，文件夹有时会创建不成功
+            DirectorySecurity securityRules = new DirectorySecurity();
+            string username = Environment.UserDomainName + @"\" + Environment.UserName;
+            securityRules.AddAccessRule(new FileSystemAccessRule(username, FileSystemRights.Read, AccessControlType.Allow));
+            securityRules.AddAccessRule(new FileSystemAccessRule(username, FileSystemRights.FullControl, AccessControlType.Allow));
+            Directory.CreateDirectory(folderPath, securityRules);
         }
     }
 
