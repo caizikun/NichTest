@@ -45,6 +45,11 @@
             this.pLCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemClearLog = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemClearExcelFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemClearXmlFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemClearEyeFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemClearBackup = new System.Windows.Forms.ToolStripMenuItem();
             this.CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,6 +112,7 @@
             this.txtLigSourceERCh1 = new System.Windows.Forms.TextBox();
             this.txtPMOffsetCh4 = new System.Windows.Forms.TextBox();
             this.txtLigSourceCh1 = new System.Windows.Forms.TextBox();
+            this.ToolStripMenuItemClearAllData = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -248,7 +254,13 @@
             // AToolStripMenuItem
             // 
             this.AToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.searchToolStripMenuItem});
+            this.searchToolStripMenuItem,
+            this.ToolStripMenuItemClearLog,
+            this.ToolStripMenuItemClearExcelFile,
+            this.ToolStripMenuItemClearXmlFile,
+            this.ToolStripMenuItemClearEyeFile,
+            this.ToolStripMenuItemClearBackup,
+            this.ToolStripMenuItemClearAllData});
             this.AToolStripMenuItem.Name = "AToolStripMenuItem";
             this.AToolStripMenuItem.Size = new System.Drawing.Size(60, 21);
             this.AToolStripMenuItem.Text = "数据(A)";
@@ -257,9 +269,44 @@
             // 
             this.searchToolStripMenuItem.Image = global::NichTest.Properties.Resources.search;
             this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            this.searchToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.searchToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.searchToolStripMenuItem.Text = "查询";
             this.searchToolStripMenuItem.Click += new System.EventHandler(this.searchToolStripMenuItem_Click);
+            // 
+            // ToolStripMenuItemClearLog
+            // 
+            this.ToolStripMenuItemClearLog.Name = "ToolStripMenuItemClearLog";
+            this.ToolStripMenuItemClearLog.Size = new System.Drawing.Size(153, 22);
+            this.ToolStripMenuItemClearLog.Text = "清除日志文件";
+            this.ToolStripMenuItemClearLog.Click += new System.EventHandler(this.ToolStripMenuItemClearLog_Click);
+            // 
+            // ToolStripMenuItemClearExcelFile
+            // 
+            this.ToolStripMenuItemClearExcelFile.Name = "ToolStripMenuItemClearExcelFile";
+            this.ToolStripMenuItemClearExcelFile.Size = new System.Drawing.Size(153, 22);
+            this.ToolStripMenuItemClearExcelFile.Text = "清除excel数据";
+            this.ToolStripMenuItemClearExcelFile.Click += new System.EventHandler(this.ToolStripMenuItemClearExcelFile_Click);
+            // 
+            // ToolStripMenuItemClearXmlFile
+            // 
+            this.ToolStripMenuItemClearXmlFile.Name = "ToolStripMenuItemClearXmlFile";
+            this.ToolStripMenuItemClearXmlFile.Size = new System.Drawing.Size(153, 22);
+            this.ToolStripMenuItemClearXmlFile.Text = "清除xml数据";
+            this.ToolStripMenuItemClearXmlFile.Click += new System.EventHandler(this.ToolStripMenuItemClearXmlFile_Click);
+            // 
+            // ToolStripMenuItemClearEyeFile
+            // 
+            this.ToolStripMenuItemClearEyeFile.Name = "ToolStripMenuItemClearEyeFile";
+            this.ToolStripMenuItemClearEyeFile.Size = new System.Drawing.Size(153, 22);
+            this.ToolStripMenuItemClearEyeFile.Text = "清除眼图文件";
+            this.ToolStripMenuItemClearEyeFile.Click += new System.EventHandler(this.ToolStripMenuItemClearEyeFile_Click);
+            // 
+            // ToolStripMenuItemClearBackup
+            // 
+            this.ToolStripMenuItemClearBackup.Name = "ToolStripMenuItemClearBackup";
+            this.ToolStripMenuItemClearBackup.Size = new System.Drawing.Size(153, 22);
+            this.ToolStripMenuItemClearBackup.Text = "清除备份数据";
+            this.ToolStripMenuItemClearBackup.Click += new System.EventHandler(this.ToolStripMenuItemClearBackup_Click);
             // 
             // CToolStripMenuItem
             // 
@@ -901,6 +948,13 @@
             this.txtLigSourceCh1.Text = "-0.52";
             this.txtLigSourceCh1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // ToolStripMenuItemClearAllData
+            // 
+            this.ToolStripMenuItemClearAllData.Name = "ToolStripMenuItemClearAllData";
+            this.ToolStripMenuItemClearAllData.Size = new System.Drawing.Size(153, 22);
+            this.ToolStripMenuItemClearAllData.Text = "清除所有数据";
+            this.ToolStripMenuItemClearAllData.Click += new System.EventHandler(this.ToolStripMenuItemClearAllData_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -1022,6 +1076,12 @@
         private System.Windows.Forms.ToolStripButton toolStripBtnCalculator;
         private System.Windows.Forms.Button btnTraceView;
         private System.Windows.Forms.CheckBox checkBoxParallelTest;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemClearLog;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemClearExcelFile;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemClearXmlFile;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemClearEyeFile;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemClearBackup;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemClearAllData;
     }
 }
 

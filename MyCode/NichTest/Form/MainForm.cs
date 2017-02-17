@@ -436,18 +436,10 @@ namespace NichTest
                             this.BeginInvoke(new UpdateControl(delegate
                             {
                                 //Save test data to server
-                                if (TestPlanParaByPN.ItemName.Contains("TR"))
+                                DirectoryInfo theFolder = new DirectoryInfo(FolderPath.TestDataPath);
+                                foreach (FileInfo nextFile in theFolder.GetFiles())
                                 {
-                                    this.UploadTestData(FilePath.TxODataXml);
-                                    this.UploadTestData(FilePath.RxODataXml);
-                                }
-                                else if (TestPlanParaByPN.ItemName.Contains("TX"))
-                                {
-                                    this.UploadTestData(FilePath.TxODataXml);
-                                }
-                                else if (TestPlanParaByPN.ItemName.Contains("RX"))
-                                {
-                                    this.UploadTestData(FilePath.RxODataXml);
+                                    UploadTestData(nextFile.FullName);
                                 }
 
                                 this.UpdateControlAfterTest(task.Result);
@@ -456,18 +448,10 @@ namespace NichTest
                         else
                         {
                             //Save test data to server
-                            if (TestPlanParaByPN.ItemName.Contains("TR"))
+                            DirectoryInfo theFolder = new DirectoryInfo(FolderPath.TestDataPath);
+                            foreach (FileInfo nextFile in theFolder.GetFiles())
                             {
-                                this.UploadTestData(FilePath.TxODataXml);
-                                this.UploadTestData(FilePath.RxODataXml);
-                            }
-                            else if (TestPlanParaByPN.ItemName.Contains("TX"))
-                            {
-                                this.UploadTestData(FilePath.TxODataXml);
-                            }
-                            else if (TestPlanParaByPN.ItemName.Contains("RX"))
-                            {
-                                this.UploadTestData(FilePath.RxODataXml);
+                                UploadTestData(nextFile.FullName);
                             }
                             this.UpdateControlAfterTest(task.Result);
                         }
@@ -825,6 +809,135 @@ namespace NichTest
                 logForm.WindowState = FormWindowState.Normal;
                 logForm.Show();
                 logForm.Activate();
+            }
+        }
+
+        private void ToolStripMenuItemClearLog_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("确定删除日志文件？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+
+                string folder = Application.StartupPath + @"\Log\";
+                FolderPath.ClearFolder(folder);
+                MessageBox.Show("成功删除！");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void ToolStripMenuItemClearExcelFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("确定删除excel数据文件？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+
+                string folder = Application.StartupPath + @"\TestData\xls\";
+                FolderPath.ClearFolder(folder);
+                MessageBox.Show("成功删除！");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void ToolStripMenuItemClearXmlFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("确定删除xml数据文件？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+
+                string folder = Application.StartupPath + @"\TestData\xml\";
+                FolderPath.ClearFolder(folder);
+                MessageBox.Show("成功删除！");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void ToolStripMenuItemClearEyeFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("确定删除眼图文件？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+
+                string folder = Application.StartupPath + @"\EyeDiagram\";
+                FolderPath.ClearFolder(folder);
+                MessageBox.Show("成功删除！");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void ToolStripMenuItemClearBackup_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("确定删除备份数据？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+
+                string folder = Application.StartupPath + @"\TestData\backup\";
+                FolderPath.ClearFolder(folder);
+                MessageBox.Show("成功删除！");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void ToolStripMenuItemClearAllData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("确定删除所有数据文件？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+
+                string[] folders = new string[5];
+                folders[0] = Application.StartupPath + @"\Log\";
+                folders[1] = Application.StartupPath + @"\EyeDiagram\";
+                folders[2] = Application.StartupPath + @"\TestData\xml\";
+                folders[3] = Application.StartupPath + @"\TestData\backup\";
+                folders[4] = Application.StartupPath + @"\TestData\xls\";
+
+                foreach (string folder in folders)
+                {
+                    FolderPath.ClearFolder(folder);
+                }
+                MessageBox.Show("成功删除！");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
