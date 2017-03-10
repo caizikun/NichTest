@@ -940,5 +940,13 @@ namespace NichTest
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void ToolStripMenuItemLog_Click(object sender, EventArgs e)
+        {
+            if (this.btnTraceView.Enabled == true)
+            {
+                this.btnTraceView_Click(sender, e);
+            }
+        }
     }
 }

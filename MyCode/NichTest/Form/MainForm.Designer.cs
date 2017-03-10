@@ -41,7 +41,7 @@
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testPlanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.WToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.日志ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemLog = new System.Windows.Forms.ToolStripMenuItem();
             this.pLCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,6 +50,7 @@
             this.ToolStripMenuItemClearXmlFile = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemClearEyeFile = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemClearBackup = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemClearAllData = new System.Windows.Forms.ToolStripMenuItem();
             this.CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,7 +113,6 @@
             this.txtLigSourceERCh1 = new System.Windows.Forms.TextBox();
             this.txtPMOffsetCh4 = new System.Windows.Forms.TextBox();
             this.txtLigSourceCh1 = new System.Windows.Forms.TextBox();
-            this.ToolStripMenuItemClearAllData = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -233,22 +233,23 @@
             // WToolStripMenuItem
             // 
             this.WToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.日志ToolStripMenuItem,
+            this.ToolStripMenuItemLog,
             this.pLCToolStripMenuItem});
             this.WToolStripMenuItem.Name = "WToolStripMenuItem";
             this.WToolStripMenuItem.Size = new System.Drawing.Size(64, 21);
             this.WToolStripMenuItem.Text = "窗口(W)";
             // 
-            // 日志ToolStripMenuItem
+            // ToolStripMenuItemLog
             // 
-            this.日志ToolStripMenuItem.Name = "日志ToolStripMenuItem";
-            this.日志ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.日志ToolStripMenuItem.Text = "日志";
+            this.ToolStripMenuItemLog.Name = "ToolStripMenuItemLog";
+            this.ToolStripMenuItemLog.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemLog.Text = "日志";
+            this.ToolStripMenuItemLog.Click += new System.EventHandler(this.ToolStripMenuItemLog_Click);
             // 
             // pLCToolStripMenuItem
             // 
             this.pLCToolStripMenuItem.Name = "pLCToolStripMenuItem";
-            this.pLCToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.pLCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pLCToolStripMenuItem.Text = "PLC";
             // 
             // AToolStripMenuItem
@@ -307,6 +308,13 @@
             this.ToolStripMenuItemClearBackup.Size = new System.Drawing.Size(153, 22);
             this.ToolStripMenuItemClearBackup.Text = "清除备份数据";
             this.ToolStripMenuItemClearBackup.Click += new System.EventHandler(this.ToolStripMenuItemClearBackup_Click);
+            // 
+            // ToolStripMenuItemClearAllData
+            // 
+            this.ToolStripMenuItemClearAllData.Name = "ToolStripMenuItemClearAllData";
+            this.ToolStripMenuItemClearAllData.Size = new System.Drawing.Size(153, 22);
+            this.ToolStripMenuItemClearAllData.Text = "清除所有数据";
+            this.ToolStripMenuItemClearAllData.Click += new System.EventHandler(this.ToolStripMenuItemClearAllData_Click);
             // 
             // CToolStripMenuItem
             // 
@@ -948,13 +956,6 @@
             this.txtLigSourceCh1.Text = "-0.52";
             this.txtLigSourceCh1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // ToolStripMenuItemClearAllData
-            // 
-            this.ToolStripMenuItemClearAllData.Name = "ToolStripMenuItemClearAllData";
-            this.ToolStripMenuItemClearAllData.Size = new System.Drawing.Size(153, 22);
-            this.ToolStripMenuItemClearAllData.Text = "清除所有数据";
-            this.ToolStripMenuItemClearAllData.Click += new System.EventHandler(this.ToolStripMenuItemClearAllData_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -1061,7 +1062,7 @@
         private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem WToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 日志ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemLog;
         private System.Windows.Forms.ToolStripMenuItem pLCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testPlanToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripBtnInitial;

@@ -503,8 +503,7 @@ namespace NichTest
                 }
                 else
                 {
-                    Log.SaveLogToTxt("Name of test plan is not corrected");
-                    return false;
+                    Log.SaveLogToTxt("Test plan is not for function test.");
                 }
 
                 string beginTime = DateTime.Now.ToString();
@@ -675,8 +674,7 @@ namespace NichTest
                 }
                 else
                 {
-                    Log.SaveLogToTxt("Name of test plan is not corrected");
-                    return false;
+                    Log.SaveLogToTxt("Test plan is not for function test.");
                 }
 
                 string beginTime = DateTime.Now.ToString();
