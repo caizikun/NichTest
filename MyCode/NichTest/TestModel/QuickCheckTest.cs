@@ -204,8 +204,9 @@ namespace NichTest
                 Log.SaveLogToTxt("Test data is abnormal.");
                 return false;
             }
-            catch
+            catch(Exception ex)
             {
+                Log.SaveLogToTxt(ex.Message);
                 Log.SaveLogToTxt("Failed to upload test data to MySQL.");
                 return false;
             }
