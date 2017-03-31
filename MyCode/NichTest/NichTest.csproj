@@ -103,6 +103,12 @@
     <Compile Include="Equipment\PowerSupply\PowerSupply.cs" />
     <Compile Include="Equipment\Thermocontroller\Thermocontroller.cs" />
     <Compile Include="FolderPath.cs" />
+    <Compile Include="Form\DCA_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\DCA_Form.Designer.cs">
+      <DependentUpon>DCA_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form\LogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,6 +198,9 @@
     <Compile Include="TestModel\TestVccDmi.cs" />
     <EmbeddedResource Include="Form\CalculatorForm.resx">
       <DependentUpon>CalculatorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\DCA_Form.resx">
+      <DependentUpon>DCA_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>

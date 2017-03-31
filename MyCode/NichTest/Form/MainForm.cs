@@ -139,7 +139,7 @@ namespace NichTest
                 myTextBox[12].Text = myXml.VccOffset;
                 myTextBox[13].Text = myXml.IccOffset;
             }
-            catch(Exception ex)
+            catch
             {
                 var result = MessageBox.Show("导入Config文件出错，请确认，并重启软件。", "错误", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.Yes)
@@ -947,6 +947,12 @@ namespace NichTest
             {
                 this.btnTraceView_Click(sender, e);
             }
+        }
+
+        private void dCAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DCA_Form dcafrom = new DCA_Form();
+            dcafrom.Show();
         }
     }
 }
