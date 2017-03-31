@@ -87,6 +87,35 @@ namespace NichTest
             }
         }
 
+        public override bool Connect()
+        {
+            try
+            {                
+                this.isConnected = false;
+                switch (IOType)
+                {
+                    case "GPIB":
+                        lock (syncRoot)
+                        {
+                            this.WriteString("*IDN?");
+                            string content = this.ReadString();
+                            this.isConnected = content.Contains("86100");
+                        }
+                        break;
+
+                    default:
+                        Log.SaveLogToTxt("GPIB port error.");
+                        break;
+                }
+                return this.isConnected;
+            }
+            catch
+            {
+                Log.SaveLogToTxt("Failed to initial DCA86100.");
+                return false;
+            }
+        }
+
         public override bool Configure(int syn = 0)
         {
             lock (syncRoot)
@@ -420,7 +449,10 @@ namespace NichTest
             {
                 try
                 {
-
+                    if (syn != 0)
+                    {
+                        return this.WriteString(":SYSTem:AUToscale");
+                    }
                     return WriteOpc(":SYSTem:AUToscale", 0.01, 5);
 
                 }
@@ -439,7 +471,7 @@ namespace NichTest
         /// 0=Run,1=Stop,2=Clear
         /// </param>
         /// <returns></returns>
-        public override bool RunStop(bool run)// true "RUN"  false  "Stop"
+        public override bool RunStop(bool run, int syn=0)// true "RUN"  false  "Stop"
         {
             lock (syncRoot)
             {
@@ -447,7 +479,7 @@ namespace NichTest
                 {
                     try
                     {
-                        return AcquisitionControl(0);
+                        return AcquisitionControl(0, syn);
 
                     }
                     catch (Exception error)
@@ -460,7 +492,7 @@ namespace NichTest
                 {
                     try
                     {
-                        return AcquisitionControl(1);
+                        return AcquisitionControl(1, syn);
 
                     }
                     catch (Exception ex)
@@ -3655,7 +3687,7 @@ namespace NichTest
             }
         }
 
-        private bool AcquisitionControl(byte control)
+        private bool AcquisitionControl(byte control, int syn = 0)
         {
             lock (syncRoot)
             {
@@ -3678,6 +3710,10 @@ namespace NichTest
                             break;
                     }
                     Log.SaveLogToTxt("AcquisitionControl is" + strcontrol);
+                    if (syn != 0)
+                    {
+                        return this.WriteString(":ACQuire:" + strcontrol);
+                    }
                     return WriteOpc(":ACQuire:" + strcontrol, 5, 30);
                 }
                 catch (Exception ex)

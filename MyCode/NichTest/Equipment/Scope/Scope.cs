@@ -50,7 +50,7 @@ namespace NichTest
         public virtual bool MaskONOFF(bool MaskOn, int syn = 0) { return true; }
         public virtual bool SetRunTilOff(int syn = 0) { return true; }
         public virtual bool AutoScale(int syn = 0) { return true; }
-        public virtual bool RunStop(bool run) { return true; }
+        public virtual bool RunStop(bool run, int syn = 0) { return true; }
         public virtual bool ClearDisplay() { return true; }
         public virtual bool OpenOpticalChannel(bool Switch, int syn = 0) { return true; }
         public virtual bool OpticalEyeTest(ref Dictionary<string, double> result, int syn = 0) { return false; }
