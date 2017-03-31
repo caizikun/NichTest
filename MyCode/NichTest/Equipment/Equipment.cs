@@ -10,14 +10,27 @@ namespace NichTest
         protected IOPort myIO = IOPort.GetIOPort();
         protected bool isConnected;
         protected bool isConfigured;
-        protected string IOType;
+        protected string IOType = "GPIB";
         protected string address;
         protected string name;
         protected bool reset;
         protected int role;
         protected Dictionary<int, double> offsetByCh = new Dictionary<int, double>();
 
+        public string Address
+        {
+            set
+            {
+                this.address = value;
+            }
+            get
+            {
+                return this.address;
+            }
+        }
+
         public virtual bool Initial(Dictionary<string, string> inPara, int syn = 0) { return true; }
+        public virtual bool Connect() { return true; }
         public virtual bool Configure(int syn = 0) { return true; }
         public virtual bool OutPutSwitch(bool isON, int syn = 0) { return true; }
         public virtual bool ConfigOffset(int channel, double offset, int syn = 0) { return true; }
