@@ -324,6 +324,7 @@
     <None Include="Resources\Newspaper.ico" />
     <None Include="Resources\Google Profile.ico" />
     <None Include="Resources\Google Profile1.ico" />
+    <None Include="Resources\logo_new.png" />
     <Content Include="Resources\Normal.png" />
     <None Include="Resources\NotFound.png" />
     <Content Include="Resources\Smile.png" />

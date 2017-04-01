@@ -32,19 +32,17 @@
             this.menuPanel = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.initialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.testPlanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.WToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemLog = new System.Windows.Forms.ToolStripMenuItem();
             this.pLCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.设备SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dCAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bERTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.powerSupplyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.e3631ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemClearLog = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemClearExcelFile = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemClearXmlFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,15 +55,7 @@
             this.HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripBtnSave = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripBtnInitial = new System.Windows.Forms.ToolStripButton();
-            this.toolStripBtnRun = new System.Windows.Forms.ToolStripButton();
-            this.toolStripBtnStop = new System.Windows.Forms.ToolStripButton();
-            this.toolStripBtnMine = new System.Windows.Forms.ToolStripButton();
-            this.toolStripBtnCalculator = new System.Windows.Forms.ToolStripButton();
-            this.toolStripBtnHelp = new System.Windows.Forms.ToolStripButton();
             this.panel3 = new System.Windows.Forms.Panel();
             this.labelStatus = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -79,7 +69,6 @@
             this.btnTraceView = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.btnInitial = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBoxConfig = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxFamily = new System.Windows.Forms.ComboBox();
@@ -113,11 +102,22 @@
             this.txtLigSourceERCh1 = new System.Windows.Forms.TextBox();
             this.txtPMOffsetCh4 = new System.Windows.Forms.TextBox();
             this.txtLigSourceCh1 = new System.Windows.Forms.TextBox();
-            this.设备SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dCAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bERTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.powerSupplyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.e3631ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.toolStripBtnSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripBtnInitial = new System.Windows.Forms.ToolStripButton();
+            this.toolStripBtnRun = new System.Windows.Forms.ToolStripButton();
+            this.toolStripBtnStop = new System.Windows.Forms.ToolStripButton();
+            this.toolStripBtnMine = new System.Windows.Forms.ToolStripButton();
+            this.toolStripBtnCalculator = new System.Windows.Forms.ToolStripButton();
+            this.toolStripBtnHelp = new System.Windows.Forms.ToolStripButton();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.initialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testPlanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -127,9 +127,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestData)).BeginInit();
             this.panel5.SuspendLayout();
             this.groupBoxStatus.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBoxConfig.SuspendLayout();
             this.groupBoxCalibratioon.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuPanel
@@ -171,21 +171,6 @@
             this.FToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.FToolStripMenuItem.Text = "文件(F)";
             // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Image = global::NichTest.Properties.Resources.Save;
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.saveToolStripMenuItem.Text = "保存";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            // 
-            // printToolStripMenuItem
-            // 
-            this.printToolStripMenuItem.Image = global::NichTest.Properties.Resources.Print;
-            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.printToolStripMenuItem.Text = "打印";
-            // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
@@ -204,38 +189,6 @@
             this.EToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.EToolStripMenuItem.Text = "编辑(E)";
             // 
-            // initialToolStripMenuItem
-            // 
-            this.initialToolStripMenuItem.Image = global::NichTest.Properties.Resources.initial;
-            this.initialToolStripMenuItem.Name = "initialToolStripMenuItem";
-            this.initialToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.initialToolStripMenuItem.Text = "初始化";
-            this.initialToolStripMenuItem.Click += new System.EventHandler(this.btnInitial_Click);
-            // 
-            // runToolStripMenuItem
-            // 
-            this.runToolStripMenuItem.Image = global::NichTest.Properties.Resources.link;
-            this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.runToolStripMenuItem.Text = "运行";
-            this.runToolStripMenuItem.Click += new System.EventHandler(this.btnStart_Click);
-            // 
-            // stopToolStripMenuItem
-            // 
-            this.stopToolStripMenuItem.Image = global::NichTest.Properties.Resources.stop;
-            this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.stopToolStripMenuItem.Text = "停止";
-            this.stopToolStripMenuItem.Click += new System.EventHandler(this.toolStripBtnStop_Click);
-            // 
-            // testPlanToolStripMenuItem
-            // 
-            this.testPlanToolStripMenuItem.Image = global::NichTest.Properties.Resources.Google_Profile;
-            this.testPlanToolStripMenuItem.Name = "testPlanToolStripMenuItem";
-            this.testPlanToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.testPlanToolStripMenuItem.Text = "TestPlan";
-            this.testPlanToolStripMenuItem.Click += new System.EventHandler(this.testPlanToolStripMenuItem_Click);
-            // 
             // WToolStripMenuItem
             // 
             this.WToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -248,15 +201,52 @@
             // ToolStripMenuItemLog
             // 
             this.ToolStripMenuItemLog.Name = "ToolStripMenuItemLog";
-            this.ToolStripMenuItemLog.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemLog.Size = new System.Drawing.Size(98, 22);
             this.ToolStripMenuItemLog.Text = "日志";
             this.ToolStripMenuItemLog.Click += new System.EventHandler(this.ToolStripMenuItemLog_Click);
             // 
             // pLCToolStripMenuItem
             // 
             this.pLCToolStripMenuItem.Name = "pLCToolStripMenuItem";
-            this.pLCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pLCToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.pLCToolStripMenuItem.Text = "PLC";
+            // 
+            // 设备SToolStripMenuItem
+            // 
+            this.设备SToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dCAToolStripMenuItem,
+            this.bERTToolStripMenuItem,
+            this.powerSupplyToolStripMenuItem});
+            this.设备SToolStripMenuItem.Name = "设备SToolStripMenuItem";
+            this.设备SToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.设备SToolStripMenuItem.Text = "设备(S)";
+            // 
+            // dCAToolStripMenuItem
+            // 
+            this.dCAToolStripMenuItem.Name = "dCAToolStripMenuItem";
+            this.dCAToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.dCAToolStripMenuItem.Text = "DCA";
+            this.dCAToolStripMenuItem.Click += new System.EventHandler(this.dCAToolStripMenuItem_Click);
+            // 
+            // bERTToolStripMenuItem
+            // 
+            this.bERTToolStripMenuItem.Name = "bERTToolStripMenuItem";
+            this.bERTToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.bERTToolStripMenuItem.Text = "BERT";
+            // 
+            // powerSupplyToolStripMenuItem
+            // 
+            this.powerSupplyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.e3631ToolStripMenuItem});
+            this.powerSupplyToolStripMenuItem.Name = "powerSupplyToolStripMenuItem";
+            this.powerSupplyToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.powerSupplyToolStripMenuItem.Text = "PowerSupply";
+            // 
+            // e3631ToolStripMenuItem
+            // 
+            this.e3631ToolStripMenuItem.Name = "e3631ToolStripMenuItem";
+            this.e3631ToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
+            this.e3631ToolStripMenuItem.Text = "E3631";
             // 
             // AToolStripMenuItem
             // 
@@ -272,53 +262,45 @@
             this.AToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.AToolStripMenuItem.Text = "数据(A)";
             // 
-            // searchToolStripMenuItem
-            // 
-            this.searchToolStripMenuItem.Image = global::NichTest.Properties.Resources.search;
-            this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            this.searchToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.searchToolStripMenuItem.Text = "查询";
-            this.searchToolStripMenuItem.Click += new System.EventHandler(this.searchToolStripMenuItem_Click);
-            // 
             // ToolStripMenuItemClearLog
             // 
             this.ToolStripMenuItemClearLog.Name = "ToolStripMenuItemClearLog";
-            this.ToolStripMenuItemClearLog.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemClearLog.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemClearLog.Text = "清除日志文件";
             this.ToolStripMenuItemClearLog.Click += new System.EventHandler(this.ToolStripMenuItemClearLog_Click);
             // 
             // ToolStripMenuItemClearExcelFile
             // 
             this.ToolStripMenuItemClearExcelFile.Name = "ToolStripMenuItemClearExcelFile";
-            this.ToolStripMenuItemClearExcelFile.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemClearExcelFile.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemClearExcelFile.Text = "清除excel数据";
             this.ToolStripMenuItemClearExcelFile.Click += new System.EventHandler(this.ToolStripMenuItemClearExcelFile_Click);
             // 
             // ToolStripMenuItemClearXmlFile
             // 
             this.ToolStripMenuItemClearXmlFile.Name = "ToolStripMenuItemClearXmlFile";
-            this.ToolStripMenuItemClearXmlFile.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemClearXmlFile.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemClearXmlFile.Text = "清除xml数据";
             this.ToolStripMenuItemClearXmlFile.Click += new System.EventHandler(this.ToolStripMenuItemClearXmlFile_Click);
             // 
             // ToolStripMenuItemClearEyeFile
             // 
             this.ToolStripMenuItemClearEyeFile.Name = "ToolStripMenuItemClearEyeFile";
-            this.ToolStripMenuItemClearEyeFile.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemClearEyeFile.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemClearEyeFile.Text = "清除眼图文件";
             this.ToolStripMenuItemClearEyeFile.Click += new System.EventHandler(this.ToolStripMenuItemClearEyeFile_Click);
             // 
             // ToolStripMenuItemClearBackup
             // 
             this.ToolStripMenuItemClearBackup.Name = "ToolStripMenuItemClearBackup";
-            this.ToolStripMenuItemClearBackup.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemClearBackup.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemClearBackup.Text = "清除备份数据";
             this.ToolStripMenuItemClearBackup.Click += new System.EventHandler(this.ToolStripMenuItemClearBackup_Click);
             // 
             // ToolStripMenuItemClearAllData
             // 
             this.ToolStripMenuItemClearAllData.Name = "ToolStripMenuItemClearAllData";
-            this.ToolStripMenuItemClearAllData.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemClearAllData.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemClearAllData.Text = "清除所有数据";
             this.ToolStripMenuItemClearAllData.Click += new System.EventHandler(this.ToolStripMenuItemClearAllData_Click);
             // 
@@ -340,7 +322,7 @@
             // MineToolStripMenuItem
             // 
             this.MineToolStripMenuItem.Name = "MineToolStripMenuItem";
-            this.MineToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.MineToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.MineToolStripMenuItem.Text = "扫雷";
             this.MineToolStripMenuItem.Click += new System.EventHandler(this.MineToolStripMenuItem_Click);
             // 
@@ -381,89 +363,10 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripBtnSave
-            // 
-            this.toolStripBtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripBtnSave.Image = global::NichTest.Properties.Resources.Save;
-            this.toolStripBtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnSave.Name = "toolStripBtnSave";
-            this.toolStripBtnSave.Size = new System.Drawing.Size(23, 22);
-            this.toolStripBtnSave.Text = "保存";
-            this.toolStripBtnSave.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::NichTest.Properties.Resources.Print;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "打印";
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripBtnInitial
-            // 
-            this.toolStripBtnInitial.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripBtnInitial.Image = global::NichTest.Properties.Resources.initial;
-            this.toolStripBtnInitial.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnInitial.Name = "toolStripBtnInitial";
-            this.toolStripBtnInitial.Size = new System.Drawing.Size(23, 22);
-            this.toolStripBtnInitial.Text = "初始化";
-            this.toolStripBtnInitial.Click += new System.EventHandler(this.btnInitial_Click);
-            // 
-            // toolStripBtnRun
-            // 
-            this.toolStripBtnRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripBtnRun.Image = global::NichTest.Properties.Resources.link;
-            this.toolStripBtnRun.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnRun.Name = "toolStripBtnRun";
-            this.toolStripBtnRun.Size = new System.Drawing.Size(23, 22);
-            this.toolStripBtnRun.Text = "运行";
-            this.toolStripBtnRun.Click += new System.EventHandler(this.btnStart_Click);
-            // 
-            // toolStripBtnStop
-            // 
-            this.toolStripBtnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripBtnStop.Image = global::NichTest.Properties.Resources.stop;
-            this.toolStripBtnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnStop.Name = "toolStripBtnStop";
-            this.toolStripBtnStop.Size = new System.Drawing.Size(23, 22);
-            this.toolStripBtnStop.Text = "停止";
-            this.toolStripBtnStop.Click += new System.EventHandler(this.toolStripBtnStop_Click);
-            // 
-            // toolStripBtnMine
-            // 
-            this.toolStripBtnMine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripBtnMine.Image = global::NichTest.Properties.Resources.saolei;
-            this.toolStripBtnMine.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnMine.Name = "toolStripBtnMine";
-            this.toolStripBtnMine.Size = new System.Drawing.Size(23, 22);
-            this.toolStripBtnMine.Text = "扫雷";
-            this.toolStripBtnMine.Click += new System.EventHandler(this.MineToolStripMenuItem_Click);
-            // 
-            // toolStripBtnCalculator
-            // 
-            this.toolStripBtnCalculator.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripBtnCalculator.Image = global::NichTest.Properties.Resources.Newspaper;
-            this.toolStripBtnCalculator.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnCalculator.Name = "toolStripBtnCalculator";
-            this.toolStripBtnCalculator.Size = new System.Drawing.Size(23, 22);
-            this.toolStripBtnCalculator.Text = "计算器";
-            this.toolStripBtnCalculator.Click += new System.EventHandler(this.CToolStripMenuItem_Click);
-            // 
-            // toolStripBtnHelp
-            // 
-            this.toolStripBtnHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripBtnHelp.Image = global::NichTest.Properties.Resources.Help;
-            this.toolStripBtnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnHelp.Name = "toolStripBtnHelp";
-            this.toolStripBtnHelp.Size = new System.Drawing.Size(23, 22);
-            this.toolStripBtnHelp.Text = "帮助";
-            this.toolStripBtnHelp.Click += new System.EventHandler(this.HelpHToolStripMenuItem_Click);
             // 
             // panel3
             // 
@@ -581,7 +484,7 @@
             this.checkBoxParallelTest.AutoSize = true;
             this.checkBoxParallelTest.Checked = true;
             this.checkBoxParallelTest.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxParallelTest.Location = new System.Drawing.Point(861, 140);
+            this.checkBoxParallelTest.Location = new System.Drawing.Point(861, 172);
             this.checkBoxParallelTest.Name = "checkBoxParallelTest";
             this.checkBoxParallelTest.Size = new System.Drawing.Size(93, 21);
             this.checkBoxParallelTest.TabIndex = 17;
@@ -591,7 +494,7 @@
             // btnTraceView
             // 
             this.btnTraceView.Enabled = false;
-            this.btnTraceView.Location = new System.Drawing.Point(960, 129);
+            this.btnTraceView.Location = new System.Drawing.Point(960, 161);
             this.btnTraceView.Name = "btnTraceView";
             this.btnTraceView.Size = new System.Drawing.Size(75, 40);
             this.btnTraceView.TabIndex = 16;
@@ -601,7 +504,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(960, 61);
+            this.btnStart.Location = new System.Drawing.Point(960, 93);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 40);
             this.btnStart.TabIndex = 16;
@@ -611,23 +514,13 @@
             // 
             // btnInitial
             // 
-            this.btnInitial.Location = new System.Drawing.Point(860, 61);
+            this.btnInitial.Location = new System.Drawing.Point(860, 93);
             this.btnInitial.Name = "btnInitial";
             this.btnInitial.Size = new System.Drawing.Size(75, 40);
             this.btnInitial.TabIndex = 16;
             this.btnInitial.Text = "Initial";
             this.btnInitial.UseVisualStyleBackColor = true;
             this.btnInitial.Click += new System.EventHandler(this.btnInitial_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = global::NichTest.Properties.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(784, 17);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(287, 67);
-            this.pictureBox1.TabIndex = 14;
-            this.pictureBox1.TabStop = false;
             // 
             // groupBoxConfig
             // 
@@ -962,42 +855,149 @@
             this.txtLigSourceCh1.Text = "-0.52";
             this.txtLigSourceCh1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // 设备SToolStripMenuItem
+            // pictureBox1
             // 
-            this.设备SToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dCAToolStripMenuItem,
-            this.bERTToolStripMenuItem,
-            this.powerSupplyToolStripMenuItem});
-            this.设备SToolStripMenuItem.Name = "设备SToolStripMenuItem";
-            this.设备SToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.设备SToolStripMenuItem.Text = "设备(S)";
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Image = global::NichTest.Properties.Resources.logo_new;
+            this.pictureBox1.Location = new System.Drawing.Point(650, 10);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(407, 67);
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
             // 
-            // dCAToolStripMenuItem
+            // toolStripBtnSave
             // 
-            this.dCAToolStripMenuItem.Name = "dCAToolStripMenuItem";
-            this.dCAToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.dCAToolStripMenuItem.Text = "DCA";
-            this.dCAToolStripMenuItem.Click += new System.EventHandler(this.dCAToolStripMenuItem_Click);
+            this.toolStripBtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripBtnSave.Image = global::NichTest.Properties.Resources.Save;
+            this.toolStripBtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnSave.Name = "toolStripBtnSave";
+            this.toolStripBtnSave.Size = new System.Drawing.Size(23, 22);
+            this.toolStripBtnSave.Text = "保存";
+            this.toolStripBtnSave.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
-            // bERTToolStripMenuItem
+            // toolStripButton2
             // 
-            this.bERTToolStripMenuItem.Name = "bERTToolStripMenuItem";
-            this.bERTToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.bERTToolStripMenuItem.Text = "BERT";
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = global::NichTest.Properties.Resources.Print;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "打印";
             // 
-            // powerSupplyToolStripMenuItem
+            // toolStripBtnInitial
             // 
-            this.powerSupplyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.e3631ToolStripMenuItem});
-            this.powerSupplyToolStripMenuItem.Name = "powerSupplyToolStripMenuItem";
-            this.powerSupplyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.powerSupplyToolStripMenuItem.Text = "PowerSupply";
+            this.toolStripBtnInitial.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripBtnInitial.Image = global::NichTest.Properties.Resources.initial;
+            this.toolStripBtnInitial.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnInitial.Name = "toolStripBtnInitial";
+            this.toolStripBtnInitial.Size = new System.Drawing.Size(23, 22);
+            this.toolStripBtnInitial.Text = "初始化";
+            this.toolStripBtnInitial.Click += new System.EventHandler(this.btnInitial_Click);
             // 
-            // e3631ToolStripMenuItem
+            // toolStripBtnRun
             // 
-            this.e3631ToolStripMenuItem.Name = "e3631ToolStripMenuItem";
-            this.e3631ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.e3631ToolStripMenuItem.Text = "E3631";
+            this.toolStripBtnRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripBtnRun.Image = global::NichTest.Properties.Resources.link;
+            this.toolStripBtnRun.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnRun.Name = "toolStripBtnRun";
+            this.toolStripBtnRun.Size = new System.Drawing.Size(23, 22);
+            this.toolStripBtnRun.Text = "运行";
+            this.toolStripBtnRun.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // toolStripBtnStop
+            // 
+            this.toolStripBtnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripBtnStop.Image = global::NichTest.Properties.Resources.stop;
+            this.toolStripBtnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnStop.Name = "toolStripBtnStop";
+            this.toolStripBtnStop.Size = new System.Drawing.Size(23, 22);
+            this.toolStripBtnStop.Text = "停止";
+            this.toolStripBtnStop.Click += new System.EventHandler(this.toolStripBtnStop_Click);
+            // 
+            // toolStripBtnMine
+            // 
+            this.toolStripBtnMine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripBtnMine.Image = global::NichTest.Properties.Resources.saolei;
+            this.toolStripBtnMine.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnMine.Name = "toolStripBtnMine";
+            this.toolStripBtnMine.Size = new System.Drawing.Size(23, 22);
+            this.toolStripBtnMine.Text = "扫雷";
+            this.toolStripBtnMine.Click += new System.EventHandler(this.MineToolStripMenuItem_Click);
+            // 
+            // toolStripBtnCalculator
+            // 
+            this.toolStripBtnCalculator.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripBtnCalculator.Image = global::NichTest.Properties.Resources.Newspaper;
+            this.toolStripBtnCalculator.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnCalculator.Name = "toolStripBtnCalculator";
+            this.toolStripBtnCalculator.Size = new System.Drawing.Size(23, 22);
+            this.toolStripBtnCalculator.Text = "计算器";
+            this.toolStripBtnCalculator.Click += new System.EventHandler(this.CToolStripMenuItem_Click);
+            // 
+            // toolStripBtnHelp
+            // 
+            this.toolStripBtnHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripBtnHelp.Image = global::NichTest.Properties.Resources.Help;
+            this.toolStripBtnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnHelp.Name = "toolStripBtnHelp";
+            this.toolStripBtnHelp.Size = new System.Drawing.Size(23, 22);
+            this.toolStripBtnHelp.Text = "帮助";
+            this.toolStripBtnHelp.Click += new System.EventHandler(this.HelpHToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Image = global::NichTest.Properties.Resources.Save;
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.saveToolStripMenuItem.Text = "保存";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // printToolStripMenuItem
+            // 
+            this.printToolStripMenuItem.Image = global::NichTest.Properties.Resources.Print;
+            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.printToolStripMenuItem.Text = "打印";
+            // 
+            // initialToolStripMenuItem
+            // 
+            this.initialToolStripMenuItem.Image = global::NichTest.Properties.Resources.initial;
+            this.initialToolStripMenuItem.Name = "initialToolStripMenuItem";
+            this.initialToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.initialToolStripMenuItem.Text = "初始化";
+            this.initialToolStripMenuItem.Click += new System.EventHandler(this.btnInitial_Click);
+            // 
+            // runToolStripMenuItem
+            // 
+            this.runToolStripMenuItem.Image = global::NichTest.Properties.Resources.link;
+            this.runToolStripMenuItem.Name = "runToolStripMenuItem";
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.runToolStripMenuItem.Text = "运行";
+            this.runToolStripMenuItem.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // stopToolStripMenuItem
+            // 
+            this.stopToolStripMenuItem.Image = global::NichTest.Properties.Resources.stop;
+            this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.stopToolStripMenuItem.Text = "停止";
+            this.stopToolStripMenuItem.Click += new System.EventHandler(this.toolStripBtnStop_Click);
+            // 
+            // testPlanToolStripMenuItem
+            // 
+            this.testPlanToolStripMenuItem.Image = global::NichTest.Properties.Resources.Google_Profile;
+            this.testPlanToolStripMenuItem.Name = "testPlanToolStripMenuItem";
+            this.testPlanToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.testPlanToolStripMenuItem.Text = "TestPlan";
+            this.testPlanToolStripMenuItem.Click += new System.EventHandler(this.testPlanToolStripMenuItem_Click);
+            // 
+            // searchToolStripMenuItem
+            // 
+            this.searchToolStripMenuItem.Image = global::NichTest.Properties.Resources.search;
+            this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
+            this.searchToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.searchToolStripMenuItem.Text = "查询";
+            this.searchToolStripMenuItem.Click += new System.EventHandler(this.searchToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1031,11 +1031,11 @@
             this.panel5.PerformLayout();
             this.groupBoxStatus.ResumeLayout(false);
             this.groupBoxStatus.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBoxConfig.ResumeLayout(false);
             this.groupBoxConfig.PerformLayout();
             this.groupBoxCalibratioon.ResumeLayout(false);
             this.groupBoxCalibratioon.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
