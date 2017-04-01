@@ -40,7 +40,16 @@ namespace NichTest
             dca.Address = this.numericUpDownAddress.Value.ToString();
             bool connected = dca.Connect();
             this.Text = this.comboBoxItemModel.Text;
-            string message = connected == true ? "successfully" : "failed";
+            string message;
+            if (connected == true)
+            {
+                message = "successfully";
+            }
+            else
+            {
+                message = "failed";
+                dca = null;
+            }
             MessageBox.Show("Connected " + message, "message", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
